@@ -28,5 +28,4 @@ override_dh_auto_install:
 	./install.sh $(CURDIR)/debian/gpu-viv-bin-dfb dfb
 	./install.sh $(CURDIR)/debian/gpu-viv-bin-x11 x11
 
-override_dh_shlibdeps:
-	dh_shlibdeps -- --ignore-missing-info
+override_dh_shlibdeps: 
