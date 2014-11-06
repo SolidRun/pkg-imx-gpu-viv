@@ -1,0 +1,60 @@
+Source: gpu-viv-bin
+Priority: optional
+Maintainer: Josua Mayer <josua@unknown>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Section: libs
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: git://git.debian.org/collab-maint/gpu-viv-bin.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/gpu-viv-bin.git;a=summary
+
+Package: gpu-viv-bin-fb
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: gpu-viv-bin, libegl1-fb, libgles1, libgles2, libopenvg1, libopencl1
+Breaks: gpu-viv-bin, libegl1-fb, libgles1, libgles2, libopenvg1, libopencl1
+Replaces: gpu-viv-bin, libegl1-fb, libgles1, libgles2, libopenvg1, libopencl1
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: gpu-viv-bin-fb-dev
+Section: libdevel
+Architecture: any
+Depends: gpu-viv-binBROKEN (= ${binary:Version})
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: gpu-viv-bin-dfb
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: gpu-viv-bin, libegl1-dfb, libgles1, libgles2, libopenvg1, libopencl1
+Breaks: gpu-viv-bin, libegl1-dfb, libgles1, libgles2, libopenvg1, libopencl1
+Replaces: gpu-viv-bin, libegl1-dfb, libgles1, libgles2, libopenvg1, libopencl1
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: gpu-viv-bin-dfb-dev
+Section: libdevel
+Architecture: any
+Depends: gpu-viv-binBROKEN (= ${binary:Version})
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: gpu-viv-bin-x11
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: gpu-viv-bin, libgl1, libegl1-fb, libgles1, libgles2, libopenvg1, libopencl1
+Breaks: gpu-viv-bin, libgl1, libegl1-fb, libgles1, libgles2, libopenvg1, libopencl1
+Replaces: gpu-viv-bin, libgl1, libegl1-fb, libgles1, libgles2, libopenvg1, libopencl1
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: gpu-viv-bin-x11-dev
+Section: libdevel
+Architecture: any
+Depends: gpu-viv-binBROKEN (= ${binary:Version})
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

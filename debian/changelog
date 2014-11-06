@@ -1,0 +1,5 @@
+gpu-viv-bin (1-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Josua Mayer <josua@unknown>  Thu, 06 Nov 2014 18:35:29 +0100
