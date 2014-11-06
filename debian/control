@@ -1,7 +1,7 @@
 Source: gpu-viv-bin
 Priority: optional
 Maintainer: Josua Mayer <josua@unknown>
-Build-Depends: debhelper (>= 8.0.0)
+Build-Depends: debhelper (>= 8.0.0), wget
 Standards-Version: 3.9.3
 Section: libs
 Homepage: <insert the upstream URL, if relevant>
@@ -21,7 +21,7 @@ Description: <insert up to 60 chars description>
 Package: gpu-viv-bin-fb-dev
 Section: libdevel
 Architecture: any
-Depends: gpu-viv-binBROKEN (= ${binary:Version})
+Depends: gpu-viv-bin-fb (= ${binary:Version})
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
 
@@ -38,7 +38,7 @@ Description: <insert up to 60 chars description>
 Package: gpu-viv-bin-dfb-dev
 Section: libdevel
 Architecture: any
-Depends: gpu-viv-binBROKEN (= ${binary:Version})
+Depends: gpu-viv-bin-dfb (= ${binary:Version})
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
 
@@ -55,6 +55,6 @@ Description: <insert up to 60 chars description>
 Package: gpu-viv-bin-x11-dev
 Section: libdevel
 Architecture: any
-Depends: gpu-viv-binBROKEN (= ${binary:Version})
+Depends: gpu-viv-bin-x11 (= ${binary:Version})
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
