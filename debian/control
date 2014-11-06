@@ -1,7 +1,7 @@
 Source: gpu-viv-bin
 Priority: optional
 Maintainer: Josua Mayer <josua@unknown>
-Build-Depends: debhelper (>= 8.0.0), wget
+Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.3
 Section: libs
 Homepage: <insert the upstream URL, if relevant>

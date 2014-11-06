@@ -7,7 +7,10 @@
 # This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
+#export DH_VERBOSE=1
+
+# hack: will only work on OBS-created chroots
+SOURCESDIR=/usr/src/packages/SOURCES/
 
 %:
 	dh $@ 
@@ -20,6 +23,7 @@ override_dh_auto_clean:
 build: 
 
 override_dh_auto_install:
+	find $(SOURCESDIR) -maxdepth 1 -iname "gpu-viv-bin-*-*-*-*.bin" -exec cp -v {} ./ \; || true
 	./install.sh $(CURDIR)/debian/gpu-viv-bin-fb fb
 	./install.sh $(CURDIR)/debian/gpu-viv-bin-dfb dfb
 	./install.sh $(CURDIR)/debian/gpu-viv-bin-x11 x11
