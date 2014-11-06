@@ -1,0 +1,11 @@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+version=@VERSION@
+
+Name: gl
+Description: Vivante OpenGL library for X11
+Requires.private:
+Version: ${version}
+Libs: -L${libdir} -lGL
+Libs.private:
+Cflags: -I${includedir}

@@ -1,0 +1,11 @@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+version=@VERSION@
+
+Name: egl
+Description: Vivante EGL library
+Requires.private:
+Version: ${version}
+Libs: -L${libdir} -lEGL
+Libs.private:
+Cflags: -I${includedir} -DLINUX -DEGL_API_FB

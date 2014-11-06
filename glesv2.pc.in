@@ -1,0 +1,11 @@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+version=@VERSION@
+
+Name: glesv2
+Description: Vivante OpenGL ES 2.0 library
+Requires.private:
+Version: ${version}
+Libs: -L${libdir} -lGLESv2
+Libs.private:
+Cflags: -I${includedir}

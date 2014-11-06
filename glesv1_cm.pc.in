@@ -1,0 +1,11 @@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+version=@VERSION@
+
+Name: glesv1_cm
+Description: Vivante OpenGL ES 1.1 CM library
+Requires.private:
+Version: ${version}
+Libs: -L${libdir} -lGLESv1_CM
+Libs.private:
+Cflags: -I${includedir}

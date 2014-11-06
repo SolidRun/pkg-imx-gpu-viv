@@ -1,0 +1,11 @@
+libdir=@LIBDIR@
+includedir=@INCLUDEDIR@
+version=@VERSION@
+
+Name: vg
+Description: Vivante OpenVG 1.0 library
+Requires.private:
+Version: ${version}
+Libs: -L${libdir} -lGOpenVG
+Libs.private:
+Cflags: -I${includedir}
