@@ -161,7 +161,7 @@ chksum() {
 	fi
 
 	mysum=`md5sum $file | cut -d ' ' -f 1`
-	if [ "$mysum" == "$chksum" ]; then
+	if [ "$mysum" = "$chksum" ]; then
 		return 0
 	else
 		return 2
