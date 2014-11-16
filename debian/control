@@ -22,6 +22,9 @@ Package: gpu-viv-bin-fb-dev
 Section: libdevel
 Architecture: any
 Depends: gpu-viv-bin-fb (= ${binary:Version})
+Provides: libegl-dev, libgles2-dev
+Breaks: libegl-dev, libgles2-dev
+Replaces: libegl-dev, libgles2-dev
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
 
@@ -39,6 +42,9 @@ Package: gpu-viv-bin-dfb-dev
 Section: libdevel
 Architecture: any
 Depends: gpu-viv-bin-dfb (= ${binary:Version})
+Provides: libegl-dev, libgles2-dev
+Breaks: libegl-dev, libgles2-dev
+Replaces: libegl-dev, libgles2-dev
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
 
@@ -56,8 +62,8 @@ Package: gpu-viv-bin-x11-dev
 Section: libdevel
 Architecture: any
 Depends: gpu-viv-bin-x11 (= ${binary:Version})
-Provides: libgl-dev
-Breaks: libgl-dev
-Replaces: libgl-dev
+Provides: libgl-dev, libegl-dev, libgles2-dev
+Breaks: libgl-dev, libegl-dev, libgles2-dev
+Replaces: libgl-dev, libegl-dev, libgles2-dev
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
