@@ -34,7 +34,7 @@ link_lib() {
 }
 
 install_headers() {
-	# TODO: what ifdestination already exists?
+	# TODO: what if destination already exists?
 
 	mkdir -p ${destdir}/usr/include/
 	cp -rv "${vivantebindir}/usr/include/${1}" "${destdir}/usr/include/"
@@ -43,7 +43,12 @@ install_headers() {
 }
 
 install_header() {
-	install -v -m644 -D "${vivantebindir}/usr/include/${1}" "${destdir}/usr/include/${1}"
+	oldname="${1}"
+	newname="${2}"
+        if [ -z "${newname}" ]; then
+		destname="${oldname}"
+	fi
+	install -v -m644 -D "${vivantebindir}/usr/include/${oldname}" "${destdir}/usr/include/${newname}"
 }
 
 format_pc() {
@@ -277,6 +282,9 @@ install_x11() {
 	link_lib libGL.so.1.2 libGL.so.1
 	link_lib libGL.so.1 libGL.so
 	install_custom_pc gl
+	install_header gl.h GL/gl.h
+	install_header glext.h GL/glext.h
+	install_header glxext.h GL/glxext.h
 
 	# DRI
 	install_lib dri/vivante_dri.so

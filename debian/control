@@ -55,6 +55,7 @@ Description: <insert up to 60 chars description>
 Package: gpu-viv-bin-x11-dev
 Section: libdevel
 Architecture: any
+Provides: libgl-dev
 Depends: gpu-viv-bin-x11 (= ${binary:Version})
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
