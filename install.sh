@@ -51,6 +51,15 @@ install_header() {
 	install -v -m644 -D "${vivantebindir}/usr/include/${oldname}" "${destdir}/usr/include/${newname}"
 }
 
+install_custom_header() {
+        oldname="${1}"
+        newname="${2}"
+        if [ -z "${newname}" ]; then
+                destname="${oldname}"
+        fi
+        install -v -m644 -D "${basedir}/${oldname}" "${destdir}/usr/include/${newname}"
+}
+
 format_pc() {
 	name="${1}"
 	includedir="${2}"
@@ -282,9 +291,9 @@ install_x11() {
 	link_lib libGL.so.1.2 libGL.so.1
 	link_lib libGL.so.1 libGL.so
 	install_custom_pc gl
-	install_header gl.h GL/gl.h
-	install_header glext.h GL/glext.h
-	install_header glxext.h GL/glxext.h
+	install_custom_header gl.h GL/gl.h
+	install_custom_header glext.h GL/glext.h
+	install_custom_header glxext.h GL/glxext.h
 
 	# DRI
 	install_lib dri/vivante_dri.so
