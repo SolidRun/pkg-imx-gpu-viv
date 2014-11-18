@@ -36,4 +36,5 @@ override_dh_install:
 	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11
 	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11-dev
 
-override_dh_shlibdeps: 
+override_dh_shlibdeps:
+	dh_shlibdeps -- --ignore-missing-info
