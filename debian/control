@@ -61,7 +61,7 @@ Description: <insert up to 60 chars description>
 Package: gpu-viv-bin-x11-dev
 Section: libdevel
 Architecture: any
-Depends: gpu-viv-bin-x11 (= ${binary:Version})
+Depends: gpu-viv-bin-x11 (= ${binary:Version}), mesa-common-dev
 Provides: libgl-dev, libegl-dev, libgles2-dev
 Breaks: libgl-dev, libegl-dev, libgles2-dev
 Replaces: libgl-dev, libegl-dev, libgles2-dev

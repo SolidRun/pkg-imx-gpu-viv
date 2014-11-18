@@ -291,9 +291,9 @@ install_x11() {
 	link_lib libGL.so.1.2 libGL.so.1
 	link_lib libGL.so.1 libGL.so
 	install_custom_pc gl
-	install_custom_header gl.h GL/gl.h
-	install_custom_header glext.h GL/glext.h
-	install_custom_header glxext.h GL/glxext.h
+	#install_custom_header gl.h GL/gl.h
+	#install_custom_header glext.h GL/glext.h
+	#install_custom_header glxext.h GL/glxext.h
 
 	# DRI
 	install_lib dri/vivante_dri.so
