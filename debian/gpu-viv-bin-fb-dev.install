@@ -1,0 +1,6 @@
+/usr/include/*
+/usr/lib/libEGL.so
+/usr/lib/libGLESv1_CL.so
+/usr/lib/libGLESv1_CM.so
+/usr/lib/libGLESv2.so
+/usr/lib/pkgconfig/*.pc

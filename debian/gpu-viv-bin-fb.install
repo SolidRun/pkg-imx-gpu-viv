@@ -1,0 +1,13 @@
+/usr/lib/libCLC.so
+/usr/lib/libEGL.so.*
+/usr/lib/libGAL.so
+/usr/lib/libGLES_CL.so
+/usr/lib/libGLES_CM.so
+/usr/lib/libGLESv1_CL.so.*
+/usr/lib/libGLESv1_CM.so.*
+/usr/lib/libGLESv2.so.*
+/usr/lib/libGLSLC.so
+/usr/lib/libOpenCL.so
+/usr/lib/libOpenVG*.so
+/usr/lib/libVDK.so
+/usr/lib/libVIVANTE.so
