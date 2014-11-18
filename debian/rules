@@ -23,7 +23,7 @@ override_dh_auto_clean:
 build: 
 
 override_dh_auto_install:
-	find $(SOURCESDIRS) -maxdepth 1 -iname "gpu-viv-bin-*-*-*-*.bin" -exec cp -v {} ./ \; || true
+	find $(SOURCESDIRS) -maxdepth 1 -iname "gpu-viv-bin-*-*-*-*.bin" -exec cp -v {} ./ \; -quit || true
 	./install.sh $(CURDIR)/debian/tmp-fb fb
 	./install.sh $(CURDIR)/debian/tmp-dfb dfb
 	./install.sh $(CURDIR)/debian/tmp-x11 x11
