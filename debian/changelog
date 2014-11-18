@@ -1,7 +1,6 @@
 gpu-viv-bin (2-1) unstable; urgency=low
 
   * put devel files into -dev packages
-  * include shlib dependency information
   * depend on mesa-common-dev for OpenGL (DRI/GLX) headers
 
  -- Josua Mayer <josua@solid-run.com>  Tue, 18 Nov 2014 16:24:36 +0100
