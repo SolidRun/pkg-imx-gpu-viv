@@ -1,3 +1,9 @@
+gpu-viv-bin (3-1) UNRELEASED; urgency=low
+
+  * move libraries to /usr/lib/galcore
+
+ -- Josua Mayer <josua@localhost>  Tue, 02 Dec 2014 19:50:28 +0100
+
 gpu-viv-bin (2-1) unstable; urgency=low
 
   * put devel files into -dev packages

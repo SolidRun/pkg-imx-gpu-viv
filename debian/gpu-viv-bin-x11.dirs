@@ -1,2 +1,3 @@
-/usr/lib
+/etc/ld.so.conf.d
+/usr/lib/galcore
 /usr/lib/dri
