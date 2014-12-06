@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+for backend in fb dfb x11; do
+	cat gpu-viv-bin.spec.in | sed -e "s;BACKEND;$backend;g" > gpu-viv-bin-$backend.spec
+done
