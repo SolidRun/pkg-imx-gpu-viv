@@ -349,6 +349,7 @@ fi
 
 backend="${2}"
 case $backend in
+  base)	;;
   fb)	;;
   dfb)	;;
   x11)	;;
@@ -374,7 +375,10 @@ basedir="$PWD"
 vivantebindir="$PWD/gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp"
 vivanteversion=1.0.1
 
-install_base
 install_${backend}
-install_galcore_linker_config
+
+if [ "x${backend}" = "xbase" ]; then
+	install_galcore_linker_config
+fi
+
 #install_demos
