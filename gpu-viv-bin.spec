@@ -1,3 +1,26 @@
+#
+# spec file for package gpu-viv-bin
+#
+# Copyright (c) 2014 Josua Mayer <josua@solid-run.com>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
 %define blobpkg_name gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp
 %define blobpkg_md5 29a54f6e5bf889a00cd8ca85080af223
 
@@ -6,7 +29,7 @@
 Name: gpu-viv-bin
 Version: 3
 Release: 1
-License: Proprietary
+License: Freescale IP
 Group: System/Libraries
 Summary: Binary drivers for Vivante GPU
 Source: gpu-viv-bin-%{version}.tar.gz
@@ -96,6 +119,7 @@ cp -rv temp-x11/* %{buildroot}/
 /usr/lib/galcore/libOpenCL.so
 /usr/lib/galcore/libOpenVG*.so
 /usr/lib/galcore/libVDK.so
+%doc EULA.txt
 
 %files common-devel
 %defattr(-,root,root)
