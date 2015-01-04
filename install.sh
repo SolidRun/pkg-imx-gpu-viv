@@ -285,6 +285,7 @@ install_fb() {
 	install_custom_pc egl_fb egl
 	install_galcore_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
 	install_galcore_lib libVIVANTE-${backend}.so libVIVANTE.so
+	return
 }
 
 install_dfb() {
@@ -315,10 +316,29 @@ install_x11() {
 
 	# DRI
 	install_lib dri/vivante_dri.so
+	return
 }
 
 install_wl() {
-	# TODO
+	install_galcore_lib libGAL-${backend}.so libGAL.so
+	install_galcore_lib libEGL-${backend}.so libEGL.so.1.0
+	install_custom_pc egl_wl egl
+	install_pc wayland-egl # TODO: check what this does and if it is required
+	install_galcore_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
+	install_galcore_lib libVIVANTE-${backend}.so libVIVANTE.so
+
+	# Wayland libs
+	install_galcore_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
+	link_galcore_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
+	install_lib libgc_wayland_protocol.a
+	install_pc gc_wayland_protocol
+
+	install_lib libwayland-viv.so.0.0.0 libwayland-viv.so.0
+	link_galcore_lib libwayland-viv.so.0 libwayland-viv.so
+	install_lib libwayland-viv.a
+	install_pc wayland-viv
+	
+	# TODO: update paths in installed .pc-files
 	return
 }
 
@@ -353,7 +373,7 @@ case $backend in
   fb)	;;
   dfb)	;;
   x11)	;;
-#  wl)	;;
+  wl)	;;
   *)	echo "Backend ${backend} is unknown!"
 	exit 1
 	;;
