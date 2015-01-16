@@ -1,3 +1,2 @@
-/etc/ld.so.conf.d
-/usr/lib/galcore
+/usr/lib
 /usr/lib/directfb-1.6-0/gfxdrivers

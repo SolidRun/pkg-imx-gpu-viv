@@ -10,24 +10,6 @@ install_lib() {
 	install -v -m755 -D "${vivantebindir}/usr/lib/${oldname}" "${destdir}/usr/lib/${newname}"
 }
 
-install_galcore_lib() {
-	if [ "x$#" = "x1" ]; then
-		install_lib "${1}" "galcore/${1}"
-	else
-		install_lib "${1}" "galcore/${2}"
-	fi
-}
-
-install_galcore_linker_config() {
-	mkdir -p "${destdir}/etc/ld.so.conf.d/"
-	echo "/usr/lib/galcore" > "${destdir}/etc/ld.so.conf.d/0galcore.conf"
-	chmod 644 "${destdir}/etc/ld.so.conf.d/0galcore.conf"
-}
-
-link_galcore_lib() {
-	link_lib "${1}" "galcore/${2}"
-}
-
 link_lib() {
 	# in case the destination already exists it has to be overwritten
 	# if the destination exists and is a file, or a symlink
@@ -42,7 +24,7 @@ link_lib() {
 	fi
 
 	# make sure the destination directory exists
-	mkdir -p `dirname ${destdir}/usr/lib/${2}`
+	mkdir -p ${destdir}/usr/lib/
 
 	# create the link
 	t=0
@@ -114,7 +96,7 @@ install_custom_pc() {
 
 	# generate .pc if .in exists
 	if [ -e "${basedir}/${oldname}.pc.in" ]; then
-		format_pc "${oldname}" /usr/include/ /usr/lib/galcore/ "${vivanteversion}"
+		format_pc "${oldname}" /usr/include/ /usr/lib/ "${vivanteversion}"
 	fi
 
 	if [ ! -e "${basedir}/${oldname}.pc" ]; then
@@ -229,50 +211,50 @@ install_base() {
 	install_headers KHR
 
 	# EGL
-	link_galcore_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
+	link_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
 	# libEGL.so.1.0 backend dependent
-	link_galcore_lib libEGL.so.1.0 libEGL.so.1
-	link_galcore_lib libEGL.so.1 libEGL.so
+	link_lib libEGL.so.1.0 libEGL.so.1
+	link_lib libEGL.so.1 libEGL.so
 	install_headers EGL
 
 	# OpenGL-ES
-	install_galcore_lib libGLES_CL.so
-	install_galcore_lib libGLES_CM.so
+	install_lib libGLES_CL.so
+	install_lib libGLES_CM.so
 	install_headers GLES
 
 	# OpenGL-ES 1.1
-	install_galcore_lib libGLESv1_CL.so libGLESv1_CL.so.1.1.0
-	link_galcore_lib libGLESv1_CL.so.1.1.0 libGLESv1_CL.so.1
-	link_galcore_lib libGLESv1_CL.so.1 libGLESv1_CL.so
-	install_galcore_lib libGLESv1_CM.so libGLESv1_CM.so.1.1.0
-	link_galcore_lib libGLESv1_CM.so.1.1.0 libGLESv1_CM.so.1
-	link_galcore_lib libGLESv1_CM.so.1 libGLESv1_CM.so
+	install_lib libGLESv1_CL.so libGLESv1_CL.so.1.1.0
+	link_lib libGLESv1_CL.so.1.1.0 libGLESv1_CL.so.1
+	link_lib libGLESv1_CL.so.1 libGLESv1_CL.so
+	install_lib libGLESv1_CM.so libGLESv1_CM.so.1.1.0
+	link_lib libGLESv1_CM.so.1.1.0 libGLESv1_CM.so.1
+	link_lib libGLESv1_CM.so.1 libGLESv1_CM.so
 	install_custom_pc glesv1_cm
 
 	# OpenGL-ES 2.0
 	# libGLESv2.so.2.0.0 backend-dependent
-	link_galcore_lib libGLESv2.so.2.0.0 libGLESv2.so.2
-	link_galcore_lib libGLESv2.so.2 libGLESv2.so
+	link_lib libGLESv2.so.2.0.0 libGLESv2.so.2
+	link_lib libGLESv2.so.2 libGLESv2.so
 	install_headers GLES2
 	install_custom_pc glesv2
 
 	# GL Shader Compiler
-	install_galcore_lib libGLSLC.so
+	install_lib libGLSLC.so
 
 	# OpenVG
-	install_galcore_lib libOpenVG_355.so
-	install_galcore_lib libOpenVG_3D.so
-	link_galcore_lib libOpenVG_3D.so libOpenVG.so
+	install_lib libOpenVG_355.so
+	install_lib libOpenVG_3D.so
+	link_lib libOpenVG_3D.so libOpenVG.so
 	install_headers VG
 	install_custom_pc vg
 
 	# OpenCL (only GC2000)
-	install_galcore_lib libOpenCL.so
-	install_galcore_lib libCLC.so
+	install_lib libOpenCL.so
+	install_lib libCLC.so
 	install_headers CL
 
 	# VDK
-	install_galcore_lib libVDK.so
+	install_lib libVDK.so
 	install_header gc_vdk.h
 	install_header gc_vdk_hal.h
 	install_header gc_vdk_types.h
@@ -280,35 +262,35 @@ install_base() {
 }
 
 install_fb() {
-	install_galcore_lib libGAL-${backend}.so libGAL.so
-	install_galcore_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${backend}.so libGAL.so
+	install_lib libEGL-${backend}.so libEGL.so.1.0
 	install_custom_pc egl_fb egl
-	install_galcore_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_galcore_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${backend}.so libVIVANTE.so
 	return
 }
 
 install_dfb() {
-	install_galcore_lib libGAL-${backend}.so libGAL.so
-	install_galcore_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${backend}.so libGAL.so
+	install_lib libEGL-${backend}.so libEGL.so.1.0
 	install_custom_pc egl_dfb egl
-	install_galcore_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_galcore_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${backend}.so libVIVANTE.so
 	install_lib directfb-1.6-0/gfxdrivers/libdirectfb_gal.so
 	return
 }
 
 install_x11() {
-	install_galcore_lib libGAL-${backend}.so libGAL.so
-	install_galcore_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${backend}.so libGAL.so
+	install_lib libEGL-${backend}.so libEGL.so.1.0
 	install_custom_pc egl_x11 egl
-	install_galcore_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_galcore_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${backend}.so libVIVANTE.so
 
 	# X11 OpenGL GLX
-	install_galcore_lib libGL.so libGL.so.1.2
-	link_galcore_lib libGL.so.1.2 libGL.so.1
-	link_galcore_lib libGL.so.1 libGL.so
+	install_lib libGL.so libGL.so.1.2
+	link_lib libGL.so.1.2 libGL.so.1
+	link_lib libGL.so.1 libGL.so
 	install_custom_pc gl
 	#install_custom_header gl.h GL/gl.h
 	#install_custom_header glext.h GL/glext.h
@@ -320,15 +302,15 @@ install_x11() {
 }
 
 install_wl() {
-	install_galcore_lib libGAL-${backend}.so libGAL.so
-	install_galcore_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${backend}.so libGAL.so
+	install_lib libEGL-${backend}.so libEGL.so.1.0
 	install_custom_pc egl_wl egl
 	install_pc wayland-egl # TODO: check what this does and if it is required
-	install_galcore_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_galcore_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${backend}.so libVIVANTE.so
 
 	# Wayland libs
-	install_galcore_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
+	install_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
 	link_galcore_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
 	install_lib libgc_wayland_protocol.a
 	install_pc gc_wayland_protocol
@@ -396,9 +378,5 @@ vivantebindir="$PWD/gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp"
 vivanteversion=1.0.1
 
 install_${backend}
-
-if [ "x${backend}" = "xbase" ]; then
-	install_galcore_linker_config
-fi
 
 #install_demos

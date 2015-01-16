@@ -108,26 +108,24 @@ cp -rv temp-x11/* %{buildroot}/
 
 %files common
 %defattr(-,root,root)
-%config /etc/ld.so.conf.d/0galcore.conf
-%dir /usr/lib/galcore
-/usr/lib/galcore/libCLC.so
-/usr/lib/galcore/libGLES_CL.so
-/usr/lib/galcore/libGLES_CM.so
-/usr/lib/galcore/libGLESv1_CL.so.*
-/usr/lib/galcore/libGLESv1_CM.so.*
-/usr/lib/galcore/libGLSLC.so
-/usr/lib/galcore/libOpenCL.so
-/usr/lib/galcore/libOpenVG*.so
-/usr/lib/galcore/libVDK.so
+/usr/lib/libCLC.so
+/usr/lib/libGLES_CL.so
+/usr/lib/libGLES_CM.so
+/usr/lib/libGLESv1_CL.so.*
+/usr/lib/libGLESv1_CM.so.*
+/usr/lib/libGLSLC.so
+/usr/lib/libOpenCL.so
+/usr/lib/libOpenVG*.so
+/usr/lib/libVDK.so
 %doc EULA.txt
 
 %files common-devel
 %defattr(-,root,root)
 /usr/include/*
-/usr/lib/galcore/libEGL.so
-/usr/lib/galcore/libGLESv1_CL.so
-/usr/lib/galcore/libGLESv1_CM.so
-/usr/lib/galcore/libGLESv2.so
+/usr/lib/libEGL.so
+/usr/lib/libGLESv1_CL.so
+/usr/lib/libGLESv1_CM.so
+/usr/lib/libGLESv2.so
 %exclude /usr/lib/pkgconfig/egl.pc
 %exclude /usr/lib/pkgconfig/gl.pc
 /usr/lib/pkgconfig/*.pc
@@ -135,10 +133,10 @@ cp -rv temp-x11/* %{buildroot}/
 %if 0%{x11only} == 0
 %files fb
 %defattr(-,root,root)
-/usr/lib/galcore/libEGL.so.*
-/usr/lib/galcore/libGAL.so
-/usr/lib/galcore/libGLESv2.so.*
-/usr/lib/galcore/libVIVANTE.so
+/usr/lib/libEGL.so.*
+/usr/lib/libGAL.so
+/usr/lib/libGLESv2.so.*
+/usr/lib/libVIVANTE.so
 
 %files fb-devel
 %defattr(-,root,root)
@@ -146,10 +144,10 @@ cp -rv temp-x11/* %{buildroot}/
 
 %files dfb
 %defattr(-,root,root)
-/usr/lib/galcore/libEGL.so.*
-/usr/lib/galcore/libGAL.so
-/usr/lib/galcore/libGLESv2.so.*
-/usr/lib/galcore/libVIVANTE.so
+/usr/lib/libEGL.so.*
+/usr/lib/libGAL.so
+/usr/lib/libGLESv2.so.*
+/usr/lib/libVIVANTE.so
 %dir /usr/lib/directfb-1.6-0
 %dir /usr/lib/directfb-1.6-0/gfxdrivers
 /usr/lib/directfb-1.6-0/gfxdrivers/*.so
@@ -161,18 +159,17 @@ cp -rv temp-x11/* %{buildroot}/
 
 %files x11
 %defattr(-,root,root)
-%dir /usr/lib/galcore
-/usr/lib/galcore/libEGL.so.*
-/usr/lib/galcore/libGAL.so
-/usr/lib/galcore/libGLESv2.so.*
-/usr/lib/galcore/libVIVANTE.so
-/usr/lib/galcore/libGL.so.*
+/usr/lib/libEGL.so.*
+/usr/lib/libGAL.so
+/usr/lib/libGLESv2.so.*
+/usr/lib/libVIVANTE.so
+/usr/lib/libGL.so.*
 %dir /usr/lib/dri
 /usr/lib/dri/vivante_dri.so
 
 %files x11-devel
 %defattr(-,root,root)
-/usr/lib/galcore/libGL.so
+/usr/lib/libGL.so
 /usr/lib/pkgconfig/egl.pc
 /usr/lib/pkgconfig/gl.pc
 
