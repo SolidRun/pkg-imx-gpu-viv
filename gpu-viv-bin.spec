@@ -44,6 +44,12 @@ Summary: Backend-independent Vivante libs
 %description common
 Provides the binary-only implementations of GPU libraries provided by Vivante using the Linux Framebuffer.
 
+%post common
+/sbin/ldconfig
+
+%postun common
+/sbin/ldconfig
+
 %package common-devel
 Group: Development/Languages/C and C++
 Summary: Development files for Vivante GPU drivers
@@ -55,6 +61,12 @@ Group: System/Libraries
 Summary: Vivante libs for Framebuffer backend
 %description fb
 Provides the binary-only implementations of GPU libraries provided by Vivante using the Linux Framebuffer.
+
+%post fb
+/sbin/ldconfig
+
+%postun fb
+/sbin/ldconfig
 
 %package fb-devel
 Group: Development/Languages/C and C++
@@ -69,6 +81,12 @@ Summary: Vivante libs for DirectFB backend
 %description dfb
 Provides the binary-only implementations of GPU libraries provided by Vivante using DirectFB.
 
+%post dfb
+/sbin/ldconfig
+
+%postun dfb
+/sbin/ldconfig
+
 %package dfb-devel
 Group: Development/Languages/C and C++
 Summary: Development files for Vivante GPU drivers
@@ -82,6 +100,12 @@ Summary: Vivante libs for X11 backend
 Provides: libGL.so.1
 %description x11
 Provides the binary-only implementations of GPU libraries provided by Vivante using X11.
+
+%post x11
+/sbin/ldconfig
+
+%postun x11
+/sbin/ldconfig
 
 %package x11-devel
 Group: Development/Languages/C and C++
