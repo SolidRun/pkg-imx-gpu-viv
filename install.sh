@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# settings
+_multiarch=arm-linux-gnueabihf
+
 install_lib() {
 	oldname="${1}"
 	newname="${2}"
@@ -8,6 +11,16 @@ install_lib() {
 	fi
 
 	install -v -m755 -D "${vivantebindir}/usr/lib/${oldname}" "${destdir}/usr/lib/${newname}"
+}
+
+install_lib_multiarch() {
+	oldname="${1}"
+	newname="${2}"
+	if [ -z "${newname}" ]; then
+		newname="${oldname}"
+	fi
+
+	install_lib "${oldname}" "${_multiarch}/${newname}"
 }
 
 link_lib() {
@@ -297,7 +310,7 @@ install_x11() {
 	#install_custom_header glxext.h GL/glxext.h
 
 	# DRI
-	install_lib dri/vivante_dri.so
+	install_lib_multiarch dri/vivante_dri.so
 	return
 }
 
