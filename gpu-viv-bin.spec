@@ -121,10 +121,10 @@ ln -sv %{SOURCE1} ./
 %{SOURCE1} --auto-accept --force
 
 %build
-./install.sh temp-base base
-./install.sh temp-fb fb
-./install.sh temp-dfb dfb
-./install.sh temp-x11 x11
+./install.sh --destdir temp-base --backend base
+./install.sh --destdir temp-fb --backend fb
+./install.sh --destdir temp-dfb --backend dfb
+./install.sh --destdir temp-x11 --backend x11
 
 %install
 cp -rv temp-base/* %{buildroot}/

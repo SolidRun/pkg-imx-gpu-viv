@@ -1,7 +1,8 @@
 #!/bin/bash -e
 
-# settings
-_multiarch=arm-linux-gnueabihf
+#################################################################
+
+# functions
 
 install_lib() {
 	oldname="${1}"
@@ -10,38 +11,38 @@ install_lib() {
 		newname="${oldname}"
 	fi
 
-	install -v -m755 -D "${vivantebindir}/usr/lib/${oldname}" "${destdir}/usr/lib/${newname}"
+	install -v -m755 -D "${vivantebindir}/usr/lib/${oldname}" "${_destdir}/${_libdir}/${newname}"
 }
 
-install_lib_multiarch() {
+install_dri_driver() {
 	oldname="${1}"
 	newname="${2}"
 	if [ -z "${newname}" ]; then
 		newname="${oldname}"
 	fi
 
-	install_lib "${oldname}" "${_multiarch}/${newname}"
+	install -v -m755 -D "${vivantebindir}/usr/lib/dri/${oldname}" "${_destdir}/${_dridir}/${newname}"
 }
 
 link_lib() {
 	# in case the destination already exists it has to be overwritten
 	# if the destination exists and is a file, or a symlink
-	if [ -e "${destdir}/usr/lib/${2}" ] || [ -h "${destdir}/usr/lib/${2}" ]; then
+	if [ -e "${_destdir}/${_libdir}/${2}" ] || [ -h "${_destdir}/${_libdir}/${2}" ]; then
 		t=0
-		rm -vf "${destdir}/usr/lib/${2}" || t=$?
+		rm -vf "${_destdir}/${_libdir}/${2}" || t=$?
 
 		if [ "x${t}" != "x0" ]; then
-			echo "ERROR: ${destdir}/usr/lib/${2} already exists and can not be deleted"
+			echo "ERROR: ${_destdir}/${_libdir}/${2} already exists and can not be deleted"
 			return 1
 		fi
 	fi
 
 	# make sure the destination directory exists
-	mkdir -p ${destdir}/usr/lib/
+	mkdir -p ${_destdir}/${_libdir}
 
 	# create the link
 	t=0
-	ln -sv "${1}" "${destdir}/usr/lib/${2}" || t=$?
+	ln -sv "${1}" "${_destdir}/${_libdir}/${2}" || t=$?
 
 	return $t
 }
@@ -49,10 +50,10 @@ link_lib() {
 install_headers() {
 	# TODO: what if destination already exists?
 
-	mkdir -p ${destdir}/usr/include/
-	cp -rv "${vivantebindir}/usr/include/${1}" "${destdir}/usr/include/"
-	find "${destdir}/usr/include/${1}" -type f -exec chmod 644 {} \;
-	find "${destdir}/usr/include/${1}" -type d -exec chmod 755 {} \;
+	mkdir -p ${_destdir}/${_includedir}
+	cp -rv "${vivantebindir}/usr/include/${1}" "${_destdir}/${_includedir}/"
+	find "${_destdir}/${_includedir}/${1}" -type f -exec chmod 644 {} \;
+	find "${_destdir}/${_includedir}/${1}" -type d -exec chmod 755 {} \;
 }
 
 install_header() {
@@ -61,7 +62,7 @@ install_header() {
         if [ -z "${newname}" ]; then
 		destname="${oldname}"
 	fi
-	install -v -m644 -D "${vivantebindir}/usr/include/${oldname}" "${destdir}/usr/include/${newname}"
+	install -v -m644 -D "${vivantebindir}/usr/include/${oldname}" "${_destdir}/${_includedir}/${newname}"
 }
 
 install_custom_header() {
@@ -70,7 +71,7 @@ install_custom_header() {
         if [ -z "${newname}" ]; then
                 destname="${oldname}"
         fi
-        install -v -m644 -D "${basedir}/${oldname}" "${destdir}/usr/include/${newname}"
+        install -v -m644 -D "${basedir}/${oldname}" "${_destdir}/$Â{_includedir}/${newname}"
 }
 
 format_pc() {
@@ -95,8 +96,8 @@ install_pc() {
 		newname="${oldname}"
 	fi
 
-	mkdir -p ${destdir}/usr/lib/pkgconfig/
-	install -v -m644 "${vivantebindir}/usr/lib/pkgconfig/${oldname}.pc" "${destdir}/usr/lib/pkgconfig/${newname}.pc"
+	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
+	install -v -m644 "${vivantebindir}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
 	return 0
 }
 
@@ -109,7 +110,7 @@ install_custom_pc() {
 
 	# generate .pc if .in exists
 	if [ -e "${basedir}/${oldname}.pc.in" ]; then
-		format_pc "${oldname}" /usr/include/ /usr/lib/ "${vivanteversion}"
+		format_pc "${oldname}" ${_includedir} ${_libdir} "${vivanteversion}"
 	fi
 
 	if [ ! -e "${basedir}/${oldname}.pc" ]; then
@@ -117,8 +118,8 @@ install_custom_pc() {
 		return 1
 	fi
 
-	mkdir -p ${destdir}/usr/lib/pkgconfig/
-	install -v -m644 "${basedir}/${oldname}.pc" "${destdir}/usr/lib/pkgconfig/${newname}.pc"
+	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
+	install -v -m644 "${basedir}/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
 
 	return 0
 }
@@ -275,30 +276,30 @@ install_base() {
 }
 
 install_fb() {
-	install_lib libGAL-${backend}.so libGAL.so
-	install_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_fb egl
-	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 	return
 }
 
 install_dfb() {
-	install_lib libGAL-${backend}.so libGAL.so
-	install_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_dfb egl
-	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 	install_lib directfb-1.6-0/gfxdrivers/libdirectfb_gal.so
 	return
 }
 
 install_x11() {
-	install_lib libGAL-${backend}.so libGAL.so
-	install_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_x11 egl
-	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 
 	# X11 OpenGL GLX
 	install_lib libGL.so libGL.so.1.2
@@ -310,17 +311,17 @@ install_x11() {
 	#install_custom_header glxext.h GL/glxext.h
 
 	# DRI
-	install_lib_multiarch dri/vivante_dri.so
+	install_dri_driver vivante_dri.so
 	return
 }
 
 install_wl() {
-	install_lib libGAL-${backend}.so libGAL.so
-	install_lib libEGL-${backend}.so libEGL.so.1.0
+	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_wl egl
 	install_pc wayland-egl # TODO: check what this does and if it is required
-	install_lib libGLESv2-${backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${backend}.so libVIVANTE.so
+	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
+	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 
 	# Wayland libs
 	install_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
@@ -338,38 +339,81 @@ install_wl() {
 }
 
 install_demos() {
-	mkdir -p "${destdir}/opt/"
-	cp -rv "${vivantebindir}/opt/viv_samples" "${destdir}/opt/"
+	mkdir -p "${_destdir}/opt/"
+	cp -rv "${vivantebindir}/opt/viv_samples" "${_destdir}/opt/"
 	return
 }
 
 #################################################################
 
+# handle arguments and set default paths
 usage() {
-	echo "Freescale Vivante Userspace Installer"
-	echo "Usage: ${0} <destination> <backend>"
-	echo "Backends: fb dfb x11" # TODO: wl
+	echo Userspace installer for Vivante graphics driver
+	echo Usage: $0 [OPTIONS]
+	echo
+	echo "	--backend       graphics backend (base|fb|dfb|x11|wl)"
+	echo
+	echo "	--destdir       installation prefix"
+	echo "	--libdir        directory for libraries"
+	echo "	--includedir	directory for header files"
+	echo "	--dridir        directory for DRI drivers"
+	echo
 }
 
-# take 2 arguments, destination and backend
-if [ "x${#}" != "x2" ]; then
+s=0
+OPTIONS=`getopt -n "$0" -o "" -l "backend:,destdir:,libdir:,includedir:,dridir:" -- "$@"` || s=$?
+if [ $s -ne 0 ]; then
 	usage
 	exit 1
 fi
 
-destdir="${1}"
-if [ ! -d "${destdir}" ]; then
-	echo "Warning: ${destdir} does not exist yet, going to create it."
+_destdir=/
+_libdir=/usr/lib
+_includedir=/usr/include
+_dridir=/usr/lib/dri
+eval set -- "$OPTIONS"
+while true; do
+	case $1 in
+		--backend)
+			_backend=$2
+			shift 2
+			;;
+		--libdir)
+			_libdir=$2
+			shift 2
+			;;
+		--includedir)
+			_includedir=$2
+			shift 2
+			;;
+		--dridir)
+			_dridir=$2
+			shift 2
+			;;
+		--destdir)
+			_destdir=$2
+			shift 2
+			;;
+		--)
+			shift
+			break
+			;;
+	esac
+done
+
+# check arguments validity
+
+if [ ! -d "${_destdir}" ]; then
+	echo "Warning: ${_destdir} does not exist yet, going to create it."
 fi
 
-backend="${2}"
-case $backend in
+case $_backend in
   base)	;;
   fb)	;;
   dfb)	;;
   x11)	;;
   wl)	;;
-  *)	echo "Backend ${backend} is unknown!"
+  *)	echo "Backend ${_backend} is unknown!"
 	exit 1
 	;;
 esac
@@ -390,6 +434,6 @@ basedir="$PWD"
 vivantebindir="$PWD/gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp"
 vivanteversion=1.0.1
 
-install_${backend}
+install_${_backend}
 
 #install_demos

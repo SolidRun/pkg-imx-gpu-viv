@@ -24,12 +24,12 @@ build:
 
 override_dh_auto_install:
 	find $(SOURCESDIRS) -maxdepth 1 -iname "gpu-viv-bin-*-*-*-*.bin" -exec cp -v {} ./ \; -quit || true
-	./install.sh $(CURDIR)/debian/tmp-fb base
-	./install.sh $(CURDIR)/debian/tmp-dfb base
-	./install.sh $(CURDIR)/debian/tmp-x11 base
-	./install.sh $(CURDIR)/debian/tmp-fb fb
-	./install.sh $(CURDIR)/debian/tmp-dfb dfb
-	./install.sh $(CURDIR)/debian/tmp-x11 x11
+	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend base
+	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend base
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base
+	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb
+	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)/dri
 
 override_dh_install:
 	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb
