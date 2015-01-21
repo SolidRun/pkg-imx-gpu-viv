@@ -1,3 +1,9 @@
+gpu-viv-bin (2-2) unstable; urgency=high
+
+  * install dri module in the right place
+
+ -- Josua Mayer <josua@solid-run.com>  Thu, 22 Jan 2015 00:27:54 +0100
+
 gpu-viv-bin (2-1) unstable; urgency=low
 
   * put devel files into -dev packages
