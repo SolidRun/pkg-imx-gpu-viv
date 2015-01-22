@@ -12,4 +12,4 @@
 /usr/lib/libOpenVG*.so
 /usr/lib/libVDK.so
 /usr/lib/libVIVANTE.so
-/usr/lib/arm-linux-gnueabihf/dri/vivante_dri.so
+/usr/lib/dri/vivante_dri.so

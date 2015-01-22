@@ -1,6 +1,6 @@
 gpu-viv-bin (2-2) unstable; urgency=high
 
-  * install dri module in the right place
+  * depend on mesa swrast driver as fallback
 
  -- Josua Mayer <josua@solid-run.com>  Thu, 22 Jan 2015 00:27:54 +0100
 

@@ -29,7 +29,7 @@ override_dh_auto_install:
 	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base
 	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb
 	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)/dri
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri
 
 override_dh_install:
 	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb
