@@ -1,25 +1,14 @@
-gpu-viv-bin (2-2) unstable; urgency=high
+gpu-viv-bin (2) unstable; urgency=high
 
   * depend on mesa swrast driver as fallback
-
- -- Josua Mayer <josua@solid-run.com>  Thu, 22 Jan 2015 00:27:54 +0100
-
-gpu-viv-bin (2-1) unstable; urgency=low
-
   * put devel files into -dev packages
   * depend on mesa-common-dev for OpenGL (DRI/GLX) headers
 
- -- Josua Mayer <josua@solid-run.com>  Tue, 18 Nov 2014 16:24:36 +0100
+ -- Josua Mayer <josua@solid-run.com>  Thu, 22 Jan 2015 00:27:54 +0100
 
-gpu-viv-bin (1-2) unstable; urgency=low
+gpu-viv-bin (1) unstable; urgency=low
 
   * add OpenGL headers to x11 package
   * provide virtual packages libegl-dev, libgles2-dev
 
  -- Josua Mayer <josua@solid-run.com>  Sun, 16 Nov 2014 18:22:01 +0100
-
-gpu-viv-bin (1-1) unstable; urgency=low
-
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
-
- -- Josua Mayer <josua@unknown>  Thu, 06 Nov 2014 18:35:29 +0100
