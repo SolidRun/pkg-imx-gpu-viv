@@ -7,5 +7,5 @@ Description: Vivante OpenGL ES 1.1 CM library
 Requires.private:
 Version: ${version}
 Libs: -L${libdir} -lGLESv1_CM
-Libs.private:
+Libs.private: -lm -lpthread -ldl
 Cflags: -I${includedir}

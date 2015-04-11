@@ -1,223 +1,11 @@
 #!/bin/bash -e
 
-#################################################################
-
-# functions
-
-install_lib() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	install -v -m755 -D "${vivantebindir}/usr/lib/${oldname}" "${_destdir}/${_libdir}/${newname}"
-}
-
-install_dri_driver() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	install -v -m755 -D "${vivantebindir}/usr/lib/dri/${oldname}" "${_destdir}/${_dridir}/${newname}"
-}
-
-link_lib() {
-	# in case the destination already exists it has to be overwritten
-	# if the destination exists and is a file, or a symlink
-	if [ -e "${_destdir}/${_libdir}/${2}" ] || [ -h "${_destdir}/${_libdir}/${2}" ]; then
-		t=0
-		rm -vf "${_destdir}/${_libdir}/${2}" || t=$?
-
-		if [ "x${t}" != "x0" ]; then
-			echo "ERROR: ${_destdir}/${_libdir}/${2} already exists and can not be deleted"
-			return 1
-		fi
-	fi
-
-	# make sure the destination directory exists
-	mkdir -p ${_destdir}/${_libdir}
-
-	# create the link
-	t=0
-	ln -sv "${1}" "${_destdir}/${_libdir}/${2}" || t=$?
-
-	return $t
-}
-
-install_headers() {
-	# TODO: what if destination already exists?
-
-	mkdir -p ${_destdir}/${_includedir}
-	cp -rv "${vivantebindir}/usr/include/${1}" "${_destdir}/${_includedir}/"
-	find "${_destdir}/${_includedir}/${1}" -type f -exec chmod 644 {} \;
-	find "${_destdir}/${_includedir}/${1}" -type d -exec chmod 755 {} \;
-}
-
-install_header() {
-	oldname="${1}"
-	newname="${2}"
-        if [ -z "${newname}" ]; then
-		destname="${oldname}"
-	fi
-	install -v -m644 -D "${vivantebindir}/usr/include/${oldname}" "${_destdir}/${_includedir}/${newname}"
-}
-
-install_custom_header() {
-        oldname="${1}"
-        newname="${2}"
-        if [ -z "${newname}" ]; then
-                destname="${oldname}"
-        fi
-        install -v -m644 -D "${basedir}/${oldname}" "${_destdir}/$Â{_includedir}/${newname}"
-}
-
-format_pc() {
-	name="${1}"
-	includedir="${2}"
-	libdir="${3}"
-	version="${4}"
-
-	cp -v "${basedir}/${name}.pc.in" "${basedir}/${name}.pc"
-	sed -e "s;@INCLUDEDIR@;${includedir};g" \
-	    -e "s;@LIBDIR@;${libdir};g" \
-	    -e "s;@VERSION@;${version};g" \
-	    -i "${basedir}/${name}.pc"
-
-	return 0
-}
-
-install_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${vivantebindir}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	return 0
-}
-
-install_custom_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	# generate .pc if .in exists
-	if [ -e "${basedir}/${oldname}.pc.in" ]; then
-		format_pc "${oldname}" ${_includedir} ${_libdir} "${vivanteversion}"
-	fi
-
-	if [ ! -e "${basedir}/${oldname}.pc" ]; then
-		echo "${basedir}/${oldname}.pc not found!"
-		return 1
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${basedir}/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-
-	return 0
-}
+source functions.inc
 
 #################################################################
 
-fetch() {
-	name=$1
-	chksum=$2
-
-	# check existing file
-	t=0
-	chksum $name $chksum || t=$?
-	if [ "x$t" = "x0" ]; then
-		echo "$name exists already and MD5 matches. Keeping the file."
-		return 0
-	else
-		if [ "x$t" = "x2" ]; then
-			echo "$name exists already but MD5 does not match. Deleting the file."
-			rm -v $name
-		fi
-			# else t=1 >> file doesn't exist yet
-	fi
-
-	# try all mirrors
-	for mirror in $MIRRORS; do
-
-		# download
-		t=0
-		wget $mirror/$name || t=$?
-
-		# handle wget return status
-		if [ "x$t" = "x0" ]; then
-			echo "$name downloaded."
-			break
-		else
-			echo "Download of $name failed. Cleaning up."
-			rm -fv $name
-			continue
-		fi
-
-	done
-
-	if  [ ! -f "$name" ]; then
-		echo "Download of $name failed."
-		return 1
-	fi
-
-	# check MD5 again
-	t=0
-	chksum $name $chksum || t=$?
-
-	if [ "x$t" != "x0" ]; then
-		echo "MD5 of downloaded file does not match! Keeping it anyway."
-		return 1
-	fi
-
-	return 0
-}
-
-chksum() {
-	file=$1
-	chksum=$2
-
-	if [ ! -e "$file" ]; then
-		return 1
-	fi
-
-	mysum=`md5sum $file | cut -d ' ' -f 1`
-	if [ "$mysum" = "$chksum" ]; then
-		return 0
-	else
-		return 2
-	fi
-}
-
-#################################################################
-
-unpack() {
-	filename="$1"
-
-	# guess the name of output directory
-	outdir=`basename ${filename} .bin`
-
-	# if the folder already exists, don't bother
-	if [ -d "${outdir}" ]; then
-		echo "archive has already been unpacked!"
-		return 0
-	fi
-
-	# actually unpack it
-	"${SHELL}" "${filename}" --auto-accept --force
-	return $?
-}
-
-#################################################################
-
-install_base() {
+# Vivante core graphics libraries
+install_core_base() {
 	# Vivante GPU HAL
 	install_headers HAL
 
@@ -232,15 +20,19 @@ install_base() {
 	install_headers EGL
 
 	# OpenGL-ES
-	install_lib libGLES_CL.so
-	install_lib libGLES_CM.so
+	install_lib libGLES_CL.so.1.1.0
+	link_lib libGLES_CL.so.1.1.0 libGLES_CL.so.1
+	link_lib libGLES_CL.so.1 libGLES_CL.so
+	install_lib libGLES_CM.so.1.1.0
+	link_lib libGLES_CM.so.1.1.0 libGLES_CM.so.1
+	link_lib libGLES_CM.so.1 libGLES_CM.so
 	install_headers GLES
 
 	# OpenGL-ES 1.1
-	install_lib libGLESv1_CL.so libGLESv1_CL.so.1.1.0
+	install_lib libGLESv1_CL.so.1.1.0
 	link_lib libGLESv1_CL.so.1.1.0 libGLESv1_CL.so.1
 	link_lib libGLESv1_CL.so.1 libGLESv1_CL.so
-	install_lib libGLESv1_CM.so libGLESv1_CM.so.1.1.0
+	install_lib libGLESv1_CM.so.1.1.0
 	link_lib libGLESv1_CM.so.1.1.0 libGLESv1_CM.so.1
 	link_lib libGLESv1_CM.so.1 libGLESv1_CM.so
 	install_custom_pc glesv1_cm
@@ -252,13 +44,16 @@ install_base() {
 	install_headers GLES2
 	install_custom_pc glesv2
 
+	# OpenGL-ES 3.0
+	install_headers GLES3
+
 	# GL Shader Compiler
 	install_lib libGLSLC.so
 
 	# OpenVG
-	install_lib libOpenVG_355.so
-	install_lib libOpenVG_3D.so
-	link_lib libOpenVG_3D.so libOpenVG.so
+	install_lib libOpenVG.2d.so
+	install_lib libOpenVG.3d.so
+	link_lib libOpenVG.3d.so libOpenVG.so
 	install_headers VG
 	install_custom_pc vg
 
@@ -273,10 +68,18 @@ install_base() {
 	install_header gc_vdk_hal.h
 	install_header gc_vdk_types.h
 	install_header vdk.h
+
+	# miscellaneous
+	install_lib libVivanteOpenCL.so
+	install_conf Vivante.icd
+	install_lib libVSC.so
+
+	return
 }
 
-install_fb() {
+install_core_fb() {
 	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
 	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_fb egl
 	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
@@ -284,39 +87,40 @@ install_fb() {
 	return
 }
 
-install_dfb() {
+install_core_dfb() {
 	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
 	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_dfb egl
 	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
 	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
-	install_lib directfb-1.6-0/gfxdrivers/libdirectfb_gal.so
+	install_lib directfb-1.7-4/gfxdrivers/libdirectfb_gal.so
+	install_conf directfbrc
 	return
 }
 
-install_x11() {
+install_core_x11() {
 	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libGAL_egl.dri.so libGAL_egl.so
 	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_x11 egl
 	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
 	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 
 	# X11 OpenGL GLX
-	install_lib libGL.so libGL.so.1.2
+	install_lib libGL.so.1.2
 	link_lib libGL.so.1.2 libGL.so.1
 	link_lib libGL.so.1 libGL.so
 	install_custom_pc gl
-	#install_custom_header gl.h GL/gl.h
-	#install_custom_header glext.h GL/glext.h
-	#install_custom_header glxext.h GL/glxext.h
 
 	# DRI
 	install_dri_driver vivante_dri.so
 	return
 }
 
-install_wl() {
+install_core_wl() {
 	install_lib libGAL-${_backend}.so libGAL.so
+	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
 	install_lib libEGL-${_backend}.so libEGL.so.1.0
 	install_custom_pc egl_wl egl
 	install_pc wayland-egl # TODO: check what this does and if it is required
@@ -324,23 +128,58 @@ install_wl() {
 	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 
 	# Wayland libs
-	install_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
-	link_galcore_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
+	install_lib libgc_wayland_protocol.so.0.0.0
+	link_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
+	link_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
 	install_lib libgc_wayland_protocol.a
 	install_pc gc_wayland_protocol
 
-	install_lib libwayland-viv.so.0.0.0 libwayland-viv.so.0
-	link_galcore_lib libwayland-viv.so.0 libwayland-viv.so
+	install_lib libwayland-viv.so.0.0.0
+	link_lib libwayland-viv.so.0.0.0 libwayland-viv.so.0
+	link_lib libwayland-viv.so.0 libwayland-viv.so
 	install_lib libwayland-viv.a
 	install_pc wayland-viv
-	
+
 	# TODO: update paths in installed .pc-files
+	return
+}
+
+install_g2d() {
+	install_lib libg2d-viv.so libg2d.so.0.8
+	link_lib libg2d.so.0.8 libg2d.so
+	install_header g2d.h
 	return
 }
 
 install_demos() {
 	mkdir -p "${_destdir}/opt/"
-	cp -rv "${vivantebindir}/opt/viv_samples" "${_destdir}/opt/"
+	if [ "x${_backend}" = "xfb" ]; then
+		cp -rv "${SOURCESDIR}/opt/viv_samples" "${_destdir}/opt/"
+	fi
+	cp -rv "${SOURCESDIR}/opt/fsl-samples" "${_destdir}/opt/"
+	return
+}
+
+install_tools() {
+	install_bin gmem_info
+	return
+}
+
+install_apitrace_nonx11() {
+	install_bin apitrace
+	install_bin eglretrace
+	install_lib apitrace/wrappers/egltrace.so
+	mkdir -p "${_destdir}/usr/lib/apitrace"
+	cp -rv "${SOURCESDIR}/usr/lib/apitrace/scripts" "${_destdir}/${_libdir}/apitrace/"
+	mkdir -p "${_destdir}/usr/share/doc/"
+	cp -rv "${SOURCESDIR}/usr/share/doc/apitrace" "${_destdir}/usr/share/doc/"
+	return
+}
+
+install_apitrace_x11() {
+	install_apitrace_nonx11
+	install_bin glretrace
+	install_lib apitrace/wrappers/glxtrace.so
 	return
 }
 
@@ -353,15 +192,19 @@ usage() {
 	echo
 	echo "	--backend       graphics backend (base|fb|dfb|x11|wl)"
 	echo
+	echo "	--fhw           floating-point hardware (hard|soft)"
+	echo
 	echo "	--destdir       installation prefix"
 	echo "	--libdir        directory for libraries"
 	echo "	--includedir	directory for header files"
 	echo "	--dridir        directory for DRI drivers"
+	echo "	--sysconfdir    directory for system-wide configuration files"
+	echo "	--bindir        directory for binaries"
 	echo
 }
 
 s=0
-OPTIONS=`getopt -n "$0" -o "" -l "backend:,destdir:,libdir:,includedir:,dridir:" -- "$@"` || s=$?
+OPTIONS=`getopt -n "$0" -o "" -l "backend:,destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,fhw:" -- "$@"` || s=$?
 if [ $s -ne 0 ]; then
 	usage
 	exit 1
@@ -369,8 +212,11 @@ fi
 
 _destdir=/
 _libdir=/usr/lib
+_bindir=/usr/bin
 _includedir=/usr/include
 _dridir=/usr/lib/dri
+_sysconfdir=/etc
+_fhw=hard
 eval set -- "$OPTIONS"
 while true; do
 	case $1 in
@@ -380,6 +226,10 @@ while true; do
 			;;
 		--libdir)
 			_libdir=$2
+			shift 2
+			;;
+		--bindir)
+			_bindir=$2
 			shift 2
 			;;
 		--includedir)
@@ -392,6 +242,14 @@ while true; do
 			;;
 		--destdir)
 			_destdir=$2
+			shift 2
+			;;
+		--sysconfdir)
+			_sysconfdir=$2
+			shift 2
+			;;
+		--fhw)
+			_fhw=$2
 			shift 2
 			;;
 		--)
@@ -418,22 +276,52 @@ case $_backend in
 	;;
 esac
 
+case $_fhw in
+  soft) ;;
+  hard) ;;
+  *)    echo "invalid value \"${_fhw}\"for option --fhw"
+	exit 1
+	;;
+esac
+
 #################################################################
 
-echo "Going to install Freescale Vivante userspace 3.10.17-1.0.1"
+echo "Going to install Freescale Vivante userspace 5.0.11 p4.4"
 
 # download the vivante binary package
 MIRRORS="http://www.freescale.com/lgfiles/NMG/MAD/YOCTO/ http://download.ossystems.com.br/bsp/freescale/source/"
-fetch gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp.bin d729db01e3eec3384e310cd3507761ce
-# fetch gpu-viv-bin-mx6q-3.10.17-1.0.1-sfp.bin 55788f48a222b430a8b76856ac6fa636
+if [ "x$_fhw" = "xhard" ]; then
+	fslpkgname=imx-gpu-viv-5.0.11.p4.4-hfp.bin
+	fslpkgchksum=5aa3dfe5b9362f9ee53615e0a56f9009
+else
+	fslpkgname=imx-gpu-viv-5.0.11.p4.4-sfp.bin
+	fslpkgchksum=201398ab011b8765755fafb898efa77d
+fi
+fetch $fslpkgname $fslpkgchksum
 
 # unpack the archive at the current location
-unpack gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp.bin
+unpack $fslpkgname
 
 basedir="$PWD"
-vivantebindir="$PWD/gpu-viv-bin-mx6q-3.10.17-1.0.1-hfp"
-vivanteversion=1.0.1
+vivantebindir="$basedir/`basename $fslpkgname .bin`"
+vivanteversion=5.0.11
 
-install_${_backend}
+# perform installation
 
-#install_demos
+SOURCESDIR="${vivantebindir}/gpu-core"
+install_core_base
+install_core_${_backend}
+
+SOURCESDIR="${vivantebindir}/gpu-demos"
+install_demos
+
+SOURCESDIR="${vivantebindir}/g2d"
+install_g2d
+
+if [ "x${_backend}" = "xx11" ]; then
+	SOURCESDIR="${vivantebindir}/apitrace/x11"
+	install_apitrace_x11
+else
+	SOURCESDIR="${vivantebindir}/apitrace/non-x11"
+	install_apitrace_nonx11
+fi

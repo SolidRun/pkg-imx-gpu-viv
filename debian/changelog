@@ -1,3 +1,9 @@
+gpu-viv-bin (5.0.11.p4.4) stable; urgency=low
+
+  * initial release
+
+ -- Josua Mayer <josua@solid-run.com>  Sat, 11 Apr 2015 22:17:17 +0200
+
 gpu-viv-bin (2) unstable; urgency=high
 
   * depend on mesa swrast driver as fallback

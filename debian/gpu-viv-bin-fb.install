@@ -1,8 +1,15 @@
+/etc/Vivante.icd
+/opt/fsl-samples
+/opt/viv_samples
+/usr/bin/*
+/usr/lib/apitrace
 /usr/lib/libCLC.so
 /usr/lib/libEGL.so.*
+/usr/lib/libg2d.so.*
+/usr/lib/libGAL_egl.so
 /usr/lib/libGAL.so
-/usr/lib/libGLES_CL.so
-/usr/lib/libGLES_CM.so
+/usr/lib/libGLES_CL.so.*
+/usr/lib/libGLES_CM.so.*
 /usr/lib/libGLESv1_CL.so.*
 /usr/lib/libGLESv1_CM.so.*
 /usr/lib/libGLESv2.so.*
@@ -10,4 +17,7 @@
 /usr/lib/libOpenCL.so
 /usr/lib/libOpenVG*.so
 /usr/lib/libVDK.so
+/usr/lib/libVivanteOpenCL.so
 /usr/lib/libVIVANTE.so
+/usr/lib/libVSC.so
+/usr/share/doc/apitrace/*

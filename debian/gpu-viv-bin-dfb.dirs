@@ -1,2 +1,8 @@
+/etc
+/opt
+/usr/bin
 /usr/lib
-/usr/lib/directfb-1.6-0/gfxdrivers
+/usr/lib/apitrace/scripts
+/usr/lib/apitrace/wrappers
+/usr/lib/directfb-1.7-4/gfxdrivers
+/usr/share/doc/apitrace

@@ -12,24 +12,32 @@ export DH_VERBOSE=1
 # hack: will only work on OBS-created chroots
 SOURCESDIRS=/usr/src/packages/SOURCES/ ~/
 
+# decide on hard- and soft-float
+ifeq (armhf, $(shell dpkg-architecture -qDEB_HOST_ARCH))
+  FLOATOPT=hard
+else
+  FLOATOPT=soft
+endif
+
 %:
 	dh $@
 
 override_dh_auto_clean:
 	rm -vf *.bin
 	for file in *.pc; do if [ -e "$$file" ]; then rm -fv "$$file"; fi; done
-	find . -type d -iname "gpu-viv-bin-*-*-*-*" -exec rm -rf {} \; || true
+	find . -type d -iname "imx-gpu-viv-*-*" -exec rm -rf {} \; || true
 	rm -vrf debian/tmp-*
 build: 
 
 override_dh_auto_install:
-	find $(SOURCESDIRS) -maxdepth 1 -iname "gpu-viv-bin-*-*-*-*.bin" -exec cp -v {} ./ \; -quit || true
-	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend base
-	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend base
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base
-	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb
-	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri
+	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; -quit || true
+	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; -quit || true
+	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend base --fhw $(FLOATOPT)
+	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend base --fhw $(FLOATOPT)
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base --fhw $(FLOATOPT)
+	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb --fhw $(FLOATOPT)
+	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb --fhw $(FLOATOPT)
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri --fhw $(FLOATOPT)
 
 override_dh_install:
 	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb

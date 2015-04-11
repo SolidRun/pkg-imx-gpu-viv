@@ -7,5 +7,5 @@ Description: Vivante OpenGL ES 2.0 library
 Requires.private:
 Version: ${version}
 Libs: -L${libdir} -lGLESv2
-Libs.private:
+Libs.private: -lpthread -lrt
 Cflags: -I${includedir}
