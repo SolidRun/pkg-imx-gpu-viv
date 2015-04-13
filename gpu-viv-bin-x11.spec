@@ -32,8 +32,11 @@ Group: System/Libraries
 Summary: Binary drivers for Vivante GPU
 Source: gpu-viv-bin-%{version}.tar.gz
 Source1: %{blobpkg_name}.bin
-
 BuildRequires: pkgconfig
+
+# provide the same libname Mesa does
+# (vivante file is libGL.so.1.2)
+Provides: libGL.so.1
 
 %description
 Provides the binary-only implementations of GPU libraries provided by Vivante.
@@ -41,6 +44,7 @@ Provides the binary-only implementations of GPU libraries provided by Vivante.
 %package devel
 Group: Development/Libraries/C and C++
 Summary: Backend-independent Vivante libs
+Requires: gpu-viv-bin-x11 = %version
 %description devel
 T.O.D.O.
 
