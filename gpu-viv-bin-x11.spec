@@ -24,6 +24,13 @@
 %define blobpkg_name imx-gpu-viv-5.0.11.p4.4-hfp
 %define blobpkg_md5 5aa3dfe5b9362f9ee53615e0a56f9009
 
+# skip OpenCL on older distros (requires recent glibc)
+%if 0%{?suse_version} > 0 && 0%{?suse_version} <= 1320
+  %define skip_cl 1
+%else
+  %define skip_cl 0
+%endif
+
 Name: gpu-viv-bin-x11
 Version: 5.0.11.p4.4
 Release: 1
@@ -63,7 +70,14 @@ ln -sv %{SOURCE1} ./
 %build
 
 %install
-./install.sh --destdir "%{buildroot}" --backend x11
+./install.sh \
+	--destdir "%{buildroot}" \
+	--backend x11 \
+	--dridir /usr/lib/dri \
+%if %skip_cl
+	--skip-cl \
+%endif
+	%{nop}
 
 %files
 %defattr(-,root,root)
@@ -72,7 +86,6 @@ ln -sv %{SOURCE1} ./
 /usr/bin/*
 /usr/lib/apitrace
 /usr/lib/dri
-/usr/lib/libCLC.so
 /usr/lib/libEGL.so.*
 /usr/lib/libg2d.so.*
 /usr/lib/libGAL_egl.so
@@ -84,14 +97,18 @@ ln -sv %{SOURCE1} ./
 /usr/lib/libGLESv2.so.*
 /usr/lib/libGLSLC.so
 /usr/lib/libGL.so.*
-/usr/lib/libOpenCL.so
 /usr/lib/libOpenVG*.so
 /usr/lib/libVDK.so
-/usr/lib/libVivanteOpenCL.so
 /usr/lib/libVIVANTE.so
 /usr/lib/libVSC.so
 /usr/share/doc/apitrace
 %doc EULA.txt
+
+%if ! %skip_cl
+/usr/lib/libCLC.so
+/usr/lib/libOpenCL.so
+/usr/lib/libVivanteOpenCL.so
+%endif
 
 %files devel
 %defattr(-,root,root)

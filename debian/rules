@@ -19,6 +19,14 @@ else
   FLOATOPT=soft
 endif
 
+# skip opencl on distros where glibc or gcc are too old
+DISTOPTS=
+DHINSTOPTS=
+ifneq (, $(filter $(shell lsb_release --codename --short), wheezy))
+  DISTOPTS += --skip-cl
+  DHINSTOPTS +=-XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so
+endif
+
 %:
 	dh $@
 
@@ -32,20 +40,20 @@ build:
 override_dh_auto_install:
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; -quit || true
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; -quit || true
-	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend base --fhw $(FLOATOPT)
-	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend base --fhw $(FLOATOPT)
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base --fhw $(FLOATOPT)
-	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb --fhw $(FLOATOPT)
-	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb --fhw $(FLOATOPT)
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri --fhw $(FLOATOPT)
+	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend base --fhw $(FLOATOPT) $(DISTOPTS)
+	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend base --fhw $(FLOATOPT) $(DISTOPTS)
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base --fhw $(FLOATOPT) $(DISTOPTS)
+	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb --fhw $(FLOATOPT) $(DISTOPTS)
+	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb --fhw $(FLOATOPT) $(DISTOPTS)
+	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
 
 override_dh_install:
-	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb
-	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb-dev
-	dh_install --sourcedir=debian/tmp-dfb --package=gpu-viv-bin-dfb
-	dh_install --sourcedir=debian/tmp-dfb --package=gpu-viv-bin-dfb-dev
-	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11
-	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11-dev
+	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb-dev $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-dfb --package=gpu-viv-bin-dfb $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-dfb --package=gpu-viv-bin-dfb-dev $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11 $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11-dev $(DHINSTOPTS)
 
 override_dh_shlibdeps:
 	# it will fail if it can not find a shared-library

@@ -57,10 +57,14 @@ install_core_base() {
 	install_headers VG
 	install_custom_pc vg
 
+	if [ "x$skip_cl" = "xno" ]; then
 	# OpenCL (only GC2000)
-	install_lib libOpenCL.so
-	install_lib libCLC.so
-	install_headers CL
+		install_lib libOpenCL.so
+		install_lib libCLC.so
+		install_headers CL
+
+		install_lib libVivanteOpenCL.so
+	fi
 
 	# VDK
 	install_lib libVDK.so
@@ -70,7 +74,6 @@ install_core_base() {
 	install_header vdk.h
 
 	# miscellaneous
-	install_lib libVivanteOpenCL.so
 	install_conf Vivante.icd
 	install_lib libVSC.so
 
@@ -153,10 +156,23 @@ install_g2d() {
 
 install_demos() {
 	mkdir -p "${_destdir}/opt/"
-	if [ "x${_backend}" = "xfb" ]; then
-		cp -rv "${SOURCESDIR}/opt/viv_samples" "${_destdir}/opt/"
-	fi
 	cp -rv "${SOURCESDIR}/opt/fsl-samples" "${_destdir}/opt/"
+
+	# OpenCL demos
+	if [ "x$skip_cl" = "xno" ]; then
+		mkdir -p "${_destdir}/opt/viv_samples"
+		cp -rv "${SOURCESDIR}/opt/viv_samples/cl11" "${_destdir}/opt/viv_samples/"
+	fi
+
+	# Graphics demos
+	mkdir -p "${_destdir}/opt/viv_samples"
+	if [ "x${_backend}" = "xfb" ]; then
+		mkdir -p "${_destdir}/opt/viv_samples"
+		cp -rv "${SOURCESDIR}/opt/viv_samples/es20" "${_destdir}/opt/viv_samples/"
+		cp -rv "${SOURCESDIR}/opt/viv_samples/tiger" "${_destdir}/opt/viv_samples/"
+		cp -rv "${SOURCESDIR}/opt/viv_samples/vdk" "${_destdir}/opt/viv_samples/"
+	fi
+
 	return
 }
 
@@ -201,10 +217,12 @@ usage() {
 	echo "	--sysconfdir    directory for system-wide configuration files"
 	echo "	--bindir        directory for binaries"
 	echo
+	echo "  --skip-cl       dont install OpenCL parts"
+	echo
 }
 
 s=0
-OPTIONS=`getopt -n "$0" -o "" -l "backend:,destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,fhw:" -- "$@"` || s=$?
+OPTIONS=`getopt -n "$0" -o "" -l "backend:,destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,fhw:,skip-cl" -- "$@"` || s=$?
 if [ $s -ne 0 ]; then
 	usage
 	exit 1
@@ -217,6 +235,7 @@ _includedir=/usr/include
 _dridir=/usr/lib/dri
 _sysconfdir=/etc
 _fhw=hard
+skip_cl=no
 eval set -- "$OPTIONS"
 while true; do
 	case $1 in
@@ -251,6 +270,10 @@ while true; do
 		--fhw)
 			_fhw=$2
 			shift 2
+			;;
+		--skip-cl)
+			skip_cl=yes
+			shift 1
 			;;
 		--)
 			shift
