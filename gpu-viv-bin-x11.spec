@@ -39,6 +39,7 @@ Group: System/Libraries
 Summary: Binary drivers for Vivante GPU
 Source: gpu-viv-bin-%{version}.tar.gz
 Source1: %{blobpkg_name}.bin
+nosource: 0, 1
 BuildRequires: pkgconfig
 
 # provide the same libname Mesa does
