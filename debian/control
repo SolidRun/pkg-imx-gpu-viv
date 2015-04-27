@@ -1,7 +1,13 @@
 Source: gpu-viv-bin
 Priority: optional
 Maintainer: Josua Mayer <josua@unknown>
-Build-Depends: debhelper (>= 8.0.0), lsb-release
+Build-Depends: debhelper (>= 8.0.0), lsb-release, 
+ libdrm2,
+ libglapi-mesa,
+ libx11-6,
+ libxdamage1,
+ libxext6,
+ libxfixes3
 Standards-Version: 3.9.3
 Section: libs
 Homepage: <insert the upstream URL, if relevant>
