@@ -39,12 +39,19 @@ Group: System/Libraries
 Summary: Binary drivers for Vivante GPU
 Source: gpu-viv-bin-%{version}.tar.gz
 Source1: %{blobpkg_name}.bin
-nosource: 0, 1
+nosource: 0
+nosource: 1
 BuildRequires: pkgconfig
 
 # provide the same libname Mesa does
 # (vivante file is libGL.so.1.2)
 Provides: libGL.so.1
+
+# conflict with the right mesa packages
+Conflicts: Mesa-libGL1
+Obsoletes: Mesa-libGL1
+Conflicts: Mesa-libGLESv2-2
+Obsoletes: Mesa-libGLESv2-2
 
 %description
 Provides the binary-only implementations of GPU libraries provided by Vivante.
@@ -54,6 +61,13 @@ Group: Development/Libraries/C and C++
 Summary: Backend-independent Vivante libs
 Requires: gpu-viv-bin-x11 = %version
 %description devel
+T.O.D.O.
+
+%package apitrace
+Group: Development/Tools/Debuggers
+Summary: Todo
+Requires: gpu-viv-bin-x11 = %version
+%description apitrace
 T.O.D.O.
 
 %post
@@ -84,8 +98,6 @@ ln -sv %{SOURCE1} ./
 %defattr(-,root,root)
 /etc/Vivante.icd
 /opt/fsl-samples
-/usr/bin/*
-/usr/lib/apitrace
 /usr/lib/dri
 /usr/lib/libEGL.so.*
 /usr/lib/libg2d.so.*
@@ -102,7 +114,6 @@ ln -sv %{SOURCE1} ./
 /usr/lib/libVDK.so
 /usr/lib/libVIVANTE.so
 /usr/lib/libVSC.so
-/usr/share/doc/apitrace
 %doc EULA.txt
 
 %if ! %skip_cl
@@ -110,6 +121,14 @@ ln -sv %{SOURCE1} ./
 /usr/lib/libOpenCL.so
 /usr/lib/libVivanteOpenCL.so
 %endif
+
+%files apitrace
+%defattr(-,root,root)
+/usr/bin/apitrace
+/usr/bin/eglretrace
+/usr/bin/glretrace
+/usr/lib/apitrace
+/usr/share/doc/apitrace
 
 %files devel
 %defattr(-,root,root)
