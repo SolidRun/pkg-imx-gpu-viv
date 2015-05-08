@@ -53,12 +53,12 @@ override_dh_auto_install:
 	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
 
 override_dh_install:
-	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb $(DHINSTOPTS)
-	dh_install --sourcedir=debian/tmp-fb --package=gpu-viv-bin-fb-dev $(DHINSTOPTS)
-	dh_install --sourcedir=debian/tmp-dfb --package=gpu-viv-bin-dfb $(DHINSTOPTS)
-	dh_install --sourcedir=debian/tmp-dfb --package=gpu-viv-bin-dfb-dev $(DHINSTOPTS)
-	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11 $(DHINSTOPTS)
-	dh_install --sourcedir=debian/tmp-x11 --package=gpu-viv-bin-x11-dev $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-fb --package=imx-gpu-viv-fb $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-fb --package=imx-gpu-viv-fb-dev $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-dfb --package=imx-gpu-viv-dfb $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-dfb --package=imx-gpu-viv-dfb-dev $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-x11 --package=imx-gpu-viv-x11 $(DHINSTOPTS)
+	dh_install --sourcedir=debian/tmp-x11 --package=imx-gpu-viv-x11-dev $(DHINSTOPTS)
 
 override_dh_shlibdeps:
 	# also search for libraries in build dir

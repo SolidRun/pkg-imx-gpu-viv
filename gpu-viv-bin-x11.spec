@@ -1,5 +1,5 @@
 #
-# spec file for package gpu-viv-bin
+# spec file for package imx-gpu-viv
 #
 # Copyright (c) 2014-2015 Josua Mayer <josua@solid-run.com>
 #
@@ -31,13 +31,13 @@
   %define skip_cl 0
 %endif
 
-Name: gpu-viv-bin-x11
+Name: imx-gpu-viv-x11
 Version: 5.0.11.p4.4
 Release: 1
 License: Freescale IP
 Group: System/Libraries
 Summary: Binary drivers for Vivante GPU
-Source: gpu-viv-bin-%{version}.tar.gz
+Source: imx-gpu-viv-%{version}.tar.gz
 Source1: %{blobpkg_name}.bin
 nosource: 0
 nosource: 1
@@ -59,14 +59,14 @@ Provides the binary-only implementations of GPU libraries provided by Vivante.
 %package devel
 Group: Development/Libraries/C and C++
 Summary: Backend-independent Vivante libs
-Requires: gpu-viv-bin-x11 = %version
+Requires: imx-gpu-viv-x11 = %version
 %description devel
 T.O.D.O.
 
 %package apitrace
 Group: Development/Tools/Debuggers
 Summary: Todo
-Requires: gpu-viv-bin-x11 = %version
+Requires: imx-gpu-viv-x11 = %version
 %description apitrace
 T.O.D.O.
 
