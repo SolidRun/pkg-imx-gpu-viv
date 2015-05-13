@@ -18,7 +18,7 @@ Package: imx-gpu-viv-fb
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, galcore-5.0.11.25762
-Provides: imx-gpu-viv, libegl1-fb, libgles1, libgles2, libgles3, libopenvg1, libopencl1
+Provides: imx-gpu-viv, libegl1, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Breaks: imx-gpu-viv, gpu-viv-bin, gpu-viv-bin-v4, libegl1-fb, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Replaces: imx-gpu-viv, gpu-viv-bin, gpu-viv-bin-v4, libegl1-fb, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Description: <insert up to 60 chars description>
@@ -38,7 +38,7 @@ Package: imx-gpu-viv-dfb
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, galcore-5.0.11.25762
-Provides: imx-gpu-viv, libegl1-dfb, libgles1, libgles2, libgles3, libopenvg1, libopencl1
+Provides: imx-gpu-viv, libegl1, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Breaks: imx-gpu-viv, gpu-viv-bin, gpu-viv-bin-v4, libegl1-dfb, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Replaces: imx-gpu-viv, gpu-viv-bin, gpu-viv-bin-v4, libegl1-dfb, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Description: <insert up to 60 chars description>
@@ -58,7 +58,7 @@ Package: imx-gpu-viv-x11
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, galcore-5.0.11.25762, libgl1-mesa-dri
-Provides: imx-gpu-viv, libgl1, libegl1-x11, libgles1, libgles2, libgles3, libopenvg1, libopencl1
+Provides: imx-gpu-viv, libgl1, libegl1-x11, libegl1, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Breaks: imx-gpu-viv, gpu-viv-bin, gpu-viv-bin-v4, libgl1, libegl1-x11, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Replaces: imx-gpu-viv, gpu-viv-bin, gpu-viv-bin-v4, libgl1, libegl1-x11, libgles1, libgles2, libgles3, libopenvg1, libopencl1
 Description: <insert up to 60 chars description>
