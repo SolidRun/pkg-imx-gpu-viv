@@ -217,3 +217,69 @@ Replaces:
  libgles3-dev
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
+
+Package: imx-gpu-viv-wl
+Section: libs
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ galcore-5.0.11.25762
+Provides:
+ imx-gpu-viv,
+ libegl1,
+ libgles1,
+ libgles2,
+ libgles3,
+ libopenvg1,
+ libopencl1
+Breaks:
+ imx-gpu-viv,
+ gpu-viv-bin,
+ gpu-viv-bin-v4,
+ libegl1,
+ libgles1,
+ libgles2,
+ libgles3,
+ libopenvg1,
+ libopencl1
+Replaces:
+ imx-gpu-viv,
+ gpu-viv-bin,
+ gpu-viv-bin-v4,
+ libegl1,
+ libgles1,
+ libgles2,
+ libgles3,
+ libopenvg1,
+ libopencl1
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: imx-gpu-viv-wl-dev
+Section: libdevel
+Architecture: any
+Depends:
+ imx-gpu-viv-wl (= ${binary:Version})
+Provides:
+ imx-gpu-viv-dev,
+ libegl1-dev,
+ libgles2-dev,
+ libgles3-dev
+Breaks:
+ imx-gpu-viv-dev,
+ gpu-viv-bin-dev,
+ gpu-viv-bin-v4-dev,
+ libegl1-dev,
+ libgles2-dev,
+ libgles3-dev,
+ libwayland-egl1
+Replaces:
+ imx-gpu-viv-dev,
+ gpu-viv-bin-dev,
+ gpu-viv-bin-v4-dev,
+ libegl1-dev,
+ libgles2-dev,
+ libgles3-dev
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
