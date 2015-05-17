@@ -2,8 +2,8 @@ libdir=@LIBDIR@
 includedir=@INCLUDEDIR@
 version=@VERSION@
 
-Name: egl
-Description: Vivante EGL library
+Name: wayland-egl
+Description: Vivante EGL library - Wayland binding
 Requires.private:
 Version: ${version}
 Libs: -L${libdir} -lEGL

@@ -125,8 +125,7 @@ install_core_wl() {
 	install_lib libGAL-${_backend}.so libGAL.so
 	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
 	install_lib libEGL-${_backend}.so libEGL.so.1.0
-	install_custom_pc egl_wl egl
-	install_pc wayland-egl # TODO: check what this does and if it is required
+	install_custom_pc egl wayland-egl.pc
 	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
 	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 
