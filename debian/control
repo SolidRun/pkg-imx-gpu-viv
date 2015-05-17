@@ -59,21 +59,21 @@ Depends:
  imx-gpu-viv-fb (= ${binary:Version})
 Provides:
  imx-gpu-viv-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Breaks:
  imx-gpu-viv-dev,
  gpu-viv-bin-dev,
  gpu-viv-bin-v4-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Replaces:
  imx-gpu-viv-dev,
  gpu-viv-bin-dev,
  gpu-viv-bin-v4-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Description: <insert up to 60 chars description>
@@ -124,21 +124,21 @@ Depends:
  imx-gpu-viv-dfb (= ${binary:Version})
 Provides:
  imx-gpu-viv-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Breaks:
  imx-gpu-viv-dev,
  gpu-viv-bin-dev,
  gpu-viv-bin-v4-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Replaces:
  imx-gpu-viv-dev,
  gpu-viv-bin-dev,
  gpu-viv-bin-v4-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Description: <insert up to 60 chars description>
@@ -196,7 +196,7 @@ Depends:
 Provides:
  imx-gpu-viv-dev,
  libgl-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Breaks:
@@ -204,7 +204,7 @@ Breaks:
  gpu-viv-bin-dev,
  gpu-viv-bin-v4-dev,
  libgl-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Replaces:
@@ -212,7 +212,7 @@ Replaces:
  gpu-viv-bin-dev,
  gpu-viv-bin-v4-dev,
  libgl-dev,
- libegl-dev,
+ libegl1-dev,
  libgles2-dev,
  libgles3-dev
 Description: <insert up to 60 chars description>
