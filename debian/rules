@@ -28,7 +28,7 @@ ifneq (, $(filter $(shell lsb_release --codename --short), wheezy))
 endif
 
 %:
-	dh $@
+	dh $@ --parallel
 
 override_dh_auto_clean:
 	rm -vf *.bin
