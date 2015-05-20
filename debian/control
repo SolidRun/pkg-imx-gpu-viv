@@ -7,7 +7,10 @@ Build-Depends: debhelper (>= 8.0.0), lsb-release,
  libx11-6,
  libxdamage1,
  libxext6,
- libxfixes3
+ libxfixes3,
+ libwayland-server0,
+ libwayland-client0,
+ libffi6
 Standards-Version: 3.9.3
 Section: libs
 #Homepage: <insert the upstream URL, if relevant>
@@ -276,7 +279,6 @@ Breaks:
  libegl1-dev,
  libgles2-dev,
  libgles3-dev,
- libwayland-egl1
 Replaces:
  imx-gpu-viv-dev,
  gpu-viv-bin-dev,
