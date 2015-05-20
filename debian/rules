@@ -41,6 +41,7 @@ build:
 	gcc -c nolib.c -o nolib.o
 	gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4 nolib.o
 	gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4 nolib.o
+	gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
 
 override_dh_auto_install:
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; -quit || true
@@ -53,6 +54,7 @@ override_dh_auto_install:
 	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb --fhw $(FLOATOPT) $(DISTOPTS)
 	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
 	./install.sh --destdir $(CURDIR)/debian/tmp-wl --backend wl --fhw $(FLOATOPT) $(DISTOPTS)
+	install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp-wl/usr/lib/
 
 override_dh_install:
 	dh_install --fail-missing --sourcedir=debian/tmp-fb --package=imx-gpu-viv-fb $(DHINSTOPTS)

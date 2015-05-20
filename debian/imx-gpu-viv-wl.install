@@ -21,3 +21,4 @@
 /usr/lib/libVSC.so
 /usr/lib/libwayland-viv.so.*
 /usr/share/doc/apitrace/*
+/usr/lib/libwayland-egl.so.1

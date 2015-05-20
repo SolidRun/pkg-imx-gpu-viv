@@ -232,7 +232,8 @@ Provides:
  libgles2,
  libgles3,
  libopenvg1,
- libopencl1
+ libopencl1,
+ libwayland-egl1
 Breaks:
  imx-gpu-viv,
  gpu-viv-bin,
@@ -242,7 +243,8 @@ Breaks:
  libgles2,
  libgles3,
  libopenvg1,
- libopencl1
+ libopencl1,
+ libwayland-egl1
 Replaces:
  imx-gpu-viv,
  gpu-viv-bin,
@@ -252,7 +254,8 @@ Replaces:
  libgles2,
  libgles3,
  libopenvg1,
- libopencl1
+ libopencl1,
+ libwayland-egl1
 Description: <insert up to 60 chars description>
  <insert long description, indented with spaces>
 
