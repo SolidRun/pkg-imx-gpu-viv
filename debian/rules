@@ -70,3 +70,9 @@ override_dh_shlibdeps:
 	# also search for libraries in build dir
 	# thats where dummy libs are placed to satisfy dependencies
 	dh_shlibdeps -l$(CURDIR)
+
+override_dh_strip:
+	dh_strip --package=imx-gpu-viv-fb --dbg-package=imx-gpu-viv-fb-dbg
+	dh_strip --package=imx-gpu-viv-dfb --dbg-package=imx-gpu-viv-dfb-dbg
+	dh_strip --package=imx-gpu-viv-x11 --dbg-package=imx-gpu-viv-x11-dbg
+	dh_strip --package=imx-gpu-viv-wl --dbg-package=imx-gpu-viv-wl-dbg
