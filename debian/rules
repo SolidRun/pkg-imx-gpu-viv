@@ -33,45 +33,37 @@ endif
 override_dh_auto_clean:
 	rm -vf *.bin
 	for file in *.pc; do if [ -e "$$file" ]; then rm -fv "$$file"; fi; done
-	rm -vf *.o *.so.*
+	rm -vf *.so.*
 	find . -type d -iname "imx-gpu-viv-*-*" -exec rm -rf {} \; || true
 	rm -vrf debian/tmp-*
 build: 
 	# create dummy libraries for directfb; dpkg-shlibdeps will complain otherwise
-	gcc -c nolib.c -o nolib.o
-	gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4 nolib.o
-	gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4 nolib.o
+	gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4
+	gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4
+
+	# create dummies for the backend-dependent libs; dpkg-shlibdeps goes mad otherwise
+	gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
+	gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
+	#gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
+
+	# create fake libwayland-egl.so.1
 	gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
 
 override_dh_auto_install:
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; -quit || true
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; -quit || true
-	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend base --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend base --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend base --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-fb --backend fb --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-dfb --backend dfb --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-x11 --backend x11 --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
-	./install.sh --destdir $(CURDIR)/debian/tmp-wl --backend wl --fhw $(FLOATOPT) $(DISTOPTS)
-	install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp-wl/usr/lib/
+	./install.sh --destdir $(CURDIR)/debian/tmp --skip-alternatives --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
+	install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp/usr/lib/
 
 override_dh_install:
-	dh_install --fail-missing --sourcedir=debian/tmp-fb --package=imx-gpu-viv-fb $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-fb --package=imx-gpu-viv-fb-dev $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-dfb --package=imx-gpu-viv-dfb $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-dfb --package=imx-gpu-viv-dfb-dev $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-x11 --package=imx-gpu-viv-x11 $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-x11 --package=imx-gpu-viv-x11-dev $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-wl --package=imx-gpu-viv-wl $(DHINSTOPTS)
-	dh_install --fail-missing --sourcedir=debian/tmp-wl --package=imx-gpu-viv-wl-dev $(DHINSTOPTS)
+	dh_install --fail-missing $(DHINSTOPTS)
 
 override_dh_shlibdeps:
-	# also search for libraries in build dir
-	# thats where dummy libs are placed to satisfy dependencies
-	dh_shlibdeps -l$(CURDIR)
+	# dont generate shlib dependencies ... only causes trouble
+	dh_shlibdeps -- --ignore-missing-info -l$(CURDIR)
 
 override_dh_strip:
+	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
 	dh_strip --package=imx-gpu-viv-fb --dbg-package=imx-gpu-viv-fb-dbg
 	dh_strip --package=imx-gpu-viv-dfb --dbg-package=imx-gpu-viv-dfb-dbg
 	dh_strip --package=imx-gpu-viv-x11 --dbg-package=imx-gpu-viv-x11-dbg

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "x$1" = "xremove" ]; then
+	update-alternatives --remove vivante /usr/lib/imx-gpu-viv-fb
+fi
+
+#DEBHELPER#
+
+exit 0

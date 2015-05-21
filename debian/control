@@ -13,9 +13,84 @@ Build-Depends: debhelper (>= 8.0.0), lsb-release,
  libffi6
 Standards-Version: 3.9.3
 Section: libs
-#Homepage: <insert the upstream URL, if relevant>
 Vcs-Git: https://github.com/mxOBS/deb-pkg_gpu-viv-bin.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_gpu-viv-bin
+
+Package: imx-gpu-viv
+Section: libs
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
+ galcore-5.0.11.25762,
+Provides:
+ libegl1,
+ libgles1,
+ libgles2,
+ libgles3,
+ libopenvg1,
+ libopencl1,
+Breaks:
+ libegl1,
+ libgles1,
+ libgles2,
+ libgles3,
+ libopenvg1,
+ libopencl1,
+Replaces:
+ libegl1,
+ libgles1,
+ libgles2,
+ libgles3,
+ libopenvg1,
+ libopencl1,
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-dev
+Section: libdevel
+Architecture: any
+Depends:
+ ${misc:Depends},
+ imx-gpu-viv (= ${binary:Version}),
+ mesa-common-dev,
+ imx-gpu-viv-fb-dev | imx-gpu-viv-dfb-dev | imx-gpu-viv-wl-dev | imx-gpu-viv-x11-dev,
+Provides:
+ libegl1-dev,
+ libgles1-dev,
+ libgles2-dev,
+ libgles3-dev,
+ libopenvg1-dev,
+ libopencl1-dev,
+Breaks:
+ libegl1-dev,
+ libgles1-dev,
+ libgles2-dev,
+ libgles3-dev,
+ libopenvg1-dev,
+ libopencl1-dev,
+Replaces:
+ libegl1-dev,
+ libgles1-dev,
+ libgles2-dev,
+ libgles3-dev,
+ libopenvg1-dev,
+ libopencl1-dev,
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-dbg
+Architecture: any
+Section: debug
+Depends:
+ ${misc:Depends},
+ imx-gpu-viv (= ${binary:Version}),
+ imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
+Description: Todo
+ T. O. D. O.
+
+#############################################################
 
 Package: imx-gpu-viv-fb
 Section: libs
@@ -23,74 +98,9 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
- galcore-5.0.11.25762
-Provides:
- imx-gpu-viv,
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Breaks:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libegl1-fb,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Replaces:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libegl1-fb,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
-
-Package: imx-gpu-viv-fb-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends:
- imx-gpu-viv-fb (= ${binary:Version}),
- ${misc:Depends}
+ imx-gpu-viv (= ${binary:Version}),
 Description: Todo
  T. O. D. O.
-
-Package: imx-gpu-viv-fb-dev
-Section: libdevel
-Architecture: any
-Depends:
- imx-gpu-viv-fb (= ${binary:Version})
-Provides:
- imx-gpu-viv-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Breaks:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Replaces:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
 
 Package: imx-gpu-viv-dfb
 Section: libs
@@ -98,158 +108,9 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
- galcore-5.0.11.25762
-Provides:
- imx-gpu-viv,
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Breaks:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libegl1-dfb,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Replaces:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libegl1-dfb,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
-
-Package: imx-gpu-viv-dfb-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends:
- imx-gpu-viv-dfb (= ${binary:Version}),
- ${misc:Depends}
-Description: Todo
+ imx-gpu-viv (= ${binary:Version}),
+Description: Todo                          
  T. O. D. O.
-
-Package: imx-gpu-viv-dfb-dev
-Section: libdevel
-Architecture: any
-Depends:
- imx-gpu-viv-dfb (= ${binary:Version})
-Provides:
- imx-gpu-viv-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Breaks:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Replaces:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
-
-Package: imx-gpu-viv-x11
-Section: libs
-Architecture: any
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
- galcore-5.0.11.25762,
- libgl1-mesa-dri
-Provides:
- imx-gpu-viv,
- libgl1,
- libegl1-x11,
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Breaks:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libgl1,
- libegl1-x11,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Replaces:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libgl1,
- libegl1-x11,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
-
-Package: imx-gpu-viv-x11-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends:
- imx-gpu-viv-x11 (= ${binary:Version}),
- ${misc:Depends}
-Description: Todo
- T. O. D. O.
-
-Package: imx-gpu-viv-x11-dev
-Section: libdevel
-Architecture: any
-Depends:
- imx-gpu-viv-x11 (= ${binary:Version}),
- mesa-common-dev
-Provides:
- imx-gpu-viv-dev,
- libgl-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Breaks:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libgl-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Replaces:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libgl-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
 
 Package: imx-gpu-viv-wl
 Section: libs
@@ -257,48 +118,46 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
- galcore-5.0.11.25762
-Provides:
- imx-gpu-viv,
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1,
- libwayland-egl1
-Breaks:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1,
- libwayland-egl1
-Replaces:
- imx-gpu-viv,
- gpu-viv-bin,
- gpu-viv-bin-v4,
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1,
- libwayland-egl1
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+ imx-gpu-viv (= ${binary:Version}),
+Provides: libwayland-egl1
+Breaks: libwayland-egl1
+Replaces: libwayland-egl1
+Description: Todo                          
+ T. O. D. O.
 
-Package: imx-gpu-viv-wl-dbg
+Package: imx-gpu-viv-x11
+Section: libs
 Architecture: any
-Section: debug
-Priority: extra
 Depends:
- imx-gpu-viv-wl (= ${binary:Version}),
- ${misc:Depends}
+ ${shlibs:Depends},
+ ${misc:Depends},
+ imx-gpu-viv (= ${binary:Version}),
+ libgl1-mesa-dri,
+Provides:
+ libegl1-x11,
+ libgl1,
+Breaks:
+ libegl1-x11,
+ libgl1,
+Replaces:
+ libegl1-x11,
+ libgl1,
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-fb-dev
+Section: libdevel
+Architecture: any
+Depends:
+ imx-gpu-viv-fb (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-dfb-dev
+Section: libdevel
+Architecture: any
+Depends:
+ imx-gpu-viv-dfb (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
 
@@ -306,25 +165,46 @@ Package: imx-gpu-viv-wl-dev
 Section: libdevel
 Architecture: any
 Depends:
- imx-gpu-viv-wl (= ${binary:Version})
-Provides:
- imx-gpu-viv-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Breaks:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev,
-Replaces:
- imx-gpu-viv-dev,
- gpu-viv-bin-dev,
- gpu-viv-bin-v4-dev,
- libegl1-dev,
- libgles2-dev,
- libgles3-dev
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+ imx-gpu-viv-wl (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-x11-dev
+Section: libdevel
+Architecture: any
+Depends:
+ imx-gpu-viv-x11 (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-fb-dbg
+Architecture: any
+Section: debug
+Depends:
+ imx-gpu-viv-fb (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-dfb-dbg
+Architecture: any    
+Section: debug
+Depends:
+ imx-gpu-viv-dfb (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-wl-dbg
+Architecture: any    
+Section: debug
+Depends:
+ imx-gpu-viv-wl (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.
+
+Package: imx-gpu-viv-x11-dbg
+Architecture: any    
+Section: debug
+Depends:
+ imx-gpu-viv-x11 (= ${binary:Version}), ${misc:Depends}
+Description: Todo
+ T. O. D. O.

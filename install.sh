@@ -7,6 +7,14 @@ source functions.inc
 # Vivante core graphics libraries
 install_core_base() {
 	# Vivante GPU HAL
+	for bg in fb dfb wl; do
+		install_lib libGAL-$bg.so imx-gpu-viv-$bg/libGAL.so
+		install_lib libGAL_egl.$bg.so imx-gpu-viv-$bg/libGAL_egl.so
+	done
+	install_lib libGAL-x11.so imx-gpu-viv-x11/libGAL.so
+	install_lib libGAL_egl.dri.so imx-gpu-viv-x11/libGAL_egl.so
+	link_lib imx-gpu-viv/libGAL.so libGAL.so
+	link_lib imx-gpu-viv/libGAL_egl.so libGAL_egl.so
 	install_headers HAL
 
 	# Khronos shared headers
@@ -14,7 +22,15 @@ install_core_base() {
 
 	# EGL
 	link_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
-	# libEGL.so.1.0 backend dependent
+	for bg in fb dfb wl x11; do
+		install_lib libEGL-$bg.so imx-gpu-viv-$bg/libEGL.so.1.0
+	done
+	link_lib imx-gpu-viv/libEGL.so.1.0 libEGL.so.1.0
+	install_custom_pc egl_fb ../imx-gpu-viv-fb/egl
+	install_custom_pc egl_dfb ../imx-gpu-viv-dfb/egl
+	install_custom_pc egl_wl ../imx-gpu-viv-wl/egl
+	install_custom_pc egl_x11 ../imx-gpu-viv-x11/egl
+	link_lib ../imx-gpu-viv/egl pkgconfig/egl.pc # make more readable
 	link_lib libEGL.so.1.0 libEGL.so.1
 	link_lib libEGL.so.1 libEGL.so
 	install_headers EGL
@@ -38,13 +54,17 @@ install_core_base() {
 	install_custom_pc glesv1_cm
 
 	# OpenGL-ES 2.0
-	# libGLESv2.so.2.0.0 backend-dependent
+	for bg in fb dfb wl x11; do
+		install_lib libGLESv2-$bg.so imx-gpu-viv-$bg/libGLESv2.so.2.0.0
+	done
+	link_lib imx-gpu-viv/libGLESv2.so.2.0.0 libGLESv2.so.2.0.0
 	link_lib libGLESv2.so.2.0.0 libGLESv2.so.2
 	link_lib libGLESv2.so.2 libGLESv2.so
 	install_headers GLES2
 	install_custom_pc glesv2
 
 	# OpenGL-ES 3.0
+	# part of libGLESv2.so
 	install_headers GLES3
 
 	# GL Shader Compiler
@@ -56,6 +76,7 @@ install_core_base() {
 	link_lib libOpenVG.3d.so libOpenVG.so
 	install_headers VG
 	install_custom_pc vg
+	# TODO: alternative for VG?
 
 	if [ "x$skip_cl" = "xno" ]; then
 	# OpenCL (only GC2000)
@@ -76,40 +97,25 @@ install_core_base() {
 	# miscellaneous
 	install_conf Vivante.icd
 	install_lib libVSC.so
+	for bg in fb dfb wl x11; do
+		install_lib libVIVANTE-$bg.so imx-gpu-viv-$bg/libVIVANTE.so
+	done
+	link_lib imx-gpu-viv/libVIVANTE.so libVIVANTE.so
 
 	return
 }
 
 install_core_fb() {
-	install_lib libGAL-${_backend}.so libGAL.so
-	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
-	install_lib libEGL-${_backend}.so libEGL.so.1.0
-	install_custom_pc egl_fb egl
-	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 	return
 }
 
 install_core_dfb() {
-	install_lib libGAL-${_backend}.so libGAL.so
-	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
-	install_lib libEGL-${_backend}.so libEGL.so.1.0
-	install_custom_pc egl_dfb egl
-	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 	install_lib directfb-1.7-4/gfxdrivers/libdirectfb_gal.so
 	install_conf directfbrc
 	return
 }
 
 install_core_x11() {
-	install_lib libGAL-${_backend}.so libGAL.so
-	install_lib libGAL_egl.dri.so libGAL_egl.so
-	install_lib libEGL-${_backend}.so libEGL.so.1.0
-	install_custom_pc egl_x11 egl
-	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
-
 	# X11 OpenGL GLX
 	install_lib libGL.so.1.2
 	link_lib libGL.so.1.2 libGL.so.1
@@ -122,13 +128,7 @@ install_core_x11() {
 }
 
 install_core_wl() {
-	install_lib libGAL-${_backend}.so libGAL.so
-	install_lib libGAL_egl.${_backend}.so libGAL_egl.so
-	install_lib libEGL-${_backend}.so libEGL.so.1.0
-	install_custom_pc egl_wl egl
 	install_custom_pc wayland-egl
-	install_lib libGLESv2-${_backend}.so libGLESv2.so.2.0.0
-	install_lib libVIVANTE-${_backend}.so libVIVANTE.so
 
 	# Wayland libs
 	install_lib libgc_wayland_protocol.so.0.0.0
@@ -145,6 +145,13 @@ install_core_wl() {
 
 	# TODO: update paths in installed .pc-files
 	return
+}
+
+install_core_alternatives() {
+	update-alternatives --remove-all vivante
+	for bg in fb dfb wl x11; do
+		update-alternatives --install /usr/lib/imx-gpu-viv vivante /usr/lib/imx-gpu-viv-$bg 10
+	done
 }
 
 install_g2d() {
@@ -166,12 +173,9 @@ install_demos() {
 
 	# Graphics demos
 	mkdir -p "${_destdir}/opt/viv_samples"
-	if [ "x${_backend}" = "xfb" ]; then
-		mkdir -p "${_destdir}/opt/viv_samples"
-		cp -rv "${SOURCESDIR}/opt/viv_samples/es20" "${_destdir}/opt/viv_samples/"
-		cp -rv "${SOURCESDIR}/opt/viv_samples/tiger" "${_destdir}/opt/viv_samples/"
-		cp -rv "${SOURCESDIR}/opt/viv_samples/vdk" "${_destdir}/opt/viv_samples/"
-	fi
+	cp -rv "${SOURCESDIR}/opt/viv_samples/es20" "${_destdir}/opt/viv_samples/"
+	cp -rv "${SOURCESDIR}/opt/viv_samples/tiger" "${_destdir}/opt/viv_samples/"
+	cp -rv "${SOURCESDIR}/opt/viv_samples/vdk" "${_destdir}/opt/viv_samples/"
 
 	return
 }
@@ -206,23 +210,22 @@ usage() {
 	echo Userspace installer for Vivante graphics driver
 	echo Usage: $0 [OPTIONS]
 	echo
-	echo "	--backend       graphics backend (base|fb|dfb|x11|wl)"
+	echo "	--fhw                floating-point hardware (hard|soft)"
 	echo
-	echo "	--fhw           floating-point hardware (hard|soft)"
+	echo "	--destdir            installation prefix"
+	echo "	--libdir             directory for libraries"
+	echo "	--includedir         directory for header files"
+	echo "	--dridir             directory for DRI drivers"
+	echo "	--sysconfdir         directory for system-wide configuration files"
+	echo "	--bindir  	     directory for binaries"
+	echo "  --skip-alternatives  dont run update-alternatives"
 	echo
-	echo "	--destdir       installation prefix"
-	echo "	--libdir        directory for libraries"
-	echo "	--includedir	directory for header files"
-	echo "	--dridir        directory for DRI drivers"
-	echo "	--sysconfdir    directory for system-wide configuration files"
-	echo "	--bindir        directory for binaries"
-	echo
-	echo "  --skip-cl       dont install OpenCL parts"
+	echo "  --skip-cl            dont install OpenCL parts"
 	echo
 }
 
 s=0
-OPTIONS=`getopt -n "$0" -o "" -l "backend:,destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,fhw:,skip-cl" -- "$@"` || s=$?
+OPTIONS=`getopt -n "$0" -o "" -l "destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,fhw:,skip-alternatives,skip-cl" -- "$@"` || s=$?
 if [ $s -ne 0 ]; then
 	usage
 	exit 1
@@ -235,14 +238,11 @@ _includedir=/usr/include
 _dridir=/usr/lib/dri
 _sysconfdir=/etc
 _fhw=hard
+skip_alternatives=no
 skip_cl=no
 eval set -- "$OPTIONS"
 while true; do
 	case $1 in
-		--backend)
-			_backend=$2
-			shift 2
-			;;
 		--libdir)
 			_libdir=$2
 			shift 2
@@ -271,6 +271,10 @@ while true; do
 			_fhw=$2
 			shift 2
 			;;
+		--skip-alternatives)
+			skip_alternatives=yes
+			shift 1
+			;;
 		--skip-cl)
 			skip_cl=yes
 			shift 1
@@ -287,17 +291,6 @@ done
 if [ ! -d "${_destdir}" ]; then
 	echo "Warning: ${_destdir} does not exist yet, going to create it."
 fi
-
-case $_backend in
-  base)	;;
-  fb)	;;
-  dfb)	;;
-  x11)	;;
-  wl)	;;
-  *)	echo "Backend ${_backend} is unknown!"
-	exit 1
-	;;
-esac
 
 case $_fhw in
   soft) ;;
@@ -333,7 +326,13 @@ vivanteversion=5.0.11
 
 SOURCESDIR="${vivantebindir}/gpu-core"
 install_core_base
-install_core_${_backend}
+install_core_fb
+install_core_dfb
+install_core_wl
+install_core_x11
+if [ "$skip_alternatives" = "no" ]; then
+	install_core_alternatives
+fi
 
 SOURCESDIR="${vivantebindir}/gpu-demos"
 install_demos
@@ -341,10 +340,7 @@ install_demos
 SOURCESDIR="${vivantebindir}/g2d"
 install_g2d
 
-if [ "x${_backend}" = "xx11" ]; then
-	SOURCESDIR="${vivantebindir}/apitrace/x11"
-	install_apitrace_x11
-else
-	SOURCESDIR="${vivantebindir}/apitrace/non-x11"
-	install_apitrace_nonx11
-fi
+SOURCESDIR="${vivantebindir}/apitrace/x11"
+#install_apitrace_x11
+SOURCESDIR="${vivantebindir}/apitrace/non-x11"
+#install_apitrace_nonx11
