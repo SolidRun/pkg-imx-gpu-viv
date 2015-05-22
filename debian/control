@@ -1,6 +1,6 @@
 Source: imx-gpu-viv
 Priority: optional
-Maintainer: Josua Mayer <josua@unknown>
+Maintainer: Josua Mayer <josua@solid-run.com>
 Build-Depends: debhelper (>= 8.0.0), lsb-release, 
  libdrm2,
  libglapi-mesa,
@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 8.0.0), lsb-release,
  libwayland-server0,
  libwayland-client0,
  libffi6
-Standards-Version: 3.9.3
+Standards-Version: 3.9.6
 Section: libs
 Vcs-Git: https://github.com/mxOBS/deb-pkg_gpu-viv-bin.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_gpu-viv-bin
