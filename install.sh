@@ -30,7 +30,7 @@ install_core_base() {
 	install_custom_pc egl_dfb ../imx-gpu-viv-dfb/egl
 	install_custom_pc egl_wl ../imx-gpu-viv-wl/egl
 	install_custom_pc egl_x11 ../imx-gpu-viv-x11/egl
-	link_lib ../imx-gpu-viv/egl pkgconfig/egl.pc # make more readable
+	link_lib ../imx-gpu-viv/egl.pc pkgconfig/egl.pc # make more readable
 	link_lib libEGL.so.1.0 libEGL.so.1
 	link_lib libEGL.so.1 libEGL.so
 	install_headers EGL

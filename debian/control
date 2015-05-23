@@ -20,10 +20,12 @@ Package: imx-gpu-viv
 Section: libs
 Architecture: any
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
  imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
  galcore-5.0.11.25762,
+ libc6 (>= 2.4),
+ libgcc1 (>= 1:4.4.0),
+ libstdc++6 (>= 4.9),
 Provides:
  libegl1,
  libgles1,
@@ -96,7 +98,6 @@ Package: imx-gpu-viv-fb
 Section: libs
 Architecture: any
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
 Description: Todo
@@ -106,19 +107,22 @@ Package: imx-gpu-viv-dfb
 Section: libs
 Architecture: any
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
-Description: Todo                          
+ libdirectfb-1.7-4,
+ zlib1g (>= 1:1.1.4),
+Description: Todo
  T. O. D. O.
 
 Package: imx-gpu-viv-wl
 Section: libs
 Architecture: any
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
+ libffi6 (>= 3.0.4),
+ libwayland-client0 (>= 1.3.92),
+ libwayland-server0 (>= 1.2.0),
 Provides: libwayland-egl1
 Breaks: libwayland-egl1
 Replaces: libwayland-egl1
@@ -129,10 +133,15 @@ Package: imx-gpu-viv-x11
 Section: libs
 Architecture: any
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  libgl1-mesa-dri,
+ libdrm2 (>= 2.3.1),
+ libglapi-mesa,
+ libx11-6 (>= 2:1.4.99.1),
+ libxdamage1 (>= 1:1.1),
+ libxext6,
+ libxfixes3 (>= 1:4.0.1),
 Provides:
  libegl1-x11,
  libgl1,
@@ -149,6 +158,7 @@ Package: imx-gpu-viv-fb-dev
 Section: libdevel
 Architecture: any
 Depends:
+ imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -157,6 +167,7 @@ Package: imx-gpu-viv-dfb-dev
 Section: libdevel
 Architecture: any
 Depends:
+ imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-dfb (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -165,6 +176,7 @@ Package: imx-gpu-viv-wl-dev
 Section: libdevel
 Architecture: any
 Depends:
+ imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -173,6 +185,7 @@ Package: imx-gpu-viv-x11-dev
 Section: libdevel
 Architecture: any
 Depends:
+ imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -181,6 +194,7 @@ Package: imx-gpu-viv-fb-dbg
 Architecture: any
 Section: debug
 Depends:
+ imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -189,6 +203,7 @@ Package: imx-gpu-viv-dfb-dbg
 Architecture: any    
 Section: debug
 Depends:
+ imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-dfb (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -197,6 +212,7 @@ Package: imx-gpu-viv-wl-dbg
 Architecture: any    
 Section: debug
 Depends:
+ imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.
@@ -205,6 +221,7 @@ Package: imx-gpu-viv-x11-dbg
 Architecture: any    
 Section: debug
 Depends:
+ imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}), ${misc:Depends}
 Description: Todo
  T. O. D. O.

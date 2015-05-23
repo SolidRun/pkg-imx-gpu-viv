@@ -42,8 +42,8 @@ build:
 	gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4
 
 	# create dummies for the backend-dependent libs; dpkg-shlibdeps goes mad otherwise
-	gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
-	gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
+	#gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
+	#gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
 	#gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
 
 	# create fake libwayland-egl.so.1
@@ -60,7 +60,6 @@ override_dh_install:
 
 override_dh_shlibdeps:
 	# dont generate shlib dependencies ... only causes trouble
-	dh_shlibdeps -- --ignore-missing-info -l$(CURDIR)
 
 override_dh_strip:
 	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
