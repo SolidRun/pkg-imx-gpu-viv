@@ -2,7 +2,7 @@
 
 # handle alternatives
 if [ "x$1" = "xconfigure" ]; then
-	update-alternatives --install /usr/lib/imx-gpu-viv vivante /usr/lib/imx-gpu-viv-fb 10
+	update-alternatives --install /usr/lib/imx-gpu-viv vivante /usr/lib/imx-gpu-viv-dfb 10
 fi
 
 #DEBHELPER#
