@@ -54,6 +54,7 @@ override_dh_auto_install:
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; -quit || true
 	./install.sh --destdir $(CURDIR)/debian/tmp --skip-alternatives --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
 	install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp/usr/lib/
+	install -v -m644 -D vivante.profile.sh $(CURDIR)/debian/tmp/etc/profile.d/vivante.sh
 
 override_dh_install:
 	dh_install --fail-missing $(DHINSTOPTS)
