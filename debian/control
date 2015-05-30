@@ -187,6 +187,9 @@ Architecture: any
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}), ${misc:Depends}
+Provides: libgl-dev
+Breaks: libgl-dev
+Replaces: libgl-dev
 Description: Todo
  T. O. D. O.
 
