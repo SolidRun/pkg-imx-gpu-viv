@@ -1,5 +1,3 @@
-#! /usr/bin/dh-exec
-
 /etc/profile.d/vivante.sh
 /etc/Vivante.icd
 /usr/lib/libGAL.so
@@ -34,6 +32,3 @@
 /usr/lib/libVSC.so
 /usr/lib/libVIVANTE.so
 /opt/viv_samples/cl11
-/usr/lib/libg2d.so.0.8
-/usr/lib/libg2d.so
-/opt/fsl-samples/g2d

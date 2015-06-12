@@ -307,11 +307,11 @@ echo "Going to install Freescale Vivante userspace 5.0.11 p4.4"
 # download the vivante binary package
 MIRRORS="http://www.freescale.com/lgfiles/NMG/MAD/YOCTO/ http://download.ossystems.com.br/bsp/freescale/source/"
 if [ "x$_fhw" = "xhard" ]; then
-	fslpkgname=imx-gpu-viv-5.0.11.p4.4-hfp.bin
-	fslpkgchksum=5aa3dfe5b9362f9ee53615e0a56f9009
+	fslpkgname=imx-gpu-viv-5.0.11.p4.5-hfp.bin
+	fslpkgchksum=8314408acb6b3bc58fcbbb8a0f48b54b
 else
-	fslpkgname=imx-gpu-viv-5.0.11.p4.4-sfp.bin
-	fslpkgchksum=201398ab011b8765755fafb898efa77d
+	fslpkgname=imx-gpu-viv-5.0.11.p4.5-sfp.bin
+	fslpkgchksum=479dce20e0e2f9f7d0a4e4ff70d4a4b2
 fi
 fetch $fslpkgname $fslpkgchksum
 
@@ -320,7 +320,6 @@ unpack $fslpkgname
 
 basedir="$PWD"
 vivantebindir="$basedir/`basename $fslpkgname .bin`"
-vivanteversion=5.0.11
 
 # perform installation
 

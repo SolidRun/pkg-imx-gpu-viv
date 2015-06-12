@@ -1,9 +1,9 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: gpu-viv-bin
-Source: <url://example.com>
+Upstream-Name: imx-gpu-viv
+Source: https://github.com/mxOBS/deb-pkg_gpu-viv-bin
 
 Files: *
-Copyright: 2014 Josua Mayer <josua@solid-run.com>
+Copyright: 2014-2015 Josua Mayer <josua@solid-run.com>
 License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,15 @@ License: MIT
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 
-Files: gpu-viv-bin-*/*
+Files: imx-gpu-viv-*/*
 Copyright: Freescale, Vivante
-License: Freescale IP
- FREESCALE SEMICONDUCTOR SOFTWARE LICENSE AGREEMENT
- ... very long text, check EULA.txt
+License: LA_OPT_FSL_OPEN_3RD_PARTY_IP
+ FREESCALE SEMICONDUCTOR SOFTWARE LICENSE AGREEMENT v6 February 2015
+ .
+ see EULA.txt for the full license.
 
 Files: debian/*
-Copyright: 2014 Josua Mayer <josua@solid-run.com>
+Copyright: 2014-2015 Josua Mayer <josua@solid-run.com>
 License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

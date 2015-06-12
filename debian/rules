@@ -24,7 +24,7 @@ DISTOPTS=
 DHINSTOPTS=
 ifneq (, $(filter $(shell lsb_release --codename --short), wheezy))
   DISTOPTS += --skip-cl
-  DHINSTOPTS +=-XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so
+  DHINSTOPTS +=-XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11
 endif
 
 %:
@@ -35,23 +35,27 @@ override_dh_auto_clean:
 	for file in *.pc; do if [ -e "$$file" ]; then rm -fv "$$file"; fi; done
 	rm -vf *.so.*
 	find . -type d -iname "imx-gpu-viv-*-*" -exec rm -rf {} \; || true
-	rm -vrf debian/tmp-*
+	rm -vrf debian/tmp{,-*}
 build: 
-	# create dummy libraries for directfb; dpkg-shlibdeps will complain otherwise
+	# create dummy libraries for directfb and wayland; dpkg-shlibdeps will complain otherwise
 	gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4
 	gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4
+	gcc -shared -Wl,-soname,libwayland-server.so.0 -o libwayland-server.so.0
+	gcc -shared -Wl,-soname,libwayland-client.so.0 -o libwayland-client.so.0
+	gcc -shared -Wl,-soname,libffi.so.6 -o libffi.so.6
 
-	# create dummies for the backend-dependent libs; dpkg-shlibdeps goes mad otherwise
-	#gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
-	#gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
-	#gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
+	# create dummies for the backend-dependent libs required by the indep package;
+	# dpkg-shlibdeps will otherwise add one backend package as dependency to all of them
+	gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
+	gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
+	gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
 
 	# create fake libwayland-egl.so.1
 	gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
 
 override_dh_auto_install:
-	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; -quit || true
-	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; -quit || true
+	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; || true
+	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; || true
 	./install.sh --destdir $(CURDIR)/debian/tmp --skip-alternatives --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
 	install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp/usr/lib/
 	install -v -m644 -D vivante.profile.sh $(CURDIR)/debian/tmp/etc/profile.d/vivante.sh
@@ -60,7 +64,13 @@ override_dh_install:
 	dh_install --fail-missing $(DHINSTOPTS)
 
 override_dh_shlibdeps:
-	# dont generate shlib dependencies ... only causes trouble
+	dh_shlibdeps -l$(CURDIR) --package=imx-gpu-viv -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-fb/usr/lib/gpu-viv-bin-fb --package=gpu-viv-bin-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-dfb/usr/lib/gpu-viv-bin-dfb --package=gpu-viv-bin-dfb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-wl/usr/lib/gpu-viv-bin-wl --package=gpu-viv-bin-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-x11/usr/lib/gpu-viv-bin-x11 --package=gpu-viv-bin-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps --package=libg2d0.8
+	dh_shlibdeps --package=libg2d-demos
 
 override_dh_strip:
 	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
@@ -68,3 +78,4 @@ override_dh_strip:
 	dh_strip --package=imx-gpu-viv-dfb --dbg-package=imx-gpu-viv-dfb-dbg
 	dh_strip --package=imx-gpu-viv-x11 --dbg-package=imx-gpu-viv-x11-dbg
 	dh_strip --package=imx-gpu-viv-wl --dbg-package=imx-gpu-viv-wl-dbg
+	dh_strip --package=libg2d0.8 --dbg-package=libg2d0.8-dbg
