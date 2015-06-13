@@ -73,6 +73,17 @@ Depends:
 Description: Todo
  T. O. D. O.
 
+Package: imx-gpu-viv-demos
+Architecture: any
+Section: devel
+Depends:
+ ${misc:Depends},
+ imx-gpu-viv (= ${binary:Version}),
+ imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
+ ${shlibs:Depends},
+Description: Todo
+ T. O. D. O.
+
 Package: imx-gpu-viv-fb
 Section: libs
 Architecture: any
