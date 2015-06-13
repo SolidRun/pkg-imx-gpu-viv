@@ -2,15 +2,20 @@
 
 # handle alternatives
 if [ "x$1" = "xconfigure" ]; then
-	update-alternatives --install /usr/lib/imx-gpu-viv vivante /usr/lib/imx-gpu-viv-dfb 10
+	update-alternatives \
+		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/libGAL-dfb.so 10 \
+		--slave /usr/lib/galcore/libGAL_egl.so vivante-gal-egl /usr/lib/galcore/libGAL_egl.dfb.so \
+		--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/libEGL-dfb.so \
+		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/libGLESv2-dfb.so \
+		--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/libVIVANTE-dfb.so
 fi
 
 # force-reinstall/repair symlinks
-ln -sfv libEGL.so.1 /usr/lib/galcore/libEGL.so
-ln -sfv libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1
-ln -sfv libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1.0.0
-ln -sfv libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so
-ln -sfv libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so.2.0.0
+ln -sf libEGL.so.1 /usr/lib/galcore/libEGL.so
+ln -sf libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1
+ln -sf libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1.0.0
+ln -sf libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so
+ln -sf libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so.2.0.0
 
 #DEBHELPER#
 
