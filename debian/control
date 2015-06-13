@@ -21,13 +21,6 @@ Depends:
  imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
  galcore-5.0.11.25762,
  ${shlibs:Depends},
-Provides:
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1,
 Description: Todo
  T. O. D. O.
 
@@ -121,9 +114,6 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
-Provides:
- libegl1-x11,
- libgl1,
 Description: Todo
  T. O. D. O.
 
