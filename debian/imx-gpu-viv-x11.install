@@ -1,3 +1,7 @@
-/usr/lib/imx-gpu-viv-x11/*.so*
-/usr/lib/libGL.so*
+/usr/lib/galcore/libEGL-x11.so
+/usr/lib/galcore/libGAL-x11.so
+/usr/lib/galcore/libGAL_egl.x11.so
+/usr/lib/galcore/libGLESv2-x11.so
+/usr/lib/galcore/libVIVANTE-x11.so
+/usr/lib/galcore/libGL.so*
 /usr/lib/dri/vivante_dri.so

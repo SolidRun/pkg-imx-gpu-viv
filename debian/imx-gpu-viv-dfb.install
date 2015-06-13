@@ -1,3 +1,7 @@
 /etc/directfbrc
-/usr/lib/imx-gpu-viv-dfb/*.so*
+/usr/lib/galcore/libEGL-dfb.so
+/usr/lib/galcore/libGAL-dfb.so
+/usr/lib/galcore/libGAL_egl.dfb.so
+/usr/lib/galcore/libGLESv2-dfb.so
+/usr/lib/galcore/libVIVANTE-dfb.so
 /usr/lib/directfb-1.7-4/gfxdrivers/libdirectfb_gal.so

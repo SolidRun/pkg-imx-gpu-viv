@@ -28,20 +28,6 @@ Provides:
  libgles3,
  libopenvg1,
  libopencl1,
-Breaks:
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1,
-Replaces:
- libegl1,
- libgles1,
- libgles2,
- libgles3,
- libopenvg1,
- libopencl1,
 Description: Todo
  T. O. D. O.
 
@@ -114,9 +100,6 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
-Provides: libwayland-egl1
-Breaks: libwayland-egl1
-Replaces: libwayland-egl1
 Description: Todo                          
  T. O. D. O.
 
@@ -128,12 +111,6 @@ Depends:
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
 Provides:
- libegl1-x11,
- libgl1,
-Breaks:
- libegl1-x11,
- libgl1,
-Replaces:
  libegl1-x11,
  libgl1,
 Description: Todo

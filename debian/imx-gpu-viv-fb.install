@@ -1,4 +1,8 @@
-/usr/lib/imx-gpu-viv-fb/*.so*
+/usr/lib/galcore/libEGL-fb.so
+/usr/lib/galcore/libGAL-fb.so
+/usr/lib/galcore/libGAL_egl.fb.so
+/usr/lib/galcore/libGLESv2-fb.so
+/usr/lib/galcore/libVIVANTE-fb.so
 /opt/viv_samples/es20
 /opt/viv_samples/tiger
 /opt/viv_samples/vdk

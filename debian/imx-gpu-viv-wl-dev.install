@@ -1,6 +1,5 @@
-/usr/lib/imx-gpu-viv-wl/*.pc
 /usr/lib/pkgconfig/wayland-egl.pc
 /usr/lib/pkgconfig/gc_wayland_protocol.pc
 /usr/lib/pkgconfig/wayland-viv.pc
-/usr/lib/libgc_wayland_protocol.a
-/usr/lib/libwayland-viv.a
+/usr/lib/galcore/libgc_wayland_protocol.a
+/usr/lib/galcore/libwayland-viv.a

@@ -1,4 +1,7 @@
-/usr/lib/imx-gpu-viv-wl/*.so*
-/usr/lib/libgc_wayland_protocol.so*
-/usr/lib/libwayland-viv.so*
-/usr/lib/libwayland-egl.so.1
+/usr/lib/galcore/libEGL-wl.so
+/usr/lib/galcore/libGAL-wl.so
+/usr/lib/galcore/libGAL_egl.wl.so
+/usr/lib/galcore/libGLESv2-wl.so
+/usr/lib/galcore/libVIVANTE-wl.so
+/usr/lib/galcore/libgc_wayland_protocol.so*
+/usr/lib/galcore/libwayland-viv.so*

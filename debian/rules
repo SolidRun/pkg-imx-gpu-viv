@@ -24,18 +24,17 @@ DISTOPTS=
 DHINSTOPTS=
 ifneq (, $(filter $(shell lsb_release --codename --short), wheezy))
   DISTOPTS += --skip-cl
-  DHINSTOPTS +=-XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11
+  DHINSTOPTS += -XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11
 endif
 
 %:
 	dh $@ --parallel
 
 override_dh_auto_clean:
-	rm -vf *.bin
 	for file in *.pc; do if [ -e "$$file" ]; then rm -fv "$$file"; fi; done
 	rm -vf *.so.*
 	find . -type d -iname "imx-gpu-viv-*-*" -exec rm -rf {} \; || true
-	rm -vrf debian/tmp{,-*}
+	rm -vf *.bin
 build: 
 	# create dummy libraries for directfb and wayland; dpkg-shlibdeps will complain otherwise
 	gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4
@@ -49,28 +48,25 @@ build:
 	gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
 	gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
 	gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
+	gcc -shared -Wl,-soname,libVIVANTE.so -o libVIVANTE.so
 
 	# create fake libwayland-egl.so.1
-	gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
+	#gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
 
 override_dh_auto_install:
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; || true
 	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; || true
 	./install.sh --destdir $(CURDIR)/debian/tmp --skip-alternatives --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
-	install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp/usr/lib/
+	#install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp/usr/lib/
 	install -v -m644 -D vivante.profile.sh $(CURDIR)/debian/tmp/etc/profile.d/vivante.sh
+	mkdir -p $(CURDIR)/debian/tmp/etc/ld.so.conf.d
+	echo "/usr/lib/galcore" > $(CURDIR)/debian/tmp/etc/ld.so.conf.d/0vivante.conf
 
 override_dh_install:
 	dh_install --fail-missing $(DHINSTOPTS)
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l$(CURDIR) --package=imx-gpu-viv -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-fb/usr/lib/gpu-viv-bin-fb --package=gpu-viv-bin-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-dfb/usr/lib/gpu-viv-bin-dfb --package=gpu-viv-bin-dfb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-wl/usr/lib/gpu-viv-bin-wl --package=gpu-viv-bin-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/gpu-viv-bin-x11/usr/lib/gpu-viv-bin-x11 --package=gpu-viv-bin-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps --package=libg2d0.8
-	dh_shlibdeps --package=libg2d-demos
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 
 override_dh_strip:
 	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
