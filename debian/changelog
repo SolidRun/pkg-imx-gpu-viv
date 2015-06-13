@@ -1,3 +1,10 @@
+imx-gpu-viv (5.0.11.p4.5+1) stable; urgency=medium
+
+  * install vivante libs into subfolder to not conflict with mesa anymore
+  * package demos seperately
+
+ -- Josua Mayer <josua@solid-run.com>  Sun, 14 Jun 2015 01:35:00 +0800
+
 imx-gpu-viv (5.0.11.p4.5) stable; urgency=medium
 
   * Initial release of 5.0.11.p4.5

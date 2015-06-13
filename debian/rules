@@ -66,7 +66,14 @@ override_dh_install:
 	dh_install --fail-missing $(DHINSTOPTS)
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-fb/usr/lib/galcore -pimx-gpu-viv-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-dfb/usr/lib/galcore -pimx-gpu-viv-dfb-- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-wl/usr/lib/galcore -pimx-gpu-viv-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-x11/usr/lib/galcore -pimx-gpu-viv-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -plibg2d0.8 -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -plibg2d-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 
 override_dh_strip:
 	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
