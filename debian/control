@@ -41,17 +41,25 @@ Provides:
  libopencl1-dev,
 Breaks:
  libegl1-dev,
+ libegl1-mesa-dev,
  libgles1-dev,
+ libgles1-mesa-dev,
  libgles2-dev,
+ libgles2-mesa-dev,
  libgles3-dev,
  libopenvg1-dev,
+ libopenvg1-mesa-dev,
  libopencl1-dev,
 Replaces:
  libegl1-dev,
+ libegl1-mesa-dev,
  libgles1-dev,
+ libgles1-mesa-dev,
  libgles2-dev,
+ libgles2-mesa-dev,
  libgles3-dev,
  libopenvg1-dev,
+ libopenvg1-mesa-dev,
  libopencl1-dev,
 Description: Todo
  T. O. D. O.
