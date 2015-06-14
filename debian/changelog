@@ -1,3 +1,9 @@
+imx-gpu-viv (5.0.11.p4.5+2) stable; urgency=medium
+
+  * provide fake libGL.so.1 linking to vivante's libGL.so.1.2
+
+ -- Josua Mayer <josua@solid-run.com>  Sun, 14 Jun 2015 18:13:35 +0800
+
 imx-gpu-viv (5.0.11.p4.5+1) stable; urgency=medium
 
   * install vivante libs into subfolder to not conflict with mesa anymore

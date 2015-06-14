@@ -116,9 +116,11 @@ install_core_dfb() {
 install_core_x11() {
 	# X11 OpenGL GLX
 	install_gc_lib libGL.so.1.2
-	link_gc_lib libGL.so.1.2 libGL.so.1
-	link_gc_lib libGL.so.1 libGL.so
+	link_gc_lib libGL.so.1.2 libGL.so
 	install_custom_gc_pc gl
+
+	# create fake libGL.so.1 (mesa libgl soname)
+	gcc -shared -Wl,-soname=libGL.so.1 -L${_destdir}/${_libdir}/galcore -lGL -o ${_destdir}/${_libdir}/galcore/libGL.so.1
 
 	# DRI
 	install_dri_driver vivante_dri.so
