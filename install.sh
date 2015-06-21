@@ -149,9 +149,11 @@ install_core_wl() {
 
 install_core_alternatives() {
 	update-alternatives --remove-all vivante-gal
+	prio=0
 	for bg in fb dfb wl x11; do
+		((prio=prio+10))
 		update-alternatives \
-			--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/libGAL-$bg.so 10 \
+			--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/libGAL-$bg.so $prio \
 			--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/libEGL-$bg.so \
 			--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/libGLESv2-$bg.so \
 			--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/libVIVANTE-$bg.so
