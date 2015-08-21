@@ -24,7 +24,7 @@ DISTOPTS=
 DHINSTOPTS=
 ifneq (, $(filter $(shell lsb_release --codename --short), wheezy))
   DISTOPTS += --skip-cl
-  DHINSTOPTS += -XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11
+  DHINSTOPTS += -XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11 -XCL
 endif
 
 %:

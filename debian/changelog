@@ -1,3 +1,9 @@
+imx-gpu-viv (5.0.11.p4.5+3) stable; urgency=medium
+
+  * miscellaneous package fixes
+
+ -- Josua Mayer <josua@linux>  Fri, 21 Aug 2015 18:20:50 +0800
+
 imx-gpu-viv (5.0.11.p4.5+2) stable; urgency=medium
 
   * provide fake libGL.so.1 linking to vivante's libGL.so.1.2

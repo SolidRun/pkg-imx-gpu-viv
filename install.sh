@@ -142,6 +142,7 @@ install_core_wl() {
 	link_gc_lib libwayland-viv.so.0 libwayland-viv.so
 	install_gc_lib libwayland-viv.a
 	install_pc wayland-viv
+	install_headers wayland-viv
 
 	# TODO: update paths in installed .pc-files
 	return
