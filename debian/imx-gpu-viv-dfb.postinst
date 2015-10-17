@@ -3,11 +3,11 @@
 # handle alternatives
 if [ "x$1" = "xconfigure" ]; then
 	update-alternatives \
-		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/libGAL-dfb.so 20 \
-		--slave /usr/lib/galcore/libGAL_egl.so vivante-gal-egl /usr/lib/galcore/libGAL_egl.dfb.so \
-		--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/libEGL-dfb.so \
-		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/libGLESv2-dfb.so \
-		--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/libVIVANTE-dfb.so
+		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/dfb/libGAL.so 20 \
+		--slave /usr/lib/galcore/libGAL_egl.so vivante-gal-egl /usr/lib/galcore/dfb/libGAL_egl.so \
+		--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/dfb/libEGL.so \
+		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/dfb/libGLESv2.so \
+		--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/dfb/libVIVANTE.so
 fi
 
 # force-reinstall/repair symlinks

@@ -1,5 +1,1 @@
-/usr/lib/galcore/libEGL-fb.so
-/usr/lib/galcore/libGAL-fb.so
-/usr/lib/galcore/libGAL_egl.fb.so
-/usr/lib/galcore/libGLESv2-fb.so
-/usr/lib/galcore/libVIVANTE-fb.so
+/usr/lib/galcore/fb

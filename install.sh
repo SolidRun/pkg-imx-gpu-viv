@@ -8,15 +8,15 @@ source functions.inc
 install_core_base() {
 	# Vivante GPU HAL
 	for bg in fb dfb wl x11; do
-		install_gc_lib libGAL-$bg.so
+		install_gc_lib libGAL-$bg.so $bg/libGAL.so
 	done
-	# alternatives: libGAL.so -> libGAL-$bg.so
+	# alternatives: libGAL.so -> $bg/libGAL.so
 
 	for bg in fb dfb wl; do
-		install_gc_lib libGAL_egl.$bg.so
+		install_gc_lib libGAL_egl.$bg.so $bg/libGAL_egl.so
 	done
-	install_gc_lib libGAL_egl.dri.so libGAL_egl.x11.so
-	# alternatives: libGAL_egl.so -> libGAL_egl.$bg.so
+	install_gc_lib libGAL_egl.dri.so x11/libGAL_egl.so
+	# alternatives: libGAL_egl.so -> $bg/libGAL_egl.so
 	install_headers HAL
 
 	# Khronos shared headers
@@ -25,9 +25,9 @@ install_core_base() {
 	# EGL
 	link_gc_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
 	for bg in fb dfb wl x11; do
-		install_gc_lib libEGL-$bg.so
+		install_gc_lib libEGL-$bg.so $bg/libEGL.so
 	done
-	# alternatives: libEGL.so.1.0 -> libEGL-$bg.so
+	# alternatives: libEGL.so.1.0 -> $bg/libEGL.so
 	install_custom_gc_pc egl
 	link_gc_lib libEGL.so.1.0 libEGL.so.1
 	link_gc_lib libEGL.so.1 libEGL.so
@@ -53,10 +53,10 @@ install_core_base() {
 
 	# OpenGL-ES 2.0
 	for bg in fb dfb wl x11; do
-		install_gc_lib libGLESv2-$bg.so
+		install_gc_lib libGLESv2-$bg.so $bg/libGLESv2.so
 	done
 	link_gc_lib libGLESv2.so.2 libGLESv2.so.2.0.0 # Mesa compat
-	# alternatives: libGLESv2.so.2 -> libGLESv2-$bg.so
+	# alternatives: libGLESv2.so.2 -> $bg/libGLESv2.so
 	link_gc_lib libGLESv2.so.2 libGLESv2.so
 	install_headers GLES2
 	install_custom_gc_pc glesv2
@@ -96,9 +96,9 @@ install_core_base() {
 	install_conf Vivante.icd
 	install_gc_lib libVSC.so
 	for bg in fb dfb wl x11; do
-		install_gc_lib libVIVANTE-$bg.so
+		install_gc_lib libVIVANTE-$bg.so $bg/libVIVANTE.so
 	done
-	# alternatives: libVIVANTE.so -> libVIVANTE-$bg.so
+	# alternatives: libVIVANTE.so -> $bg/libVIVANTE.so
 
 	return
 }
@@ -154,10 +154,10 @@ install_core_alternatives() {
 	for bg in fb dfb wl x11; do
 		((prio=prio+10))
 		update-alternatives \
-			--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/libGAL-$bg.so $prio \
-			--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/libEGL-$bg.so \
-			--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/libGLESv2-$bg.so \
-			--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/libVIVANTE-$bg.so
+			--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/$bg/libGAL.so $prio \
+			--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/$bg/libEGL.so \
+			--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/$bg/libGLESv2.so \
+			--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/$bg/libVIVANTE.so
 	done
 }
 
