@@ -8,4 +8,4 @@ Requires.private:
 Version: ${version}
 Libs: -L${libdir} -lEGL
 Libs.private: -lm -lpthread -ldl
-Cflags: -I${includedir} -DLINUX
+Cflags: -I${includedir}

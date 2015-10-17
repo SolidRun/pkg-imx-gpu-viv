@@ -336,6 +336,10 @@ install_core_fb
 install_core_dfb
 install_core_wl
 install_core_x11
+
+# patch headers
+find ${_destdir}/${_includedir} -type f -exec sed -i "s;defined(LINUX);defined(linux);g" {} \;
+
 if [ "$skip_alternatives" = "no" ]; then
 	install_core_alternatives
 fi
