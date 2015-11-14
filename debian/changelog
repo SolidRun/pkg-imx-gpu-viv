@@ -1,3 +1,9 @@
+imx-gpu-viv (5.0.11.p4.5+5) stable; urgency=medium
+
+  * properly patch header files ..... for LINUX/__linux__
+
+ -- Josua Mayer <josua@solid-run.com>  Sat, 14 Nov 2015 17:12:11 +0000
+
 imx-gpu-viv (5.0.11.p4.5+4) stable; urgency=medium
 
   * make ldconfig a bit happier
