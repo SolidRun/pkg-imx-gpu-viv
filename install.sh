@@ -83,6 +83,8 @@ install_core_base() {
 		install_headers CL
 
 		install_gc_lib libVivanteOpenCL.so
+
+		install_conf Vivante.icd OpenCL/vendors/Vivante.icd
 	fi
 
 	# VDK
@@ -93,7 +95,6 @@ install_core_base() {
 	install_header vdk.h
 
 	# miscellaneous
-	install_conf Vivante.icd
 	install_gc_lib libVSC.so
 	for bg in fb dfb wl x11; do
 		install_gc_lib libVIVANTE-$bg.so $bg/libVIVANTE.so

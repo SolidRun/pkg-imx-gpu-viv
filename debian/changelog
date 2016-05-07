@@ -1,3 +1,10 @@
+imx-gpu-viv (5.0.11.p4.5+6) stable; urgency=high
+
+  * fix broken OpenCL (/etc/Vivante.icd -> /etc/OpenCL/vendors/)
+    Thanks to Jon Nettleton for pointing it out!
+
+ -- Josua Mayer <josua@solid-run.com>  Sat, 17 May 2016 23:13:00 +0200
+
 imx-gpu-viv (5.0.11.p4.5+5) stable; urgency=medium
 
   * properly patch header files ..... for LINUX/__linux__

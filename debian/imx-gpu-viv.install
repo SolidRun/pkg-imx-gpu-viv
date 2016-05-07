@@ -1,6 +1,6 @@
 /etc/profile.d/vivante.sh
 /etc/ld.so.conf.d/0vivante.conf
-/etc/Vivante.icd
+/etc/OpenCL/vendors/Vivante.icd
 /usr/lib/galcore/libEGL.so.1.0.0
 /usr/lib/galcore/libEGL.so.1
 /usr/lib/galcore/libEGL.so
