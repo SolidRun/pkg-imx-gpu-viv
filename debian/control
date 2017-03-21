@@ -21,8 +21,8 @@ Depends:
  imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
  galcore-5.0.11.25762,
  ${shlibs:Depends},
-Description: Todo
- T. O. D. O.
+Description: Vivante Userspace for i.MX6
+ Provides the userspace graphics libraries as provided by Vivante.
 
 Package: imx-gpu-viv-dev
 Section: libdevel
@@ -61,8 +61,8 @@ Replaces:
  libopenvg1-dev,
  libopenvg1-mesa-dev,
  libopencl1-dev,
-Description: Todo
- T. O. D. O.
+Description: Development files for imx-gpu-viv
+ Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6.
 
 Package: imx-gpu-viv-dbg
 Architecture: any
@@ -71,8 +71,8 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
-Description: Todo
- T. O. D. O.
+Description: Debug symbols for imx-gpu-viv
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries.
 
 Package: imx-gpu-viv-demos
 Architecture: any
@@ -82,8 +82,8 @@ Depends:
  imx-gpu-viv (= ${binary:Version}),
  imx-gpu-viv-fb | imx-gpu-viv-dfb | imx-gpu-viv-wl | imx-gpu-viv-x11,
  ${shlibs:Depends},
-Description: Todo
- T. O. D. O.
+Description: Vivante Demos for i.MX6
+ Provides the demo applications as provided by Vivante.
 
 Package: imx-gpu-viv-fb
 Section: libs
@@ -92,8 +92,8 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
-Description: Todo
- T. O. D. O.
+Description: Vivante Userspace for i.MX6 on Framebuffer
+ Provides the userspace graphics libraries as provided by Vivante, Framebuffer parts.
 
 Package: imx-gpu-viv-dfb
 Section: libs
@@ -102,8 +102,8 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
-Description: Todo
- T. O. D. O.
+Description: Vivante Userspace for i.MX6 on DirectFB
+ Provides the userspace graphics libraries as provided by Vivante, DirectFB parts.
 
 Package: imx-gpu-viv-wl
 Section: libs
@@ -112,8 +112,8 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
-Description: Todo                          
- T. O. D. O.
+Description: Vivante Userspace for i.MX6 on Wayland
+ Provides the userspace graphics libraries as provided by Vivante, Wayland parts.
 
 Package: imx-gpu-viv-x11
 Section: libs
@@ -122,8 +122,8 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
-Description: Todo
- T. O. D. O.
+Description: Vivante Userspace for i.MX6 on X11
+ Provides the userspace graphics libraries as provided by Vivante, X11 parts.
 
 Package: imx-gpu-viv-fb-dev
 Section: libdevel
@@ -132,8 +132,8 @@ Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Development files for imx-gpu-viv-fb
+ Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Framebuffer parts.
 
 Package: imx-gpu-viv-dfb-dev
 Section: libdevel
@@ -142,8 +142,8 @@ Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-dfb (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Development files for imx-gpu-viv-dfb
+ Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, DirectFB parts.
 
 Package: imx-gpu-viv-wl-dev
 Section: libdevel
@@ -152,8 +152,8 @@ Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Development files for imx-gpu-viv-wl
+ Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Wayland parts.
 
 Package: imx-gpu-viv-x11-dev
 Section: libdevel
@@ -165,8 +165,8 @@ Depends:
 Provides: libgl-dev
 Breaks: libgl-dev
 Replaces: libgl-dev
-Description: Todo
- T. O. D. O.
+Description: Development files for imx-gpu-viv-x11
+ Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
 
 Package: imx-gpu-viv-fb-dbg
 Architecture: any
@@ -175,8 +175,8 @@ Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Debug symbols for imx-gpu-viv-fb
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, Framebuffer parts.
 
 Package: imx-gpu-viv-dfb-dbg
 Architecture: any    
@@ -185,8 +185,8 @@ Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-dfb (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Debug symbols for imx-gpu-viv-dfb
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, DirectFB parts.
 
 Package: imx-gpu-viv-wl-dbg
 Architecture: any    
@@ -195,8 +195,8 @@ Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Debug symbols for imx-gpu-viv-wl
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, Wayland parts.
 
 Package: imx-gpu-viv-x11-dbg
 Architecture: any    
@@ -205,8 +205,8 @@ Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Debug symbols for imx-gpu-viv-x11
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, X11 parts.
 
 Package: libg2d0.8
 Section: libs
@@ -215,8 +215,8 @@ Depends:
  ${shlibs:Depends},
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
-Description: Todo
- T. O. D. O.
+Description: 2D graphics library
+ graphics library utilizing the 2D GPU.
 
 Package: libg2d-dev
 Section: libdevel
@@ -224,8 +224,8 @@ Architecture: any
 Depends:
  libg2d0.8 (= ${binary:Version}),
  ${misc:Depends}
-Description: Todo
- T. O. D. O.
+Description: Development files for libg2d
+ Provides libraries and headers to create programs using libg2d.
 
 Package: libg2d-demos
 Section: devel
@@ -234,8 +234,8 @@ Depends:
  ${misc:Depends},
  ${shlibs:Depends},
  libg2d0.8 (= ${binary:Version}),
-Description: Todo
- T. O. D. O.
+Description: 2D graphics library Demos
+ Provides the demos for libg2d as provided by Vivante.
 
 Package: libg2d0.8-dbg
 Architecture: any
@@ -243,5 +243,5 @@ Section: debug
 Depends:
  libg2d0.8 (= ${binary:Version}),
  ${misc:Depends},
-Description: Todo
- T. O. D. O.
+Description: Debug symbols for libg2d
+  Provides the debug symbols to the G2D graphics library.
