@@ -9,22 +9,24 @@
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
+# include system information
+include /usr/share/dpkg/architecture.mk
+
+# set CROSS_COMPILE only when cross-compiling
+CROSS_COMPILE=
+ifneq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
+	CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)-
+endif
+
 # hack: will only work on OBS-created chroots
 SOURCESDIRS=/usr/src/packages/SOURCES/ ~/
-
-# decide on hard- and soft-float
-ifeq (armhf, $(shell dpkg-architecture -qDEB_HOST_ARCH))
-  FLOATOPT=hard
-else
-  FLOATOPT=soft
-endif
 
 # skip opencl on distros where glibc or gcc are too old
 DISTOPTS=
 DHINSTOPTS=
 ifneq (, $(filter $(shell lsb_release --codename --short), wheezy))
   DISTOPTS += --skip-cl
-  DHINSTOPTS += -XlibCLC.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11 -XCL
+  DHINSTOPTS += -XlibCLC.so -XlibLLVM_viv.so -XlibOpenCL.so -XlibVivanteOpenCL.so -Xcl11 -XCL
 endif
 
 %:
@@ -37,26 +39,26 @@ override_dh_auto_clean:
 	rm -vf *.bin
 build: 
 	# create dummy libraries for directfb and wayland; dpkg-shlibdeps will complain otherwise
-	gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4
-	gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4
-	gcc -shared -Wl,-soname,libwayland-server.so.0 -o libwayland-server.so.0
-	gcc -shared -Wl,-soname,libwayland-client.so.0 -o libwayland-client.so.0
-	gcc -shared -Wl,-soname,libffi.so.6 -o libffi.so.6
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libdirectfb-1.7.so.4 -o libdirectfb-1.7.so.4
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libdirect-1.7.so.4 -o libdirect-1.7.so.4
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libwayland-server.so.0 -o libwayland-server.so.0
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libwayland-client.so.0 -o libwayland-client.so.0
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libwayland-cursor.so.0 -o libwayland-cursor.so.0
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libffi.so.6 -o libffi.so.6
 
 	# create dummies for the backend-dependent libs required by the indep package;
 	# dpkg-shlibdeps will otherwise add one backend package as dependency to all of them
-	gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
-	gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
-	gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
-	gcc -shared -Wl,-soname,libVIVANTE.so -o libVIVANTE.so
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libEGL.so.1 -o libEGL.so.1
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libGLESv2.so.2 -o libGLESv2.so.2
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libGAL.so -o libGAL.so
+	$(CROSS_COMPILE)gcc -shared -Wl,-soname,libVIVANTE.so -o libVIVANTE.so
 
 	# create fake libwayland-egl.so.1
-	#gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
+	#$(CROSS_COMPILE)gcc -shared -Wl,-soname,libwayland-egl.so.1 -o libwayland-egl.so.1
 
 override_dh_auto_install:
-	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-sfp.bin" -exec cp -v {} ./ \; || true
-	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*-hfp.bin" -exec cp -v {} ./ \; || true
-	./install.sh --destdir $(CURDIR)/debian/tmp --skip-alternatives --dridir /usr/lib/dri --fhw $(FLOATOPT) $(DISTOPTS)
+	find $(SOURCESDIRS) -maxdepth 1 -iname "imx-gpu-viv-*.bin" -exec cp -v {} ./ \; || true
+	CROSS_COMPILE=$(CROSS_COMPILE) ./install.sh --destdir $(CURDIR)/debian/tmp --skip-alternatives --dridir /usr/lib/dri --fhw hard $(DISTOPTS)
 	#install -v -m644 libwayland-egl.so.1 $(CURDIR)/debian/tmp/usr/lib/
 	install -v -m644 -D vivante.profile.sh $(CURDIR)/debian/tmp/etc/profile.d/vivante.sh
 	mkdir -p $(CURDIR)/debian/tmp/etc/ld.so.conf.d
@@ -66,19 +68,16 @@ override_dh_install:
 	dh_install --fail-missing $(DHINSTOPTS)
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-fb/usr/lib/galcore -pimx-gpu-viv-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-dfb/usr/lib/galcore -pimx-gpu-viv-dfb -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-wl/usr/lib/galcore -pimx-gpu-viv-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-x11/usr/lib/galcore -pimx-gpu-viv-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -plibg2d0.8 -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -plibg2d-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-dfb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-fb/usr/lib/galcore -pimx-gpu-viv-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-wl/usr/lib/galcore -pimx-gpu-viv-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-x11/usr/lib/galcore -pimx-gpu-viv-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -plibgbm -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 
 override_dh_strip:
 	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
 	dh_strip --package=imx-gpu-viv-fb --dbg-package=imx-gpu-viv-fb-dbg
-	dh_strip --package=imx-gpu-viv-dfb --dbg-package=imx-gpu-viv-dfb-dbg
 	dh_strip --package=imx-gpu-viv-x11 --dbg-package=imx-gpu-viv-x11-dbg
 	dh_strip --package=imx-gpu-viv-wl --dbg-package=imx-gpu-viv-wl-dbg
-	dh_strip --package=libg2d0.8 --dbg-package=libg2d0.8-dbg
+	dh_strip --package=libgbm --dbg-package=libgbm-dbg

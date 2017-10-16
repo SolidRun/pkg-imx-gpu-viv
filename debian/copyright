@@ -3,7 +3,7 @@ Upstream-Name: imx-gpu-viv
 Source: https://github.com/mxOBS/deb-pkg_gpu-viv-bin
 
 Files: *
-Copyright: 2014-2015 Josua Mayer <josua@solid-run.com>
+Copyright: 2014-2017 Josua Mayer <josua@solid-run.com>
 License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,13 +25,13 @@ License: MIT
 
 Files: imx-gpu-viv-*/*
 Copyright: Freescale, Vivante
-License: LA_OPT_FSL_OPEN_3RD_PARTY_IP
- FREESCALE SEMICONDUCTOR SOFTWARE LICENSE AGREEMENT v6 February 2015
+License: LA_OPT_BASE_LICENSE
+ v20 June 2017
  .
- see EULA.txt for the full license.
+ See /usr/share/doc/imx-gpu-viv/COPYING.gz for the full text!
 
 Files: debian/*
-Copyright: 2014-2015 Josua Mayer <josua@solid-run.com>
+Copyright: 2014-2017 Josua Mayer <josua@solid-run.com>
 License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

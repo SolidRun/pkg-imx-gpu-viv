@@ -1,3 +1,9 @@
+imx-gpu-viv (6.2.2.p0) UNRELEASED; urgency=medium
+
+  * Freescale release
+
+ -- Josua Mayer <josua@solid-run.com>  Mon, 16 Oct 2017 12:46:13 +0200
+
 imx-gpu-viv (5.0.11.p4.5+6) stable; urgency=high
 
   * fix broken OpenCL (/etc/Vivante.icd -> /etc/OpenCL/vendors/)

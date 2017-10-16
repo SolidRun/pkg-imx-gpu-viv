@@ -4,18 +4,16 @@
 if [ "x$1" = "xconfigure" ]; then
 	update-alternatives \
 		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/wl/libGAL.so 30 \
-		--slave /usr/lib/galcore/libGAL_egl.so vivante-gal-egl /usr/lib/galcore/wl/libGAL_egl.so \
-		--slave /usr/lib/galcore/libEGL.so.1.0 vivante-egl /usr/lib/galcore/wl/libEGL.so \
-		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/wl/libGLESv2.so \
-		--slave /usr/lib/galcore/libVIVANTE.so vivante-vivante /usr/lib/galcore/wl/libVIVANTE.so
+		--slave /usr/lib/galcore/libEGL.so.1 vivante-egl /usr/lib/galcore/wl/libEGL.so.1 \
+		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/wl/libGLESv2.so.2 \
+		--slave /usr/lib/galcore/libVDK.so vivante-vdk /usr/lib/galcore/wl/libVDK.so
 fi
 
 # force-reinstall/repair symlinks
 ln -sf libEGL.so.1 /usr/lib/galcore/libEGL.so
-ln -sf libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1
+ln -sf libEGL.so.1 /usr/lib/galcore/libEGL.so.1.0
 ln -sf libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1.0.0
 ln -sf libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so
-ln -sf libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so.2.0.0
 
 #DEBHELPER#
 

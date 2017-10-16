@@ -2,4 +2,5 @@ libdirectfb-1.7 4 libdirectfb-1.7-4
 libdirect-1.7 4 libdirectfb-1.7-4
 libwayland-server 0 libwayland-server0
 libwayland-client 0 libwayland-client0
+libwayland-cursor 0 libwayland-cursor0
 libffi 6 libffi6

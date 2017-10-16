@@ -1,1 +1,2 @@
 imx-gpu-viv-demos binary: binary-or-shlib-defines-rpath
+imx-gpu-viv-demos binary: dir-or-file-in-opt
