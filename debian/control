@@ -150,13 +150,14 @@ Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}),
  ${misc:Depends},
-Provides: libgl-dev
+Provides:
+ libgl-dev,
 Breaks:
  libgl-dev,
- mesa-common-dev,
+ mesa-common-dev (>> 1),
 Replaces:
  libgl-dev,
- mesa-common-dev,
+ mesa-common-dev (>> 1),
 Description: Development files for imx-gpu-viv-x11
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
 
