@@ -38,7 +38,6 @@ Architecture: armhf
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
- mesa-common-dev,
  imx-gpu-viv-fb-dev | imx-gpu-viv-wl-dev | imx-gpu-viv-x11-dev,
 Provides:
  libegl1-dev,
@@ -152,8 +151,12 @@ Depends:
  imx-gpu-viv-x11 (= ${binary:Version}),
  ${misc:Depends},
 Provides: libgl-dev
-Breaks: libgl-dev
-Replaces: libgl-dev
+Breaks:
+ libgl-dev,
+ mesa-common-dev,
+Replaces:
+ libgl-dev,
+ mesa-common-dev,
 Description: Development files for imx-gpu-viv-x11
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
 
