@@ -109,6 +109,7 @@ Architecture: armhf
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
+ libgbm (= ${binary:Version}),
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on Wayland
  Provides the userspace graphics libraries as provided by Vivante, Wayland parts.
@@ -139,6 +140,7 @@ Architecture: armhf
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
+ libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-wl
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Wayland parts.
