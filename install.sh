@@ -19,6 +19,7 @@ install_core_base() {
 	# EGL
 	for bg in fb wl x11; do
 		install_gc_lib libEGL-$bg.so $bg/libEGL.so.1
+		link_gc_lib libEGL.so.1 $bg/libEGL.so
 	done
 	# alternatives: libEGL.so.1 -> $bg/libEGL.so.1
 	link_gc_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
@@ -51,6 +52,7 @@ install_core_base() {
 	# OpenGL-ES 2.0
 	for bg in fb wl x11; do
 		install_gc_lib libGLESv2-$bg.so $bg/libGLESv2.so.2
+		link_gc_lib libGLESv2.so.2 $bg/libGLESv2.so
 	done
 	# alternatives: libGLESv2.so.2 -> $bg/libGLESv2.so.2
 	link_gc_lib libGLESv2.so.2 libGLESv2.so.2.0.0 # Mesa compat
