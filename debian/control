@@ -27,6 +27,8 @@ Depends:
  ${shlibs:Depends},
 Breaks:
  imx-gpu-viv-dfb,
+Conflicts:
+ libg2d0.8,
 Description: Vivante Userspace for i.MX6
  Provides the userspace graphics libraries as provided by Vivante.
 
