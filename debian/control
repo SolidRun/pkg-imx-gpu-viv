@@ -23,7 +23,7 @@ Architecture: armhf
 Depends:
  ${misc:Depends},
  imx-gpu-viv-fb | imx-gpu-viv-wl | imx-gpu-viv-x11,
- galcore-5.0.11.25762,
+ galcore-6.2.2.93313,
  ${shlibs:Depends},
 Breaks:
  imx-gpu-viv-dfb,
