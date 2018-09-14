@@ -26,9 +26,9 @@ install_core_base() {
 	link_gc_lib libEGL.so.1 libEGL.so.1.0
 	link_gc_lib libEGL.so.1 libEGL.so
 	install_headers EGL
-	install_pc egl_linuxfb egl_vivante_fb
-	install_pc egl_wayland egl_vivante_wl
-	install_pc egl_x11 egl_vivante_x11
+	install_gc_pc egl_linuxfb egl_vivante_fb
+	install_gc_pc egl_wayland egl_vivante_wl
+	install_gc_pc egl_x11 egl_vivante_x11
 	# TODO: alternatives
 
 	# OpenGL-ES
@@ -47,7 +47,7 @@ install_core_base() {
 	install_gc_lib libGLESv1_CM.so.1.1.0
 	link_gc_lib libGLESv1_CM.so.1.1.0 libGLESv1_CM.so.1
 	link_gc_lib libGLESv1_CM.so.1 libGLESv1_CM.so
-	install_pc glesv1_cm
+	install_gc_pc glesv1_cm
 
 	# OpenGL-ES 2.0
 	for bg in fb wl x11; do
@@ -58,17 +58,17 @@ install_core_base() {
 	link_gc_lib libGLESv2.so.2 libGLESv2.so.2.0.0 # Mesa compat
 	link_gc_lib libGLESv2.so.2 libGLESv2.so
 	install_headers GLES2
-	install_pc glesv2 glesv2_vivante_fb
-	install_pc glesv2 glesv2_vivante_wl
-	install_pc glesv2_x11 glesv2_vivante_x11
+	install_gc_pc glesv2 glesv2_vivante_fb
+	install_gc_pc glesv2 glesv2_vivante_wl
+	install_gc_pc glesv2_x11 glesv2_vivante_x11
 	# TODO: alternatives
 
 	# OpenGL-ES 3.0
 	# part of libGLESv2.so
 	install_headers GLES3
-	install_pc glesv1_cm glesv1_cm_vivante_fb
-	install_pc glesv1_cm glesv1_cm_vivante_wl
-	install_pc glesv1_cm_x11 glesv1_cm_vivante_x11
+	install_gc_pc glesv1_cm glesv1_cm_vivante_fb
+	install_gc_pc glesv1_cm glesv1_cm_vivante_wl
+	install_gc_pc glesv1_cm_x11 glesv1_cm_vivante_x11
 	# TODO: alternatives
 
 	# GL Shader Compiler
@@ -79,7 +79,7 @@ install_core_base() {
 	install_gc_lib libOpenVG.3d.so
 	link_gc_lib libOpenVG.3d.so libOpenVG.so
 	install_headers VG
-	install_pc vg
+	install_gc_pc vg
 	# TODO: alternative for VG?
 
 	if [ "x$skip_cl" = "xno" ]; then
@@ -117,7 +117,7 @@ install_core_x11() {
 	# X11 OpenGL GLX
 	install_gc_lib libGL.so.1.2
 	link_gc_lib libGL.so.1.2 libGL.so
-	install_pc gl_x11 gl
+	install_gc_pc gl_x11 gl
 
 	# GL headers
 	install_headers GL
@@ -138,13 +138,13 @@ install_core_wl() {
 	link_gc_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so.0.0.0
 	link_gc_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
 	install_gc_lib libgc_wayland_protocol.a
-	install_pc gc_wayland_protocol
+	install_gc_pc gc_wayland_protocol
 
 	install_gc_lib libwayland-viv.so.0.0.0 libwayland-viv.so.0
 	link_gc_lib libwayland-viv.so.0 libwayland-viv.so.0.0.0
 	link_gc_lib libwayland-viv.so.0 libwayland-viv.so
 	install_gc_lib libwayland-viv.a
-	install_pc wayland-viv
+	install_gc_pc wayland-viv
 	install_headers wayland-viv
 
 	# TODO: update paths in installed .pc-files

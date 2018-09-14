@@ -213,6 +213,27 @@ install_custom_header() {
 	install -v -m644 -D "${basedir}/${oldname}" "${_destdir}/${_includedir}/${newname}"
 }
 
+patch_pc() {
+	file="${1}"
+
+	# currently only libdir is non-standard
+	sed -i "s;^libdir=.*$;libdir=${_libdir}/galcore;g" "${file}"
+}
+
+# install .pc for libraries using galcore
+install_gc_pc() {
+	oldname="${1}"
+	newname="${2}"
+	if [ -z "${newname}" ]; then
+		newname="${oldname}"
+	fi
+
+	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
+	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	patch_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	return 0
+}
+
 format_pc() {
 	name="${1}"
 	includedir="${2}"
@@ -228,18 +249,7 @@ format_pc() {
 	return 0
 }
 
-install_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	return 0
-}
-
+# install custom (local) .pc for libraries using galcore
 install_custom_gc_pc() {
 	oldname="${1}"
 	newname="${2}"
@@ -250,29 +260,6 @@ install_custom_gc_pc() {
 	# generate .pc if .in exists
 	if [ -e "${basedir}/${oldname}.pc.in" ]; then
 		format_pc "${oldname}" ${_includedir} ${_libdir}/galcore "${vivanteversion}"
-	fi
-
-	if [ ! -e "${basedir}/${oldname}.pc" ]; then
-		echo "${basedir}/${oldname}.pc not found!"
-		return 1
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${basedir}/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-
-	return 0
-}
-
-install_custom_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	# generate .pc if .in exists
-	if [ -e "${basedir}/${oldname}.pc.in" ]; then
-		format_pc "${oldname}" ${_includedir} ${_libdir} "${vivanteversion}"
 	fi
 
 	if [ ! -e "${basedir}/${oldname}.pc" ]; then
