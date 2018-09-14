@@ -22,7 +22,7 @@ Section: libs
 Architecture: armhf
 Depends:
  ${misc:Depends},
- imx-gpu-viv-fb | imx-gpu-viv-wl | imx-gpu-viv-x11,
+ imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
  galcore-6.2.2.93313,
  ${shlibs:Depends},
 Breaks:
@@ -38,7 +38,7 @@ Architecture: armhf
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
- imx-gpu-viv-fb-dev | imx-gpu-viv-wl-dev | imx-gpu-viv-x11-dev,
+ imx-gpu-viv-fb-dev (= ${binary:Version}) | imx-gpu-viv-wl-dev (= ${binary:Version}) | imx-gpu-viv-x11-dev (= ${binary:Version}),
 Provides:
  libegl1-dev,
  libgles1-dev,
@@ -78,7 +78,7 @@ Section: debug
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
- imx-gpu-viv-fb | imx-gpu-viv-wl | imx-gpu-viv-x11,
+ imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
 Description: Debug symbols for imx-gpu-viv
  Provides the debug symbols to Vivante i.MX6 userspace graphics libraries.
 
@@ -88,7 +88,7 @@ Section: devel
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
- imx-gpu-viv-fb | imx-gpu-viv-wl | imx-gpu-viv-x11,
+ imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
  ${shlibs:Depends},
 Description: Vivante Demos for i.MX6
  Provides the demo applications as provided by Vivante.
