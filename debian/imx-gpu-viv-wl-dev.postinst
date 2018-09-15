@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ "x$1" = "xconfigure" ]; then
+	# This is tricky!
+	# Because imx-gpu-viv-*-dev depend on imx-gpu-viv-*, 
+	# the latter are always configured before the former.
+	# Therefore the alternatives have already been set up!
+
+	# Because link groups can not be changed once created,
+	# the original link group has to be recreated here :(
+	update-alternatives \
+		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/wl/libGAL.so 30 \
+		--slave /usr/lib/galcore/libEGL.so.1 vivante-egl /usr/lib/galcore/wl/libEGL.so.1 \
+		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/wl/libGLESv2.so.2 \
+		--slave /usr/lib/galcore/libVDK.so vivante-vdk /usr/lib/galcore/wl/libVDK.so \
+		--slave /usr/lib/pkgconfig/egl.pc vivante-egl-dev /usr/lib/pkgconfig/egl_vivante_wl.pc \
+		--slave /usr/lib/pkgconfig/glesv1_cm.pc vivante-gles1-dev /usr/lib/pkgconfig/glesv1_cm_vivante_wl.pc \
+		--slave /usr/lib/pkgconfig/glesv2.pc vivante-gles2-dev /usr/lib/pkgconfig/glesv2_vivante_wl.pc
+fi
+
+#DEBHELPER#
+
+exit 0
