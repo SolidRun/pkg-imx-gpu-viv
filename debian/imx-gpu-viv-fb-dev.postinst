@@ -13,7 +13,9 @@ if [ "x$1" = "xconfigure" ]; then
 		--slave /usr/lib/galcore/libEGL.so.1 vivante-egl /usr/lib/galcore/fb/libEGL.so.1 \
 		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/fb/libGLESv2.so.2 \
 		--slave /usr/lib/galcore/libVDK.so vivante-vdk /usr/lib/galcore/fb/libVDK.so \
-		--slave /usr/lib/pkgconfig/egl.pc vivante-egl-dev /usr/lib/pkgconfig/egl_vivante_fb.pc
+		--slave /usr/lib/pkgconfig/egl.pc vivante-egl-dev /usr/lib/pkgconfig/egl_vivante_fb.pc \
+		--slave /usr/lib/pkgconfig/glesv1_cm.pc vivante-gles1-dev /usr/lib/pkgconfig/glesv1_cm_vivante_fb.pc \
+		--slave /usr/lib/pkgconfig/glesv2.pc vivante-gles2-dev /usr/lib/pkgconfig/glesv2_vivante_fb.pc
 fi
 
 #DEBHELPER#

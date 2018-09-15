@@ -47,7 +47,9 @@ install_core_base() {
 	install_gc_lib libGLESv1_CM.so.1.1.0
 	link_gc_lib libGLESv1_CM.so.1.1.0 libGLESv1_CM.so.1
 	link_gc_lib libGLESv1_CM.so.1 libGLESv1_CM.so
-	install_gc_pc glesv1_cm
+	install_gc_pc glesv1_cm glesv1_cm_vivante_fb
+	install_gc_pc glesv1_cm glesv1_cm_vivante_wl
+	install_gc_pc glesv1_cm_x11 glesv1_cm_vivante_x11
 
 	# OpenGL-ES 2.0
 	for bg in fb wl x11; do
@@ -66,9 +68,6 @@ install_core_base() {
 	# OpenGL-ES 3.0
 	# part of libGLESv2.so
 	install_headers GLES3
-	install_gc_pc glesv1_cm glesv1_cm_vivante_fb
-	install_gc_pc glesv1_cm glesv1_cm_vivante_wl
-	install_gc_pc glesv1_cm_x11 glesv1_cm_vivante_x11
 	# TODO: alternatives
 
 	# GL Shader Compiler
