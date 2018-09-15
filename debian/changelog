@@ -1,4 +1,12 @@
-imx-gpu-viv (6.2.2.p0) UNRELEASED; urgency=medium
+imx-gpu-viv (6.2.2.p0+1) stable; urgency=medium
+
+  * include gbm.pc
+  * add pkgconfig files to alternatives link groups
+  * fix libdir in pkgconfig files
+
+ -- Josua Mayer <josua@solid-run.com>  Sat, 15 Sep 2018 02:29:11 +0200
+
+imx-gpu-viv (6.2.2.p0) testing; urgency=medium
 
   * Freescale release
 
