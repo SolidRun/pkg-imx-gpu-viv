@@ -213,11 +213,34 @@ install_custom_header() {
 	install -v -m644 -D "${basedir}/${oldname}" "${_destdir}/${_includedir}/${newname}"
 }
 
+# patch .pc for standard paths
 patch_pc() {
+	file="${1}"
+	sed -i "s;^libdir=.*$;libdir=${_libdir};g" "${file}"
+	return 0
+}
+
+# install standard .pc files
+install_pc() {
+	oldname="${1}"
+	newname="${2}"
+	if [ -z "${newname}" ]; then
+		newname="${oldname}"
+	fi
+
+	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
+	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	patch_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	return 0
+}
+
+# patch .pc for galcore paths
+patch_gc_pc() {
 	file="${1}"
 
 	# currently only libdir is non-standard
 	sed -i "s;^libdir=.*$;libdir=${_libdir}/galcore;g" "${file}"
+	return 0
 }
 
 # install .pc for libraries using galcore
@@ -230,7 +253,7 @@ install_gc_pc() {
 
 	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
 	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	patch_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	patch_gc_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
 	return 0
 }
 

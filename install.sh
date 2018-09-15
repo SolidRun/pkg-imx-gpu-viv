@@ -167,6 +167,7 @@ install_libgbm() {
 	install_lib libgbm.so
 	install_lib gbm_viv.so
 	install_header gbm.h
+	install_pc gbm
 }
 
 install_demos() {

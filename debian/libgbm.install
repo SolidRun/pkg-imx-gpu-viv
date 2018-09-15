@@ -1,2 +1,3 @@
+/usr/lib/pkgconfig/gbm.pc
 /usr/lib/libgbm.so
 /usr/lib/gbm_viv.so
