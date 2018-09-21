@@ -1,3 +1,10 @@
+imx-gpu-viv (6.2.2.p0+2) stable; urgency=medium
+
+  * use udev to fix gpu, ipu and vpu permissions
+  * move gbm.pc to libgbm-dev
+
+ -- Josua Mayer <josua@solid-run.com>  Fri, 21 Sep 2018 15:44:34 +0200
+
 imx-gpu-viv (6.2.2.p0+1) stable; urgency=medium
 
   * include gbm.pc
