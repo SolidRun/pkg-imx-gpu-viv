@@ -1,0 +1,5 @@
+KERNEL=="galcore", MODE="0660", GROUP="video"
+KERNEL=="mxc_hdmi", MODE="0660", GROUP="video"
+KERNEL=="mxc_hdmi_cec", MODE="0660", GROUP="video"
+KERNEL=="mxc_ipu", MODE="0660", GROUP="video"
+KERNEL=="mxc_vpu", MODE="0660", GROUP="video"
