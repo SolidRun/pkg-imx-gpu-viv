@@ -1,3 +1,1 @@
-/usr/lib/pkgconfig/egl_vivante_fb.pc
-/usr/lib/pkgconfig/glesv1_cm_vivante_fb.pc
-/usr/lib/pkgconfig/glesv2_vivante_fb.pc
+#! /usr/bin/dh-exec

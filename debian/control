@@ -2,16 +2,24 @@ Source: imx-gpu-viv
 Priority: optional
 Maintainer: Josua Mayer <josua@solid-run.com>
 Build-Depends:
- debhelper (>= 8.0.0),
- lsb-release, 
- wget,
- libdrm2,
+ debhelper (>= 8.1.3),
+ dh-exec,
+ libc6 (>= 2.4),
+ libdrm2 (>= 2.3.1),
+ libffi6 (>= 3.0.4), 
+ libgcc1 (>= 1:3.5),
  libglapi-mesa,
- libstdc++6,
- libx11-6,
- libxdamage1,
- libxext6,
+ libstdc++6 (>= 5.2),
+ libwayland-client0 (>= 1.9.91), 
+ libwayland-cursor0 (>= 1.0.2), 
+ libwayland-server0 (>= 1.2.0),
+ libx11-6 (>= 2:1.4.99.1),
+ libxau6,
+ libxdamage1 (>= 1:1.1), 
+ libxdmcp6, 
+ libxext6, 
  libxfixes3,
+ wget,
 Standards-Version: 3.9.6
 Section: libs
 Vcs-Git: https://github.com/mxOBS/deb-pkg_gpu-viv-bin.git
@@ -20,6 +28,7 @@ Vcs-Browser: https://github.com/mxOBS/deb-pkg_gpu-viv-bin
 Package: imx-gpu-viv
 Section: libs
 Architecture: armhf
+Multi-Arch: same
 Depends:
  ${misc:Depends},
  imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
@@ -32,49 +41,33 @@ Conflicts:
 Description: Vivante Userspace for i.MX6
  Provides the userspace graphics libraries as provided by Vivante.
 
+Package: imx-gpu-viv-common
+Section: libs
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ imx-gpu-viv (= ${binary:Version}),
+Description: Common files for imx-gpu-viv
+ Contains architecture independent configuration data for the Vivante GPU
+ userspace on i.MX6.
+
 Package: imx-gpu-viv-dev
 Section: libdevel
 Architecture: armhf
 Depends:
  ${misc:Depends},
+ imx-gpu-viv-common (= ${binary:Version}),
  imx-gpu-viv (= ${binary:Version}),
  imx-gpu-viv-fb-dev (= ${binary:Version}) | imx-gpu-viv-wl-dev (= ${binary:Version}) | imx-gpu-viv-x11-dev (= ${binary:Version}),
-Provides:
- libegl1-dev,
- libgles1-dev,
- libgles2-dev,
- libgles3-dev,
- libopenvg1-dev,
- libopencl1-dev,
-Breaks:
- libegl1-dev,
- libegl1-mesa-dev,
- libgles1-dev,
- libgles1-mesa-dev,
- libgles2-dev,
- libgles2-mesa-dev,
- libgles3-dev,
- libopenvg1-dev,
- libopenvg1-mesa-dev,
- libopencl1-dev,
- imx-gpu-viv-dfb-dev,
-Replaces:
- libegl1-dev,
- libegl1-mesa-dev,
- libgles1-dev,
- libgles1-mesa-dev,
- libgles2-dev,
- libgles2-mesa-dev,
- libgles3-dev,
- libopenvg1-dev,
- libopenvg1-mesa-dev,
- libopencl1-dev,
 Description: Development files for imx-gpu-viv
- Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6.
+ Provides libraries and headers to create programs with the Vivante-provided
+ graphics libraries for i.MX6.
 
 Package: imx-gpu-viv-dbg
 Architecture: armhf
 Section: debug
+Multi-Arch: same
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
@@ -96,27 +89,32 @@ Description: Vivante Demos for i.MX6
 Package: imx-gpu-viv-fb
 Section: libs
 Architecture: armhf
+Multi-Arch: same
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on Framebuffer
- Provides the userspace graphics libraries as provided by Vivante, Framebuffer parts.
+ Provides the userspace graphics libraries as provided by Vivante, Framebuffer
+ parts.
 
 Package: imx-gpu-viv-wl
 Section: libs
 Architecture: armhf
+Multi-Arch: same
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  libgbm (= ${binary:Version}),
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on Wayland
- Provides the userspace graphics libraries as provided by Vivante, Wayland parts.
+ Provides the userspace graphics libraries as provided by Vivante, Wayland
+ parts.
 
 Package: imx-gpu-viv-x11
 Section: libs
 Architecture: armhf
+Multi-Arch: same
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
@@ -132,7 +130,8 @@ Depends:
  imx-gpu-viv-fb (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-fb
- Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Framebuffer parts.
+ Provides libraries and headers to create programs with the Vivante-provided
+ graphics libraries for i.MX6, Framebuffer parts.
 
 Package: imx-gpu-viv-wl-dev
 Section: libdevel
@@ -143,7 +142,8 @@ Depends:
  libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-wl
- Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Wayland parts.
+ Provides libraries and headers to create programs with the Vivante-provided
+ graphics libraries for i.MX6, Wayland parts.
 
 Package: imx-gpu-viv-x11-dev
 Section: libdevel
@@ -161,41 +161,52 @@ Replaces:
  libgl-dev,
  mesa-common-dev (>> 1),
 Description: Development files for imx-gpu-viv-x11
- Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
+ Provides libraries and headers to create programs with the Vivante-provided
+ graphics libraries for i.MX6, X11 parts.
 
 Package: imx-gpu-viv-fb-dbg
-Architecture: armhf
 Section: debug
+Priority: extra
+Architecture: armhf
+Multi-Arch: same
 Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}),
  ${misc:Depends},
 Description: Debug symbols for imx-gpu-viv-fb
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, Framebuffer parts.
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries,
+ Framebuffer parts.
 
 Package: imx-gpu-viv-wl-dbg
-Architecture: armhf    
 Section: debug
+Priority: extra
+Architecture: armhf
+Multi-Arch: same
 Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
  ${misc:Depends},
 Description: Debug symbols for imx-gpu-viv-wl
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, Wayland parts.
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries,
+ Wayland parts.
 
 Package: imx-gpu-viv-x11-dbg
-Architecture: armhf    
 Section: debug
+Priority: extra
+Architecture: armhf
+Multi-Arch: same
 Depends:
  imx-gpu-viv-dbg (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}),
  ${misc:Depends},
 Description: Debug symbols for imx-gpu-viv-x11
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, X11 parts.
+ Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, X11
+ parts.
 
 Package: libgbm
 Section: libs
 Architecture: armhf
+Multi-Arch: same
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
@@ -205,6 +216,7 @@ Description: Vivante Graphics Buffer Management
 Package: libgbm-dev
 Section: libdevel
 Architecture: armhf
+Multi-Arch: foreign
 Depends:
  libgbm (= ${binary:Version}),
  ${misc:Depends}
@@ -212,10 +224,12 @@ Description: Development files for Vivante libgbm
  Provides libraries and headers to create programs using Vivante libgbm.
 
 Package: libgbm-dbg
-Architecture: armhf
 Section: debug
+Priority: extra
+Architecture: armhf
+Multi-Arch: same
 Depends:
  libgbm (= ${binary:Version}),
  ${misc:Depends},
 Description: Debug symbols for Vivante libgbm
-  Provides the debug symbols to the Vivante GBM library.
+ Provides the debug symbols to the Vivante GBM library.

@@ -1,3 +1,10 @@
-/usr/lib/galcore/wl
-/usr/lib/galcore/libgc_wayland_protocol.so*
-/usr/lib/galcore/libwayland-viv.so*
+#! /usr/bin/dh-exec
+
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libEGL-wl.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGAL-wl.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGLESv2-wl.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libVDK-wl.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/libwayland-viv.so.0 usr/lib/${DEB_HOST_MULTIARCH}/
+usr/lib/${DEB_HOST_MULTIARCH}/libwayland-viv.so.0.0.0 usr/lib/${DEB_HOST_MULTIARCH}/
+usr/lib/${DEB_HOST_MULTIARCH}/libgc_wayland_protocol.so.0 usr/lib/${DEB_HOST_MULTIARCH}/
+usr/lib/${DEB_HOST_MULTIARCH}/libgc_wayland_protocol.so.0.0.0 usr/lib/${DEB_HOST_MULTIARCH}/

@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if [ "x$1" = "xremove" ]; then
-	update-alternatives --remove vivante-gal /usr/lib/galcore/x11/libGAL.so
-fi
-
-#DEBHELPER#
-
-exit 0

@@ -1,2 +1,4 @@
-/usr/lib/libgbm.so
-/usr/lib/gbm_viv.so
+#! /usr/bin/dh-exec
+
+usr/lib/${DEB_HOST_MULTIARCH}/libgbm.so
+usr/lib/${DEB_HOST_MULTIARCH}/gbm_viv.so

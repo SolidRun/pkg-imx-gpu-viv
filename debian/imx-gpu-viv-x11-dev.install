@@ -1,5 +1,3 @@
-/usr/lib/pkgconfig/egl_vivante_x11.pc
-/usr/lib/pkgconfig/glesv1_cm_vivante_x11.pc
-/usr/lib/pkgconfig/glesv2_vivante_x11.pc
-/usr/lib/pkgconfig/gl.pc
+#! /usr/bin/dh-exec
+
 /usr/include/GL

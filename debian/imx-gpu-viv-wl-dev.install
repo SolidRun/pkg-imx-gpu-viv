@@ -1,9 +1,9 @@
-/usr/lib/pkgconfig/egl_vivante_wl.pc
-/usr/lib/pkgconfig/glesv1_cm_vivante_wl.pc
-/usr/lib/pkgconfig/glesv2_vivante_wl.pc
-/usr/lib/pkgconfig/wayland-egl.pc
-/usr/lib/pkgconfig/gc_wayland_protocol.pc
-/usr/lib/pkgconfig/wayland-viv.pc
-/usr/lib/galcore/libgc_wayland_protocol.a
-/usr/lib/galcore/libwayland-viv.a
-/usr/include/wayland-viv
+#! /usr/bin/dh-exec
+
+usr/lib/${DEB_HOST_MULTIARCH}/libgc_wayland_protocol.so
+usr/lib/${DEB_HOST_MULTIARCH}/libgc_wayland_protocol.a
+usr/lib/${DEB_HOST_MULTIARCH}/libwayland-viv.so
+usr/lib/${DEB_HOST_MULTIARCH}/libwayland-viv.a
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/gc_wayland_protocol.pc
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/wayland-viv.pc
+usr/include/wayland-viv

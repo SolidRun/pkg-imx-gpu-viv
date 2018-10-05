@@ -1,3 +1,8 @@
-/usr/lib/galcore/x11
-/usr/lib/galcore/libGL.so*
-/usr/lib/dri/vivante_dri.so
+#! /usr/bin/dh-exec
+
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libEGL-x11.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGAL-x11.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGLESv2-x11.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGL.so.1.2 usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libVDK-x11.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/dri/vivante_dri.so usr/lib/${DEB_HOST_MULTIARCH}/dri/

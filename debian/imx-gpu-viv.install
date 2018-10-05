@@ -1,21 +1,14 @@
-/etc/profile.d/vivante.sh
-/etc/ld.so.conf.d/0vivante.conf
-/etc/OpenCL/vendors/Vivante.icd
+#! /usr/bin/dh-exec
 
-/usr/lib/galcore/libEGL.so*
-/usr/lib/galcore/libGLES_CL.so*
-/usr/lib/galcore/libGLES_CM.so*
-/usr/lib/galcore/libGLESv1_CL.so*
-/usr/lib/galcore/libGLESv1_CM.so*
-/usr/lib/galcore/libGLESv2.so*
-/usr/lib/galcore/libGLSLC.so
-/usr/lib/galcore/libOpenVG*.so
-
-/usr/lib/galcore/libVSC.so
-
-/usr/lib/galcore/libCLC.so
-/usr/lib/galcore/libLLVM_viv.so
-/usr/lib/galcore/libOpenCL.so
-/usr/lib/galcore/libVivanteOpenCL.so
-
-/usr/bin/gmem_info
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libCLC.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGLES_CL.so.1.1.0 usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGLESv1_CL.so.1.1.0 usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGLESv1_CM.so.1.1.0 usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libGLSLC.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libLLVM_viv.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libOpenCL.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libOpenVG.2d.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libOpenVG.3d.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libOpenVG.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libVivanteOpenCL.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/
+usr/lib/${DEB_HOST_MULTIARCH}/vivante/libVSC.so usr/lib/${DEB_HOST_MULTIARCH}/vivante/

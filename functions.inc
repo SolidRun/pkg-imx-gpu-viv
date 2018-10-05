@@ -106,16 +106,18 @@ unpack() {
 # _sysconfdir
 #
 
-install_gc_lib() {
+# install vendor lib (<libdir>/vivante/)
+install_vivante_lib() {
 	oldname="${1}"
 	newname="${2}"
 	if [ -z "${newname}" ]; then
 		newname="${oldname}"
 	fi
 
-	install_lib "${oldname}" "galcore/${newname}"
+	install_lib "${oldname}" "vivante/${newname}"
 }
 
+# install system lib (<libdir>/)
 install_lib() {
 	oldname="${1}"
 	newname="${2}"
@@ -124,6 +126,77 @@ install_lib() {
 	fi
 
 	install -v -m755 -D "${SOURCESDIR}/usr/lib/${oldname}" "${_destdir}/${_libdir}/${newname}"
+}
+
+# link vendir lib (<libdir>/vivante/)
+link_vivante_lib() {
+	destination="$1"
+	name="$2"
+
+	link_lib "${destination}" "vivante/${name}"
+}
+
+# link lib (<libdir>/)
+link_lib() {
+	# in case the destination already exists it has to be overwritten
+	# if the destination exists and is a file, or a symlink
+	if [ -e "${_destdir}/${_libdir}/${2}" ] || [ -h "${_destdir}/${_libdir}/${2}" ]; then
+		t=0
+		rm -vf "${_destdir}/${_libdir}/${2}" || t=$?
+
+		if [ "x${t}" != "x0" ]; then
+			echo "ERROR: ${_destdir}/${_libdir}/${2} already exists and can not be deleted"
+			return 1
+		fi
+	fi
+
+	# make sure the destination directory exists
+	mkdir -p ${_destdir}/${_libdir}
+
+	# create the link
+	t=0
+	ln -sv "${1}" "${_destdir}/${_libdir}/${2}" || t=$?
+
+	return $t
+}
+
+install_header() {
+	oldname="${1}"
+	newname="${2}"
+	if [ -z "${newname}" ]; then
+		newname="${oldname}"
+	fi
+
+	# is directory or file?
+	if [ -d "${SOURCESDIR}/usr/include/${oldname}" ]; then
+		install -v -d "${_destdir}/${_includedir}"
+		cp -r -v "${SOURCESDIR}/usr/include/${oldname}" "${_destdir}/${_includedir}/${newname}"
+		find "${_destdir}/${_includedir}/${newname}" -type d -exec chmod 755 {} \;
+		find "${_destdir}/${_includedir}/${newname}" -type f -exec chmod 644 {} \;
+	else
+		install -v -m644 -D "${SOURCESDIR}/usr/include/${oldname}" "${_destdir}/${_includedir}/${newname}"
+	fi
+}
+
+# patch standard paths in .pc
+patch_pc() {
+	file="${1}"
+	sed -i "s;^libdir=.*$;libdir=${_libdir};g" "${file}"
+	return 0
+}
+
+# install standard .pc files
+install_pc() {
+	oldname="${1}"
+	newname="${2}"
+	if [ -z "${newname}" ]; then
+		newname="${oldname}"
+	fi
+
+	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
+	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	patch_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
+	return 0
 }
 
 install_bin() {
@@ -154,144 +227,4 @@ install_conf() {
 	fi
 
 	install -v -m755 -D "${SOURCESDIR}/etc/${oldname}" "${_destdir}/${_sysconfdir}/${newname}"
-}
-
-link_gc_lib() {
-	destination="$1"
-	name="$2"
-
-	link_lib "${destination}" "galcore/${name}"
-}
-
-link_lib() {
-	# in case the destination already exists it has to be overwritten
-	# if the destination exists and is a file, or a symlink
-	if [ -e "${_destdir}/${_libdir}/${2}" ] || [ -h "${_destdir}/${_libdir}/${2}" ]; then
-		t=0
-		rm -vf "${_destdir}/${_libdir}/${2}" || t=$?
-
-		if [ "x${t}" != "x0" ]; then
-			echo "ERROR: ${_destdir}/${_libdir}/${2} already exists and can not be deleted"
-			return 1
-		fi
-	fi
-
-	# make sure the destination directory exists
-	mkdir -p ${_destdir}/${_libdir}
-
-	# create the link
-	t=0
-	ln -sv "${1}" "${_destdir}/${_libdir}/${2}" || t=$?
-
-	return $t
-}
-
-install_headers() {
-	# TODO: what if destination already exists?
-
-	mkdir -p ${_destdir}/${_includedir}
-	cp -rv "${SOURCESDIR}/usr/include/${1}" "${_destdir}/${_includedir}/"
-	find "${_destdir}/${_includedir}/${1}" -type f -exec chmod 644 {} \;
-	find "${_destdir}/${_includedir}/${1}" -type d -exec chmod 755 {} \;
-}
-
-install_header() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		destname="${oldname}"
-	fi
-	install -v -m644 -D "${SOURCESDIR}/usr/include/${oldname}" "${_destdir}/${_includedir}/${newname}"
-}
-
-install_custom_header() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		destname="${oldname}"
-	fi
-	install -v -m644 -D "${basedir}/${oldname}" "${_destdir}/${_includedir}/${newname}"
-}
-
-# patch .pc for standard paths
-patch_pc() {
-	file="${1}"
-	sed -i "s;^libdir=.*$;libdir=${_libdir};g" "${file}"
-	return 0
-}
-
-# install standard .pc files
-install_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	patch_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	return 0
-}
-
-# patch .pc for galcore paths
-patch_gc_pc() {
-	file="${1}"
-
-	# currently only libdir is non-standard
-	sed -i "s;^libdir=.*$;libdir=${_libdir}/galcore;g" "${file}"
-	return 0
-}
-
-# install .pc for libraries using galcore
-install_gc_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${SOURCESDIR}/usr/lib/pkgconfig/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	patch_gc_pc "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-	return 0
-}
-
-format_pc() {
-	name="${1}"
-	includedir="${2}"
-	libdir="${3}"
-	version="${4}"
-
-	cp -v "${basedir}/${name}.pc.in" "${basedir}/${name}.pc"
-	sed -e "s;@INCLUDEDIR@;${includedir};g" \
-	    -e "s;@LIBDIR@;${libdir};g" \
-	    -e "s;@VERSION@;${version};g" \
-	    -i "${basedir}/${name}.pc"
-
-	return 0
-}
-
-# install custom (local) .pc for libraries using galcore
-install_custom_gc_pc() {
-	oldname="${1}"
-	newname="${2}"
-	if [ -z "${newname}" ]; then
-		newname="${oldname}"
-	fi
-
-	# generate .pc if .in exists
-	if [ -e "${basedir}/${oldname}.pc.in" ]; then
-		format_pc "${oldname}" ${_includedir} ${_libdir}/galcore "${vivanteversion}"
-	fi
-
-	if [ ! -e "${basedir}/${oldname}.pc" ]; then
-		echo "${basedir}/${oldname}.pc not found!"
-		return 1
-	fi
-
-	mkdir -p ${_destdir}/${_libdir}/pkgconfig/
-	install -v -m644 "${basedir}/${oldname}.pc" "${_destdir}/${_libdir}/pkgconfig/${newname}.pc"
-
-	return 0
 }

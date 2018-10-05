@@ -1,0 +1,4 @@
+#! /usr/bin/dh-exec
+
+etc/profile.d/vivante.sh
+etc/OpenCL/vendors/Vivante.icd

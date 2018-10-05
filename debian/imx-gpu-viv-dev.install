@@ -1,12 +1,14 @@
-/usr/lib/pkgconfig/vg.pc
-/usr/include/HAL
-/usr/include/KHR
-/usr/include/EGL
-/usr/include/GLES
-/usr/include/GLES2
-/usr/include/GLES3
-/usr/include/VG
-/usr/include/vdk.h
-/usr/include/gc_vdk.h
-/usr/include/gc_vdk_types.h
-/usr/include/CL
+#! /usr/bin/dh-exec
+
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/vg.pc
+usr/include/HAL
+usr/include/KHR
+usr/include/EGL
+usr/include/GLES
+usr/include/GLES2
+usr/include/GLES3
+usr/include/VG
+usr/include/vdk.h
+usr/include/gc_vdk.h
+usr/include/gc_vdk_types.h
+usr/include/CL

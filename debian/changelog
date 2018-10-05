@@ -1,3 +1,9 @@
+imx-gpu-viv (6.2.2.p0+3) UNRELEASED; urgency=medium
+
+  * don't replace system graphics libraries anymore
+
+ -- Josua Mayer <josua@solid-run.com>  Fri, 05 Oct 2018 18:54:57 +0200
+
 imx-gpu-viv (6.2.2.p0+2) stable; urgency=medium
 
   * use udev to fix gpu, ipu and vpu permissions

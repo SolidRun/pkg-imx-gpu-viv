@@ -1,2 +1,4 @@
-/usr/lib/pkgconfig/gbm.pc
-/usr/include/gbm.h
+#! /usr/bin/dh-exec
+
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/gbm.pc
+usr/include/gbm.h

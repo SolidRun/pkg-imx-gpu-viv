@@ -5,194 +5,107 @@ source functions.inc
 #################################################################
 
 # Vivante core graphics libraries
-install_core_base() {
-	# Vivante GPU HAL
-	for bg in fb wl x11; do
-		install_gc_lib libGAL-$bg.so $bg/libGAL.so
-	done
-	# alternatives: libGAL.so -> $bg/libGAL.so
-	install_headers HAL
-
-	# Khronos shared headers
-	install_headers KHR
-
-	# EGL
-	for bg in fb wl x11; do
-		install_gc_lib libEGL-$bg.so $bg/libEGL.so.1
-		link_gc_lib libEGL.so.1 $bg/libEGL.so
-	done
-	# alternatives: libEGL.so.1 -> $bg/libEGL.so.1
-	link_gc_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
-	link_gc_lib libEGL.so.1 libEGL.so.1.0
-	link_gc_lib libEGL.so.1 libEGL.so
-	install_headers EGL
-	install_gc_pc egl_linuxfb egl_vivante_fb
-	install_gc_pc egl_wayland egl_vivante_wl
-	install_gc_pc egl_x11 egl_vivante_x11
-	# TODO: alternatives
-
-	# OpenGL-ES
-	install_gc_lib libGLES_CL.so.1.1.0
-	link_gc_lib libGLES_CL.so.1.1.0 libGLES_CL.so.1
-	link_gc_lib libGLES_CL.so.1 libGLES_CL.so
-	install_gc_lib libGLES_CM.so.1.1.0
-	link_gc_lib libGLES_CM.so.1.1.0 libGLES_CM.so.1
-	link_gc_lib libGLES_CM.so.1 libGLES_CM.so
-	install_headers GLES
-
-	# OpenGL-ES 1.1
-	install_gc_lib libGLESv1_CL.so.1.1.0
-	link_gc_lib libGLESv1_CL.so.1.1.0 libGLESv1_CL.so.1
-	link_gc_lib libGLESv1_CL.so.1 libGLESv1_CL.so
-	install_gc_lib libGLESv1_CM.so.1.1.0
-	link_gc_lib libGLESv1_CM.so.1.1.0 libGLESv1_CM.so.1
-	link_gc_lib libGLESv1_CM.so.1 libGLESv1_CM.so
-	install_gc_pc glesv1_cm glesv1_cm_vivante_fb
-	install_gc_pc glesv1_cm glesv1_cm_vivante_wl
-	install_gc_pc glesv1_cm_x11 glesv1_cm_vivante_x11
-
-	# OpenGL-ES 2.0
-	for bg in fb wl x11; do
-		install_gc_lib libGLESv2-$bg.so $bg/libGLESv2.so.2
-		link_gc_lib libGLESv2.so.2 $bg/libGLESv2.so
-	done
-	# alternatives: libGLESv2.so.2 -> $bg/libGLESv2.so.2
-	link_gc_lib libGLESv2.so.2 libGLESv2.so.2.0.0 # Mesa compat
-	link_gc_lib libGLESv2.so.2 libGLESv2.so
-	install_headers GLES2
-	install_gc_pc glesv2 glesv2_vivante_fb
-	install_gc_pc glesv2 glesv2_vivante_wl
-	install_gc_pc glesv2_x11 glesv2_vivante_x11
-	# TODO: alternatives
-
-	# OpenGL-ES 3.0
-	# part of libGLESv2.so
-	install_headers GLES3
-	# TODO: alternatives
-
-	# GL Shader Compiler
-	install_gc_lib libGLSLC.so
-
-	# OpenVG
-	install_gc_lib libOpenVG.2d.so
-	install_gc_lib libOpenVG.3d.so
-	link_gc_lib libOpenVG.3d.so libOpenVG.so
-	install_headers VG
-	install_gc_pc vg
-	# TODO: alternative for VG?
-
-	if [ "x$skip_cl" = "xno" ]; then
-	# OpenCL (only GC2000)
-		install_gc_lib libOpenCL.so
-		install_gc_lib libCLC.so
-		install_gc_lib libLLVM_viv.so
-		install_headers CL
-
-		install_gc_lib libVivanteOpenCL.so
-
-		install_conf Vivante.icd OpenCL/vendors/Vivante.icd
-	fi
-
-	# VDK
-	for bg in fb wl x11; do
-		install_gc_lib libVDK-$bg.so $bg/libVDK.so
-	done
-	# alternatives: libVDK.so -> $bg/libVDK.so
-	install_header gc_vdk.h
-	install_header gc_vdk_types.h
-	install_header vdk.h
+install_core() {
+	# GAL
+	install_vivante_lib libGAL-fb.so
+	install_vivante_lib libGAL-wl.so
+	install_vivante_lib libGAL-x11.so
+	install_header HAL
 
 	# VSC
-	install_gc_lib libVSC.so
+	install_vivante_lib libVSC.so
 
-	return
-}
+	# EGL
+	install_vivante_lib libEGL-fb.so
+	install_vivante_lib libEGL-wl.so
+	install_vivante_lib libEGL-x11.so
+	install_header EGL
+	install_header KHR
+	install_pc egl
 
-install_core_fb() {
-	return
-}
-
-install_core_x11() {
-	# X11 OpenGL GLX
-	install_gc_lib libGL.so.1.2
-	link_gc_lib libGL.so.1.2 libGL.so
-	install_gc_pc gl_x11 gl
-
-	# GL headers
-	install_headers GL
-
-	# create fake libGL.so.1 (mesa libgl soname)
-	${CROSS_COMPILE}gcc -shared -Wl,-soname=libGL.so.1 -L${_destdir}/${_libdir}/galcore -lGL -o ${_destdir}/${_libdir}/galcore/libGL.so.1
+	# GLES
+	install_vivante_lib libGLES_CL.so.1.1.0
+	install_vivante_lib libGLESv1_CM.so.1.1.0
+	install_vivante_lib libGLESv1_CL.so.1.1.0
+	install_vivante_lib libGLESv2-fb.so
+	install_vivante_lib libGLESv2-wl.so
+	install_vivante_lib libGLESv2-x11.so
+	install_vivante_lib libGLSLC.so
+	install_header GLES
+	install_header GLES2
+	install_header GLES3
+	install_pc glesv1_cm
+	install_pc glesv2
 
 	# DRI
+	install_vivante_lib libGL.so.1.2
 	install_dri_driver vivante_dri.so
-	return
-}
+	install_header GL
 
-install_core_wl() {
-	install_custom_gc_pc wayland-egl
+	# OpenVG
+	install_vivante_lib libOpenVG.2d.so
+	install_vivante_lib libOpenVG.3d.so
+	link_vivante_lib libOpenVG.3d.so libOpenVG.so
+	install_header VG
+	install_pc vg
 
-	# Wayland libs
-	install_gc_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
-	link_gc_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so.0.0.0
-	link_gc_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
-	install_gc_lib libgc_wayland_protocol.a
-	install_gc_pc gc_wayland_protocol
+	# OpenCL
+	install_vivante_lib libCLC.so
+	install_vivante_lib libLLVM_viv.so
+	install_vivante_lib libOpenCL.so
+	install_vivante_lib libVivanteOpenCL.so
+	install_header CL
+	install_conf Vivante.icd OpenCL/vendors/Vivante.icd
 
-	install_gc_lib libwayland-viv.so.0.0.0 libwayland-viv.so.0
-	link_gc_lib libwayland-viv.so.0 libwayland-viv.so.0.0.0
-	link_gc_lib libwayland-viv.so.0 libwayland-viv.so
-	install_gc_lib libwayland-viv.a
-	install_gc_pc wayland-viv
-	install_headers wayland-viv
+	# VDK
+	install_vivante_lib libVDK-fb.so
+	install_vivante_lib libVDK-wl.so
+	install_vivante_lib libVDK-x11.so
+	install_header vdk.h
+	install_header gc_vdk.h
+	install_header gc_vdk_types.h
 
-	# TODO: update paths in installed .pc-files
-	return
-}
+	# Vivante Wayland
+	install_lib libgc_wayland_protocol.a
+	install_lib libgc_wayland_protocol.so.0.0.0
+	link_lib libgc_wayland_protocol.so.0.0.0 libgc_wayland_protocol.so.0
+	link_lib libgc_wayland_protocol.so.0 libgc_wayland_protocol.so
+	install_pc gc_wayland_protocol
+	install_lib libwayland-viv.a
+	install_lib libwayland-viv.so.0.0.0
+	link_lib libwayland-viv.so.0.0.0 libwayland-viv.so.0
+	link_lib libwayland-viv.so.0 libwayland-viv.so
+	install_header wayland-viv
+	install_pc wayland-viv
 
-install_core_alternatives() {
-	update-alternatives --remove-all vivante-gal
-	prio=0
-	for bg in fb wl x11; do
-		((prio=prio+10))
-		update-alternatives \
-			--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/$bg/libGAL.so $prio \
-			--slave /usr/lib/galcore/libEGL.so.1 vivante-egl /usr/lib/galcore/$bg/libEGL.so.1 \
-			--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/$bg/libGLESv2.so.2 \
-			--slave /usr/lib/galcore/libVDK.so vivante-vdk /usr/lib/galcore/$bg/libVDK.so
-	done
-}
-
-install_libgbm() {
-	install_lib libgbm.so
+	# gbm
 	install_lib gbm_viv.so
+	install_lib libgbm.so
 	install_header gbm.h
 	install_pc gbm
+
+	return 0
 }
 
 install_demos() {
-	mkdir -p "${_destdir}/opt/"
+	mkdir -p "${_destdir}/opt/viv_samples"
 
 	# OpenCL demos
-	if [ "x$skip_cl" = "xno" ]; then
-		mkdir -p "${_destdir}/opt/viv_samples"
-		cp -rv "${SOURCESDIR}/opt/viv_samples/cl11" "${_destdir}/opt/viv_samples/"
-	fi
+	cp -rv "${SOURCESDIR}/opt/viv_samples/cl11" "${_destdir}/opt/viv_samples/"
 
 	# Graphics demos
-	mkdir -p "${_destdir}/opt/viv_samples"
 	cp -rv "${SOURCESDIR}/opt/viv_samples/es20" "${_destdir}/opt/viv_samples/"
 	cp -rv "${SOURCESDIR}/opt/viv_samples/tiger" "${_destdir}/opt/viv_samples/"
 	cp -rv "${SOURCESDIR}/opt/viv_samples/vdk" "${_destdir}/opt/viv_samples/"
 
-	return
+	return 0
 }
 
 install_tools() {
 	_SOURCESDIR="${SOURCESDIR}"
 	SOURCESDIR="${SOURCESDIR}/gmem-info"
 	install_bin gmem_info
-	return
+	return 0
 }
 
 #################################################################
@@ -210,9 +123,6 @@ usage() {
 	echo "	--dridir             directory for DRI drivers"
 	echo "	--sysconfdir         directory for system-wide configuration files"
 	echo "	--bindir  	     directory for binaries"
-	echo "  --skip-alternatives  dont run update-alternatives"
-	echo
-	echo "  --skip-cl            dont install OpenCL parts"
 	echo
 }
 
@@ -230,8 +140,6 @@ _includedir=/usr/include
 _dridir=/usr/lib/dri
 _sysconfdir=/etc
 _fhw=hard
-skip_alternatives=no
-skip_cl=no
 eval set -- "$OPTIONS"
 while true; do
 	case $1 in
@@ -262,14 +170,6 @@ while true; do
 		--fhw)
 			_fhw=$2
 			shift 2
-			;;
-		--skip-alternatives)
-			skip_alternatives=yes
-			shift 1
-			;;
-		--skip-cl)
-			skip_cl=yes
-			shift 1
 			;;
 		--)
 			shift
@@ -310,18 +210,10 @@ vivantebindir="$basedir/`basename $fslpkgname .bin`"
 # perform installation
 
 SOURCESDIR="${vivantebindir}/gpu-core"
-install_core_base
-install_core_fb
-install_core_wl
-install_core_x11
-install_libgbm
+install_core
 
 # patch headers
 find ${_destdir}/${_includedir} -type f -exec sed -i "s;defined(LINUX);defined(__linux__);g" {} \;
-
-if [ "$skip_alternatives" = "no" ]; then
-	install_core_alternatives
-fi
 
 SOURCESDIR="${vivantebindir}/gpu-tools"
 install_tools
