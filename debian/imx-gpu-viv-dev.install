@@ -1,7 +1,6 @@
 #! /usr/bin/dh-exec
 
 usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/vg.pc
-usr/include/HAL
 usr/include/KHR
 usr/include/EGL
 usr/include/GLES

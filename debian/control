@@ -244,3 +244,12 @@ Depends:
  libvdk,
 Description: Development files for libvdk
  Provides development libraries and headers for using libvdk.
+
+Package: libgal-dev
+Section: libdevel
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+Description: Development files for libgal
+ Provides development libraries and headers for using libgal.
