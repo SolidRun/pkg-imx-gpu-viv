@@ -39,7 +39,7 @@ override_dh_shlibdeps:
 	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/$(DEB_HOST_MULTIARCH)/vivante:$(CURDIR)/debian/imx-gpu-viv-fb/usr/lib/$(DEB_HOST_MULTIARCH)/vivante -pimx-gpu-viv-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/$(DEB_HOST_MULTIARCH)/vivante:$(CURDIR)/debian/imx-gpu-viv-wl/usr/lib/$(DEB_HOST_MULTIARCH)/vivante -pimx-gpu-viv-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/$(DEB_HOST_MULTIARCH)/vivante:$(CURDIR)/debian/imx-gpu-viv-x11/usr/lib/$(DEB_HOST_MULTIARCH)/vivante -pimx-gpu-viv-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/$(DEB_HOST_MULTIARCH)/vivante -pimx-gpu-viv-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	#dh_shlibdeps -l$(CURDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/$(DEB_HOST_MULTIARCH)/vivante -pimx-gpu-viv-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 	dh_shlibdeps -plibgbm
 
 override_dh_strip:
