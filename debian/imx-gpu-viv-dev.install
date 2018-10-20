@@ -8,7 +8,4 @@ usr/include/GLES
 usr/include/GLES2
 usr/include/GLES3
 usr/include/VG
-usr/include/vdk.h
-usr/include/gc_vdk.h
-usr/include/gc_vdk_types.h
 usr/include/CL

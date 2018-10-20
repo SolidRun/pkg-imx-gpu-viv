@@ -233,3 +233,14 @@ Depends:
  ${misc:Depends},
 Description: Debug symbols for Vivante libgbm
  Provides the debug symbols to the Vivante GBM library.
+
+# Individual -dev packages for wrapped libraries
+Package: libvdk-dev
+Section: libdevel
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+ libvdk,
+Description: Development files for libvdk
+ Provides development libraries and headers for using libvdk.
