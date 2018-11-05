@@ -79,8 +79,7 @@ install_core() {
 	install_pc wayland-viv
 
 	# gbm
-	install_lib gbm_viv.so
-	install_lib libgbm.so
+	install_vivante_lib gbm_viv.so
 	install_header gbm.h
 	install_pc gbm
 

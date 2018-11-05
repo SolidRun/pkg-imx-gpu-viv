@@ -105,7 +105,6 @@ Multi-Arch: same
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
- libgbm (= ${binary:Version}),
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on Wayland
  Provides the userspace graphics libraries as provided by Vivante, Wayland
@@ -139,7 +138,6 @@ Architecture: armhf
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
- libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-wl
  Provides libraries and headers to create programs with the Vivante-provided
@@ -203,38 +201,16 @@ Description: Debug symbols for imx-gpu-viv-x11
  Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, X11
  parts.
 
-Package: libgbm
-Section: libs
-Architecture: armhf
-Multi-Arch: same
-Depends:
- ${shlibs:Depends},
- ${misc:Depends},
-Description: Vivante Graphics Buffer Management
- Graphics Buffer Management library implementation for Vivante GPUs.
-
+# Individual -dev packages for wrapped libraries
 Package: libgbm-dev
 Section: libdevel
 Architecture: armhf
 Multi-Arch: foreign
 Depends:
- libgbm (= ${binary:Version}),
  ${misc:Depends}
 Description: Development files for Vivante libgbm
  Provides libraries and headers to create programs using Vivante libgbm.
 
-Package: libgbm-dbg
-Section: debug
-Priority: extra
-Architecture: armhf
-Multi-Arch: same
-Depends:
- libgbm (= ${binary:Version}),
- ${misc:Depends},
-Description: Debug symbols for Vivante libgbm
- Provides the debug symbols to the Vivante GBM library.
-
-# Individual -dev packages for wrapped libraries
 Package: libvdk-dev
 Section: libdevel
 Architecture: all
