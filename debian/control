@@ -217,9 +217,8 @@ Package: libvdk-dev
 Section: libdevel
 Architecture: all
 Multi-Arch: foreign
-Depends:
- ${misc:Depends},
- libvdk,
+Depends: ${misc:Depends}
+Suggests: libvdk
 Description: Development files for libvdk
  Provides development libraries and headers for using libvdk.
 
