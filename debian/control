@@ -26,6 +26,10 @@ Depends:
  imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
  galcore-6.2.2.93313,
  ${shlibs:Depends},
+Provides:
+ libegl1,
+ libgles1,
+ libgles2,
 Breaks:
  imx-gpu-viv-dfb,
 Conflicts:
