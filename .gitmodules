@@ -1,0 +1,4 @@
+[submodule "implib"]
+	path = wrappers/implib
+	url = https://github.com/Josua-SR/Implib.so.git
+	branch = master

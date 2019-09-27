@@ -24,3 +24,6 @@ install_data(sources: 'vivante.profile.sh', rename: 'vivante.sh', install_dir: '
 # ld.so.conf
 install_data(sources: 'vivante.ld.so.conf', rename: '0vivante.conf', install_dir: '/etc/ld.so.conf.d')
 
+# wrappers
+subdir('wrappers')
+

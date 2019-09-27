@@ -161,8 +161,8 @@ install_core_alternatives() {
 }
 
 install_libgbm() {
-	install_lib libgbm.so
-	install_lib gbm_viv.so
+	install_lib libgbm.so vivante/libgbm.so
+	install_lib gbm_viv.so vivante/gbm_viv.so
 	install_header gbm.h
 	install_pc gbm
 }
@@ -332,3 +332,9 @@ install_tools
 SOURCESDIR="${vivantebindir}/gpu-demos"
 install_demos
 
+# MESON
+# finally install libgbm wrapper
+# (needed because of custom install script)
+install -v -m755 -D $MESON_BUILD_ROOT/wrappers/libgbm.so.1.0.0 $MESON_INSTALL_DESTDIR_PREFIX/lib/libgbm.so.1.0.0
+ln -sv libgbm.so.1.0.0 $MESON_INSTALL_DESTDIR_PREFIX/lib/libgbm.so.1
+ln -sv libgbm.so.1 $MESON_INSTALL_DESTDIR_PREFIX/lib/libgbm.so
