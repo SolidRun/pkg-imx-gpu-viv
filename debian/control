@@ -2,7 +2,7 @@ Source: imx-gpu-viv
 Priority: optional
 Maintainer: Josua Mayer <josua@solid-run.com>
 Build-Depends:
- debhelper (>= 8.0.0),
+ debhelper (>= 9.20160114),
  lsb-release, 
  wget,
  libdrm2,
@@ -73,16 +73,6 @@ Replaces:
  libopencl1-dev,
 Description: Development files for imx-gpu-viv
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6.
-
-Package: imx-gpu-viv-dbg
-Architecture: armhf
-Section: debug
-Depends:
- ${misc:Depends},
- imx-gpu-viv (= ${binary:Version}),
- imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
-Description: Debug symbols for imx-gpu-viv
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries.
 
 Package: imx-gpu-viv-demos
 Architecture: armhf
@@ -168,36 +158,6 @@ Replaces:
 Description: Development files for imx-gpu-viv-x11
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
 
-Package: imx-gpu-viv-fb-dbg
-Architecture: armhf
-Section: debug
-Depends:
- imx-gpu-viv-dbg (= ${binary:Version}),
- imx-gpu-viv-fb (= ${binary:Version}),
- ${misc:Depends},
-Description: Debug symbols for imx-gpu-viv-fb
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, Framebuffer parts.
-
-Package: imx-gpu-viv-wl-dbg
-Architecture: armhf    
-Section: debug
-Depends:
- imx-gpu-viv-dbg (= ${binary:Version}),
- imx-gpu-viv-wl (= ${binary:Version}),
- ${misc:Depends},
-Description: Debug symbols for imx-gpu-viv-wl
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, Wayland parts.
-
-Package: imx-gpu-viv-x11-dbg
-Architecture: armhf    
-Section: debug
-Depends:
- imx-gpu-viv-dbg (= ${binary:Version}),
- imx-gpu-viv-x11 (= ${binary:Version}),
- ${misc:Depends},
-Description: Debug symbols for imx-gpu-viv-x11
- Provides the debug symbols to Vivante i.MX6 userspace graphics libraries, X11 parts.
-
 Package: libgbm
 Section: libs
 Architecture: armhf
@@ -216,11 +176,3 @@ Depends:
 Description: Development files for Vivante libgbm
  Provides libraries and headers to create programs using Vivante libgbm.
 
-Package: libgbm-dbg
-Architecture: armhf
-Section: debug
-Depends:
- libgbm (= ${binary:Version}),
- ${misc:Depends},
-Description: Debug symbols for Vivante libgbm
-  Provides the debug symbols to the Vivante GBM library.

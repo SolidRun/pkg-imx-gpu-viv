@@ -76,8 +76,9 @@ override_dh_shlibdeps:
 	dh_shlibdeps -plibgbm -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 
 override_dh_strip:
-	dh_strip --package=imx-gpu-viv --dbg-package=imx-gpu-viv-dbg
-	dh_strip --package=imx-gpu-viv-fb --dbg-package=imx-gpu-viv-fb-dbg
-	dh_strip --package=imx-gpu-viv-x11 --dbg-package=imx-gpu-viv-x11-dbg
-	dh_strip --package=imx-gpu-viv-wl --dbg-package=imx-gpu-viv-wl-dbg
-	dh_strip --package=libgbm --dbg-package=libgbm-dbg
+	dh_strip --package=imx-gpu-viv --dbgsym-migration='imx-gpu-viv-dbg (<< 6.2.2.p0+4~)'
+	dh_strip --package=imx-gpu-viv-fb --dbgsym-migration='imx-gpu-viv-fb-dbg (<< 6.2.2.p0+4~)'
+	dh_strip --package=imx-gpu-viv-wl --dbgsym-migration='imx-gpu-viv-wl-dbg (<< 6.2.2.p0+4~)'
+	dh_strip --package=imx-gpu-viv-x11 --dbgsym-migration='imx-gpu-viv-x11-dbg (<< 6.2.2.p0+4~)'
+	dh_strip --package=libgbm --dbgsym-migration='libgbm-dbg (<< 6.2.2.p0+4~)'
+
