@@ -41,8 +41,10 @@ Depends:
  imx-gpu-viv-fb-dev (= ${binary:Version}) | imx-gpu-viv-wl-dev (= ${binary:Version}) | imx-gpu-viv-x11-dev (= ${binary:Version}),
 Provides:
  libegl1-dev,
+ libegl1-mesa-dev,
  libgles1-dev,
  libgles2-dev,
+ libgles2-mesa-dev,
  libgles3-dev,
  libopenvg1-dev,
  libopencl1-dev,
@@ -117,6 +119,8 @@ Description: Vivante Userspace for i.MX6 on Wayland
 Package: imx-gpu-viv-x11
 Section: libs
 Architecture: armhf
+Provides:
+ libgl1,
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
@@ -154,6 +158,7 @@ Depends:
  ${misc:Depends},
 Provides:
  libgl-dev,
+ libgl1-mesa-dev,
 Breaks:
  libgl-dev,
  mesa-common-dev (>> 1),
