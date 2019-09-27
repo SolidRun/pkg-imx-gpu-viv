@@ -6,4 +6,5 @@
 /usr/lib/pkgconfig/wayland-viv.pc
 /usr/lib/galcore/libgc_wayland_protocol.a
 /usr/lib/galcore/libwayland-viv.a
+/usr/lib/libwayland-egl.so
 /usr/include/wayland-viv

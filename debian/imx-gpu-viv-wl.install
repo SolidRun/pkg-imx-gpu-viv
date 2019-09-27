@@ -1,3 +1,5 @@
 /usr/lib/galcore/wl
 /usr/lib/galcore/libgc_wayland_protocol.so*
 /usr/lib/galcore/libwayland-viv.so*
+/usr/lib/libwayland-egl.so.1.0.0
+/usr/lib/libwayland-egl.so.1

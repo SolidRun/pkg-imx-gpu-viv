@@ -109,6 +109,10 @@ Depends:
  imx-gpu-viv (= ${binary:Version}),
  libgbm1 (= ${binary:Version}),
  ${shlibs:Depends},
+Provides:
+ libwayland-egl1 (= 1.16.0-1),
+Breaks:
+ libwayland-egl1,
 Description: Vivante Userspace for i.MX6 on Wayland
  Provides the userspace graphics libraries as provided by Vivante, Wayland parts.
 

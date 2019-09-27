@@ -338,3 +338,7 @@ install_demos
 install -v -m755 -D $MESON_BUILD_ROOT/wrappers/libgbm.so.1.0.0 $MESON_INSTALL_DESTDIR_PREFIX/lib/libgbm.so.1.0.0
 ln -sv libgbm.so.1.0.0 $MESON_INSTALL_DESTDIR_PREFIX/lib/libgbm.so.1
 ln -sv libgbm.so.1 $MESON_INSTALL_DESTDIR_PREFIX/lib/libgbm.so
+# libwayland-egl wrapper
+install -v -m755 -D $MESON_BUILD_ROOT/wrappers/libwayland-egl.so.1.0.0 $MESON_INSTALL_DESTDIR_PREFIX/lib/libwayland-egl.so.1.0.0
+ln -sv libwayland-egl.so.1.0.0 $MESON_INSTALL_DESTDIR_PREFIX/lib/libwayland-egl.so.1
+ln -sv libwayland-egl.so.1 $MESON_INSTALL_DESTDIR_PREFIX/lib/libwayland-egl.so
