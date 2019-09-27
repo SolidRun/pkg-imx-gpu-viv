@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-source functions.inc
+source $MESON_SOURCE_ROOT/functions.inc
 
 #################################################################
 
@@ -120,9 +120,6 @@ install_core_x11() {
 
 	# GL headers
 	install_headers GL
-
-	# create fake libGL.so.1 (mesa libgl soname)
-	${CROSS_COMPILE}gcc -shared -Wl,-soname=libGL.so.1 -L${_destdir}/${_libdir}/galcore -lGL -o ${_destdir}/${_libdir}/galcore/libGL.so.1
 
 	# DRI
 	install_dri_driver vivante_dri.so
@@ -278,6 +275,10 @@ while true; do
 	esac
 done
 
+if [ ! -z "$DESTDIR" ]; then
+	_destdir=$DESTDIR
+fi
+
 # check arguments validity
 
 if [ ! -d "${_destdir}" ]; then
@@ -296,16 +297,18 @@ esac
 echo "Going to install Freescale Vivante userspace 5.0.11 p4.4"
 
 # download the vivante binary package
+pushd $MESON_SOURCE_ROOT
 MIRRORS="http://www.freescale.com/lgfiles/NMG/MAD/YOCTO/ http://download.ossystems.com.br/bsp/freescale/source/"
 	fslpkgname=imx-gpu-viv-6.2.2.p0-aarch32.bin
 	fslpkgchksum=7d43f73b8bc0c1c442587f819218a1d5
 fetch $fslpkgname $fslpkgchksum
+popd
 
 # unpack the archive at the current location
-unpack $fslpkgname
+unpack $MESON_SOURCE_ROOT/$fslpkgname
 
-basedir="$PWD"
-vivantebindir="$basedir/`basename $fslpkgname .bin`"
+basedir="$MESON_SOURCE_ROOT"
+vivantebindir="$MESON_BUILD_ROOT/`basename $fslpkgname .bin`"
 
 # perform installation
 
@@ -328,3 +331,4 @@ install_tools
 
 SOURCESDIR="${vivantebindir}/gpu-demos"
 install_demos
+

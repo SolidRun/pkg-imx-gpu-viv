@@ -12,6 +12,7 @@ Build-Depends:
  libxdamage1,
  libxext6,
  libxfixes3,
+ meson,
 Standards-Version: 3.9.6
 Section: libs
 Vcs-Git: https://github.com/mxOBS/deb-pkg_gpu-viv-bin.git
