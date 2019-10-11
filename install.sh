@@ -14,7 +14,7 @@ install_core_base() {
 	install_headers HAL
 
 	# Khronos shared headers
-	install_headers KHR
+	#install_headers KHR
 
 	# EGL
 	for bg in fb wl x11; do
@@ -119,7 +119,7 @@ install_core_x11() {
 	install_gc_pc gl_x11 gl
 
 	# GL headers
-	install_headers GL
+	#install_headers GL
 
 	# DRI
 	install_dri_driver vivante_dri.so

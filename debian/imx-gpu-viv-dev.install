@@ -1,6 +1,5 @@
 /usr/lib/pkgconfig/vg.pc
 /usr/include/HAL
-/usr/include/KHR
 /usr/include/EGL
 /usr/include/GLES
 /usr/include/GLES2
