@@ -20,11 +20,11 @@ Vcs-Browser: https://github.com/mxOBS/deb-pkg_gpu-viv-bin
 
 Package: imx-gpu-viv
 Section: libs
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  ${misc:Depends},
  imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
- galcore-6.2.2.93313,
+ galcore-6.4.0.228766,
  ${shlibs:Depends},
 Provides:
  libegl1,
@@ -39,7 +39,7 @@ Description: Vivante Userspace for i.MX6
 
 Package: imx-gpu-viv-dev
 Section: libdevel
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
@@ -81,7 +81,7 @@ Description: Development files for imx-gpu-viv
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6.
 
 Package: imx-gpu-viv-demos
-Architecture: armhf
+Architecture: armhf arm64
 Section: devel
 Depends:
  ${misc:Depends},
@@ -93,40 +93,44 @@ Description: Vivante Demos for i.MX6
 
 Package: imx-gpu-viv-fb
 Section: libs
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
+ libgbm1 (= ${binary:Version}),
+ libwayland-server0,
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on Framebuffer
  Provides the userspace graphics libraries as provided by Vivante, Framebuffer parts.
 
 Package: imx-gpu-viv-wl
 Section: libs
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
  libgbm1 (= ${binary:Version}),
+ libwayland-server0,
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on Wayland
  Provides the userspace graphics libraries as provided by Vivante, Wayland parts.
 
 Package: imx-gpu-viv-x11
 Section: libs
-Architecture: armhf
+Architecture: armhf arm64
 Provides:
  libgl1,
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
+ libgbm1 (= ${binary:Version}),
  ${shlibs:Depends},
 Description: Vivante Userspace for i.MX6 on X11
  Provides the userspace graphics libraries as provided by Vivante, X11 parts.
 
 Package: imx-gpu-viv-fb-dev
 Section: libdevel
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}),
@@ -136,18 +140,17 @@ Description: Development files for imx-gpu-viv-fb
 
 Package: imx-gpu-viv-wl-dev
 Section: libdevel
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
- libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-wl
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Wayland parts.
 
 Package: imx-gpu-viv-x11-dev
 Section: libdevel
-Architecture: armhf
+Architecture: armhf arm64
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}),
@@ -177,7 +180,7 @@ Description: transitional package
 
 Package: libgbm1
 Section: libs
-Architecture: armhf
+Architecture: arm64
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
@@ -188,10 +191,9 @@ Description: Vivante Graphics Buffer Management
 
 Package: libgbm-dev
 Section: libdevel
-Architecture: armhf
+Architecture: arm64
 Depends:
  libgbm1 (= ${binary:Version}),
  ${misc:Depends}
 Description: Development files for Vivante libgbm
  Provides libraries and headers to create programs using Vivante libgbm.
-

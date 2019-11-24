@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 void *load_libgbm1(const char *lib_name) {
-    const char *gbm_viv_path = "/usr/lib/vivante/gbm_viv.so";
+    const char *gbm_viv_path = "/usr/lib/galcore/libgbm_viv.so";
     const char *libgbm_path = "/usr/lib/vivante/libgbm.so";
     void *gbm_viv = 0;
     void *libgbm = 0;

@@ -1,3 +1,9 @@
+imx-gpu-viv (6.4.0.p1.0) UNRELEASED; urgency=medium
+
+  * NXP release
+
+ -- Josua Mayer <josua@solid-run.com>  Sun, 24 Nov 2019 17:57:08 +0100
+
 imx-gpu-viv (6.2.2.p0+4) stable; urgency=medium
 
   * add libgbm1 (wrapper)

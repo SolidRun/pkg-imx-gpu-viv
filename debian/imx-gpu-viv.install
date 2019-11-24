@@ -14,7 +14,6 @@
 /usr/lib/galcore/libVSC.so
 
 /usr/lib/galcore/libCLC.so
-/usr/lib/galcore/libLLVM_viv.so
 /usr/lib/galcore/libOpenCL.so
 /usr/lib/galcore/libVivanteOpenCL.so
 

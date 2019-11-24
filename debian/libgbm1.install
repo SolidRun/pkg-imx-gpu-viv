@@ -1,4 +1,4 @@
 /usr/lib/vivante/libgbm.so
-/usr/lib/vivante/gbm_viv.so
+/usr/lib/galcore/libgbm_viv.so
 /usr/lib/libgbm.so.1.0.0
 /usr/lib/libgbm.so.1
