@@ -152,6 +152,11 @@ Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}),
  ${misc:Depends},
+ libdrm-dev,
+ libxcb1-dev,
+ libxdamage-dev,
+ libxext-dev,
+ libxfixes-dev,
 Provides:
  libgl-dev,
  libgl1-mesa-dev,
