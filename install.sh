@@ -199,7 +199,7 @@ usage() {
 	echo Userspace installer for Vivante graphics driver
 	echo Usage: $0 [OPTIONS]
 	echo
-	echo "	--fhw                floating-point hardware (hard)"
+	echo "	--arch               cpu architecture"
 	echo
 	echo "	--destdir            installation prefix"
 	echo "	--libdir             directory for libraries"
@@ -214,7 +214,7 @@ usage() {
 }
 
 s=0
-OPTIONS=`getopt -n "$0" -o "" -l "destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,fhw:,skip-alternatives,skip-cl" -- "$@"` || s=$?
+OPTIONS=`getopt -n "$0" -o "" -l "destdir:,libdir:,includedir:,dridir:,bindir:,sysconfdir:,arch:,skip-alternatives,skip-cl" -- "$@"` || s=$?
 if [ $s -ne 0 ]; then
 	usage
 	exit 1
@@ -226,7 +226,7 @@ _bindir=/usr/bin
 _includedir=/usr/include
 _dridir=/usr/lib/dri
 _sysconfdir=/etc
-_fhw=hard
+_arch=arm
 skip_alternatives=no
 skip_cl=no
 eval set -- "$OPTIONS"
@@ -256,8 +256,8 @@ while true; do
 			_sysconfdir=$2
 			shift 2
 			;;
-		--fhw)
-			_fhw=$2
+		--arch)
+			_arch=$2
 			shift 2
 			;;
 		--skip-alternatives)
@@ -285,11 +285,15 @@ if [ ! -d "${_destdir}" ]; then
 	echo "Warning: ${_destdir} does not exist yet, going to create it."
 fi
 
-case $_fhw in
-  hard) ;;
-  *)    echo "invalid value \"${_fhw}\"for option --fhw"
-	exit 1
-	;;
+case $_arch in
+	arm)
+		fslpkgname=imx-gpu-viv-6.2.2.p0-aarch32.bin
+		fslpkgchksum=7d43f73b8bc0c1c442587f819218a1d5
+		;;
+	*)
+		echo "invalid value \"${_arch}\"for option --arch"
+		exit 1
+		;;
 esac
 
 #################################################################
@@ -299,8 +303,6 @@ echo "Going to install Freescale Vivante userspace 5.0.11 p4.4"
 # download the vivante binary package
 pushd $MESON_SOURCE_ROOT
 MIRRORS="http://www.freescale.com/lgfiles/NMG/MAD/YOCTO/ http://download.ossystems.com.br/bsp/freescale/source/"
-	fslpkgname=imx-gpu-viv-6.2.2.p0-aarch32.bin
-	fslpkgchksum=7d43f73b8bc0c1c442587f819218a1d5
 fetch $fslpkgname $fslpkgchksum
 popd
 
