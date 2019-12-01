@@ -24,7 +24,7 @@ Architecture: armhf arm64
 Depends:
  ${misc:Depends},
  imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
- galcore-6.4.0.228766,
+# galcore-6.4.0.228766,
  ${shlibs:Depends},
 Provides:
  libegl1,
