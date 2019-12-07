@@ -134,6 +134,7 @@ Architecture: armhf arm64
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-fb (= ${binary:Version}),
+ libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-fb
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Framebuffer parts.
@@ -144,6 +145,7 @@ Architecture: armhf arm64
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-wl (= ${binary:Version}),
+ libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
 Description: Development files for imx-gpu-viv-wl
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, Wayland parts.
@@ -154,6 +156,7 @@ Architecture: armhf arm64
 Depends:
  imx-gpu-viv-dev (= ${binary:Version}),
  imx-gpu-viv-x11 (= ${binary:Version}),
+ libgbm-dev (= ${binary:Version}),
  ${misc:Depends},
  libdrm-dev,
  libxcb1-dev,
