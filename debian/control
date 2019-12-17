@@ -187,8 +187,9 @@ Architecture: arm64
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
+ imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
 Provides:
- libgbm1 (= 18.3.6-2),
+ libgbm1 (= 19.2.6-1),
 Description: Vivante Graphics Buffer Management
  Graphics Buffer Management library implementation for Vivante GPUs.
 
