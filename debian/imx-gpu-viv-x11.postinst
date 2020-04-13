@@ -11,12 +11,12 @@ if [ "x$1" = "xconfigure" ]; then
 fi
 
 # force-reinstall/repair symlinks
+ln -sf libGL.so.1 /usr/lib/galcore/libGL.so
+ln -sf libGL.so.1.2 /usr/lib/galcore/libGL.so.1
 ln -sf libEGL.so.1 /usr/lib/galcore/libEGL.so
 ln -sf libEGL.so.1 /usr/lib/galcore/libEGL.so.1.0
 ln -sf libEGL.so.1.0 /usr/lib/galcore/libEGL.so.1.0.0
 ln -sf libGLESv2.so.2 /usr/lib/galcore/libGLESv2.so
-ln -sf libGL.so.1.2 /usr/lib/galcore/libGL.so.1
-ln -sf libGL.so.1 /usr/lib/galcore/libGL.so
 
 #DEBHELPER#
 

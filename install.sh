@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-source $MESON_SOURCE_ROOT/functions.inc
+source ${MESON_SOURCE_ROOT:=.}/functions.inc
 
 #################################################################
 
@@ -303,12 +303,12 @@ fi
 
 case $_arch in
 	arm)
-		fslpkgname=imx-gpu-viv-6.4.0.p1.0-aarch32.bin
-		fslpkgchksum=10ebab961b21b1d08b8a17ee9ae42493
+		fslpkgname=imx-gpu-viv-6.4.0.p2.0-aarch32.bin
+		fslpkgchksum=4544b0c874914dfbc47ec93855bd04a7
 		;;
 	aarch64)
-		fslpkgname=imx-gpu-viv-6.4.0.p1.0-aarch64.bin
-		fslpkgchksum=7c2f504897e6b4495433546ab7d27912
+		fslpkgname=imx-gpu-viv-6.4.0.p2.0-aarch64.bin
+		fslpkgchksum=f4005a4a2dba6a79d8f25547612aa3b9
 		;;
 	*)
 		echo "invalid value \"${_arch}\"for option --arch"
@@ -318,7 +318,7 @@ esac
 
 #################################################################
 
-echo "Going to install Freescale Vivante userspace 6.4.0.p1.0"
+echo "Going to install Freescale Vivante userspace 6.4.0.p2.0"
 
 # download the vivante binary package
 pushd $MESON_SOURCE_ROOT
