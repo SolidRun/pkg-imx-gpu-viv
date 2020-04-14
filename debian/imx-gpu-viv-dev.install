@@ -4,6 +4,7 @@
 /usr/include/GLES
 /usr/include/GLES2
 /usr/include/GLES3
+/usr/include/KHR
 /usr/include/VG
 /usr/include/vdk.h
 /usr/include/gc_vdk.h

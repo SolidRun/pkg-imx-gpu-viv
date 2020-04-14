@@ -14,7 +14,7 @@ install_core_base() {
 	install_headers HAL
 
 	# Khronos shared headers
-	#install_headers KHR
+	install_headers KHR
 
 	# EGL
 	for bg in fb wl x11; do
