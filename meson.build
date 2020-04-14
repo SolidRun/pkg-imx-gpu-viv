@@ -16,7 +16,7 @@ shared_library('GAL', [])
 shared_library('VIVANTE')
 
 # use custom install script (replaces default install steps)
-meson.add_install_script('install.sh', '--skip-alternatives', '--arch', host_machine.cpu_family(), '--dridir', '/usr/lib/dri')
+meson.add_install_script('install.sh', '--skip-alternatives', '--arch', host_machine.cpu_family(), '--dridir', join_paths(get_option('prefix'), get_option('libdir'), 'dri'))
 
 # profile.d script
 install_data(sources: 'vivante.profile.sh', rename: 'vivante.sh', install_dir: '/etc/profile.d')

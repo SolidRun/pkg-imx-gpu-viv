@@ -1,2 +1,2 @@
 /usr/lib/galcore/x11
-/usr/lib/dri/vivante_dri.so
+/usr/lib/*/dri/vivante_dri.so
