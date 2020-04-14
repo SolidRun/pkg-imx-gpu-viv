@@ -46,8 +46,10 @@ Depends:
  imx-gpu-viv-fb-dev (= ${binary:Version}) | imx-gpu-viv-wl-dev (= ${binary:Version}) | imx-gpu-viv-x11-dev (= ${binary:Version}),
  mesa-common-dev,
 Provides:
+ libegl-dev,
  libegl1-dev,
  libegl1-mesa-dev,
+ libgles-dev,
  libgles1-dev,
  libgles2-dev,
  libgles2-mesa-dev,
