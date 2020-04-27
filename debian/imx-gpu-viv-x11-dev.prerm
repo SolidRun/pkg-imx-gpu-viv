@@ -6,6 +6,7 @@ if [ "x$1" = "xremove" ]; then
 	# the original link group has to be recreated here :(
 	update-alternatives \
 		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/x11/libGAL.so 40 \
+		--slave /usr/lib/galcore/libGL.so.1.2 vivante-gl /usr/lib/galcore/x11/libGL.so.1.2 \
 		--slave /usr/lib/galcore/libEGL.so.1 vivante-egl /usr/lib/galcore/x11/libEGL.so.1 \
 		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/x11/libGLESv2.so.2 \
 		--slave /usr/lib/galcore/libVDK.so vivante-vdk /usr/lib/galcore/x11/libVDK.so
