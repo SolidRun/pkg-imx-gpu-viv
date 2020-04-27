@@ -199,7 +199,7 @@ install_header() {
 	oldname="${1}"
 	newname="${2}"
 	if [ -z "${newname}" ]; then
-		destname="${oldname}"
+		newname="${oldname}"
 	fi
 	install -v -m644 -D "${SOURCESDIR}/usr/include/${oldname}" "${_destdir}/${_includedir}/${newname}"
 }

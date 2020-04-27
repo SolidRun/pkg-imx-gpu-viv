@@ -37,6 +37,12 @@ install_core_base() {
 		link_gc_lib libGL.so.1.2 $bg/libGL.so
 	done
 	install_gc_pc gl_x11 gl
+	#install_headers GL
+	install_header GL/glcorearb.h
+	install_header GL/glext.h
+	install_header GL/gl.h
+	#install_header GL/glxext.h
+	#install_header GL/glx.h
 
 	# OpenGL-ES
 	install_gc_lib libGLES_CL.so.1.1.0
