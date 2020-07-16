@@ -49,6 +49,7 @@ Provides:
  libegl-dev,
  libegl1-dev,
  libegl1-mesa-dev,
+ libgl-dev,
  libgles-dev,
  libgles1-dev,
  libgles2-dev,
@@ -59,6 +60,7 @@ Provides:
 Breaks:
  libegl1-dev,
  libegl1-mesa-dev,
+ libgl-dev,
  libgles1-dev,
  libgles1-mesa-dev,
  libgles2-dev,
@@ -71,6 +73,7 @@ Breaks:
 Replaces:
  libegl1-dev,
  libegl1-mesa-dev,
+ libgl-dev,
  libgles1-dev,
  libgles1-mesa-dev,
  libgles2-dev,
@@ -166,12 +169,7 @@ Depends:
  libxext-dev,
  libxfixes-dev,
 Provides:
- libgl-dev,
  libgl1-mesa-dev,
-Breaks:
- libgl-dev,
-Replaces:
- libgl-dev,
 Description: Development files for imx-gpu-viv-x11
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
 

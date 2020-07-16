@@ -1,3 +1,9 @@
+imx-gpu-viv (6.4.0.p1.0+1) stable; urgency=medium
+
+  * escalate conflict with libgl-dev to all flavours
+
+ -- Josua Mayer <josua@solid-run.com>  Thu, 16 Jul 2020 15:26:51 +0200
+
 imx-gpu-viv (6.4.0.p1.0) stable; urgency=medium
 
   * NXP release
