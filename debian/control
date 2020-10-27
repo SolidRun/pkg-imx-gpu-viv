@@ -8,6 +8,10 @@ Build-Depends:
  libdrm2,
  libglapi-mesa,
  libstdc++6,
+ libwayland-egl1,
+ libwayland-client0,
+ libwayland-cursor0,
+ libwayland-server0,
  libx11-6,
  libxdamage1,
  libxext6,
@@ -28,8 +32,10 @@ Depends:
  ${shlibs:Depends},
 Provides:
  libegl1,
+ libgl1,
  libgles1,
  libgles2,
+ libvulkan1 (= 1.2.154.0),
 Breaks:
  imx-gpu-viv-dfb,
 Conflicts:
@@ -57,6 +63,7 @@ Provides:
  libgles3-dev,
  libopenvg1-dev,
  libopencl1-dev,
+ libvulkan-dev (= 1.2.154.0),
 Breaks:
  libegl1-dev,
  libegl1-mesa-dev,
@@ -69,6 +76,7 @@ Breaks:
  libopenvg1-dev,
  libopenvg1-mesa-dev,
  libopencl1-dev,
+ libvulkan-dev,
  imx-gpu-viv-dfb-dev,
 Replaces:
  libegl1-dev,
@@ -123,8 +131,6 @@ Description: Vivante Userspace for i.MX6 on Wayland
 Package: imx-gpu-viv-x11
 Section: libs
 Architecture: armhf arm64
-Provides:
- libgl1,
 Depends:
  ${misc:Depends},
  imx-gpu-viv (= ${binary:Version}),
@@ -169,7 +175,7 @@ Depends:
  libxext-dev,
  libxfixes-dev,
 Provides:
- libgl1-mesa-dev,
+ libgl1-mesa-dev (= 9.2),
 Description: Development files for imx-gpu-viv-x11
  Provides libraries and headers to create programs with the Vivante-provided graphics libraries for i.MX6, X11 parts.
 
@@ -199,5 +205,7 @@ Architecture: arm64
 Depends:
  libgbm1 (= ${binary:Version}),
  ${misc:Depends}
+Provides:
+ libgbm-dev (= 10.2),
 Description: Development files for Vivante libgbm
  Provides libraries and headers to create programs using Vivante libgbm.

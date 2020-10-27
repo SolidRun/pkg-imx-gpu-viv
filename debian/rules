@@ -38,10 +38,10 @@ override_dh_auto_configure:
 override_dh_shlibdeps:
 	dh_shlibdeps -l$(BUILDDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 	dh_shlibdeps -l$(BUILDDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-fb/usr/lib/galcore/fb -pimx-gpu-viv-fb -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -l$(BUILDDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-wl/usr/lib/galcore/wl -pimx-gpu-viv-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -l$(BUILDDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-wl/usr/lib/galcore/wayland -pimx-gpu-viv-wl -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 	dh_shlibdeps -l$(BUILDDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore:$(CURDIR)/debian/imx-gpu-viv-x11/usr/lib/galcore/x11 -pimx-gpu-viv-x11 -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 	dh_shlibdeps -l$(BUILDDIR):$(CURDIR)/debian/imx-gpu-viv/usr/lib/galcore -pimx-gpu-viv-demos -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
-	dh_shlibdeps -plibgbm -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
+	dh_shlibdeps -plibgbm1 -- -ximx-gpu-viv-fb -ximx-gpu-viv-wl -ximx-gpu-viv-x11
 
 override_dh_strip:
 	dh_strip --package=imx-gpu-viv --dbgsym-migration='imx-gpu-viv-dbg (<< 6.2.2.p0+4~)'

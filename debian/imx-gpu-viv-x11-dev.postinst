@@ -10,13 +10,15 @@ if [ "x$1" = "xconfigure" ]; then
 	# the original link group has to be recreated here :(
 	update-alternatives \
 		--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/x11/libGAL.so 40 \
-		--slave /usr/lib/galcore/libGL.so.1.2 vivante-gl /usr/lib/galcore/x11/libGL.so.1.2 \
 		--slave /usr/lib/galcore/libEGL.so.1 vivante-egl /usr/lib/galcore/x11/libEGL.so.1 \
+		--slave /usr/lib/galcore/libGL.so.1 vivante-gl /usr/lib/galcore/x11/libGL.so.1 \
 		--slave /usr/lib/galcore/libGLESv2.so.2 vivante-gles2 /usr/lib/galcore/x11/libGLESv2.so.2 \
-		--slave /usr/lib/galcore/libVDK.so vivante-vdk /usr/lib/galcore/x11/libVDK.so \
+		--slave /usr/lib/galcore/libVDK.so.1 vivante-vdk /usr/lib/galcore/x11/libVDK.so.1 \
+		--slave /usr/lib/galcore/libvulkan.so.1 vivante-vk /usr/lib/galcore/x11/libvulkan.so.1 \
 		--slave /usr/lib/pkgconfig/egl.pc vivante-egl-dev /usr/lib/pkgconfig/egl_vivante_x11.pc \
 		--slave /usr/lib/pkgconfig/glesv1_cm.pc vivante-gles1-dev /usr/lib/pkgconfig/glesv1_cm_vivante_x11.pc \
-		--slave /usr/lib/pkgconfig/glesv2.pc vivante-gles2-dev /usr/lib/pkgconfig/glesv2_vivante_x11.pc
+		--slave /usr/lib/pkgconfig/glesv2.pc vivante-gles2-dev /usr/lib/pkgconfig/glesv2_vivante_x11.pc \
+		--slave /usr/lib/pkgconfig/vg.pc vivante-vg-dev /usr/lib/pkgconfig/vg_vivante_x11.pc
 fi
 
 #DEBHELPER#

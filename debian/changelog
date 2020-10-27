@@ -1,4 +1,10 @@
-imx-gpu-viv (6.4.0.p2.0) UNRELEASED; urgency=medium
+imx-gpu-viv (6.4.3.p0) UNRELEASED; urgency=medium
+
+  * NXP release
+
+ -- Josua Mayer <josua@solid-run.com>  Wed, 28 Oct 2020 11:57:03 +0000
+
+imx-gpu-viv (6.4.0.p2.0) stable; urgency=medium
 
   * NXP release
 

@@ -7,8 +7,8 @@ source ${MESON_SOURCE_ROOT:=.}/functions.inc
 # Vivante core graphics libraries
 install_core_base() {
 	# Vivante GPU HAL
-	for bg in fb wl x11; do
-		install_gc_lib libGAL-$bg.so $bg/libGAL.so
+	for bg in fb wayland x11; do
+		install_gc_lib $bg/libGAL.so $bg/libGAL.so
 	done
 	# alternatives: libGAL.so -> $bg/libGAL.so
 	install_headers HAL
@@ -17,13 +17,12 @@ install_core_base() {
 	install_headers KHR
 
 	# EGL
-	for bg in fb wl x11; do
-		install_gc_lib libEGL-$bg.so $bg/libEGL.so.1
+	for bg in fb wayland x11; do
+		install_gc_lib $bg/libEGL.so.1.5.0 $bg/libEGL.so.1
 		link_gc_lib libEGL.so.1 $bg/libEGL.so
 	done
 	# alternatives: libEGL.so.1 -> $bg/libEGL.so.1
-	link_gc_lib libEGL.so.1.0 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
-	link_gc_lib libEGL.so.1 libEGL.so.1.0
+	link_gc_lib libEGL.so.1 libEGL.so.1.0.0 # compatibility symlink to the Mesa soname of libEGL
 	link_gc_lib libEGL.so.1 libEGL.so
 	install_headers EGL
 	install_gc_pc egl_linuxfb egl_vivante_fb
@@ -32,10 +31,12 @@ install_core_base() {
 	# TODO: alternatives
 
 	# OpenGL
-	for bg in wl x11; do
-		install_gc_lib libGL-$bg.so $bg/libGL.so.1.2
-		link_gc_lib libGL.so.1.2 $bg/libGL.so
+	for bg in fb wayland x11; do
+		install_gc_lib $bg/libGL.so.1.2.0 $bg/libGL.so.1
+		link_gc_lib libGL.so.1 $bg/libGL.so
 	done
+	link_gc_lib libGL.so.1 libGL.so.1.2
+	link_gc_lib libGL.so.1 libGL.so
 	install_gc_pc gl_x11 gl
 	#install_headers GL
 	install_header GL/glcorearb.h
@@ -65,8 +66,8 @@ install_core_base() {
 	install_gc_pc glesv1_cm_x11 glesv1_cm_vivante_x11
 
 	# OpenGL-ES 2.0
-	for bg in fb wl x11; do
-		install_gc_lib libGLESv2-$bg.so $bg/libGLESv2.so.2
+	for bg in fb wayland x11; do
+		install_gc_lib $bg/libGLESv2.so.2.0.0 $bg/libGLESv2.so.2
 		link_gc_lib libGLESv2.so.2 $bg/libGLESv2.so
 	done
 	# alternatives: libGLESv2.so.2 -> $bg/libGLESv2.so.2
@@ -88,33 +89,38 @@ install_core_base() {
 
 	# OpenVG
 	test "x$_arch" = "xarm" && install_gc_lib libOpenVG.2d.so
-	install_gc_lib libOpenVG.3d.so
-	link_gc_lib libOpenVG.3d.so libOpenVG.so
+	install_gc_lib libOpenVG.3d.so.1.1.0 libOpenVG.so.1
+	link_gc_lib libOpenVG.so.1 libOpenVG.so
 	install_headers VG
-	install_gc_pc vg
+	install_gc_pc vg vg_vivante_fb
+	install_gc_pc vg vg_vivante_wl
+	install_gc_pc vg_x11 vg_vivante_x11
 	# TODO: alternative for VG?
 
 	# OpenVX (only aarch64)
-	if [ "x$_arch" + "xaarch64" ]; then
-		install_gc_lib libOpenVX.so
+	if [ "x$_arch" = "xaarch64" ]; then
+		install_gc_lib libOpenVX.so.1.2.0 libOpenVX.so.1
+		link_gc_lib libOpenVX.so.1 libOpenVX.so
 		install_gc_lib libOpenVXU.so
-		install_gc_lib libovxlib.so
 		install_gc_lib libOvx12VXCBinary-evis.so
 		install_gc_lib libOvx12VXCBinary-evis2.so
+		install_headers VX
 
 		# neural networks (using ovx)
-		install_gc_lib libnnrt.so
-		install_gc_lib libneuralnetworks.so
+		install_gc_lib libArchModelSw.so
+		install_gc_lib libNNArchPerf.so
+		install_gc_lib libNNGPUBinary-evis.so
+		install_gc_lib libNNGPUBinary-evis2.so
 		install_gc_lib libNNGPUBinary-lite.so
 		install_gc_lib libNNGPUBinary-ulite.so
-		install_gc_lib libNNGPUBinary-xsvx.so
 		install_gc_lib libNNVXCBinary-evis.so
 		install_gc_lib libNNVXCBinary-evis2.so
 	fi
 
 	if [ "x$skip_cl" = "xno" ]; then
 	# OpenCL (only GC2000)
-		install_gc_lib libOpenCL.so
+		install_gc_lib libOpenCL.so.1.2.0 libOpenCL.so.1
+		link_gc_lib libOpenCL.so.1 libOpenCL.so
 		install_gc_lib libCLC.so
 		install_headers CL
 
@@ -124,19 +130,23 @@ install_core_base() {
 	fi
 
 	# Vulkan (only aarch64)
-	if [ "x$_arch" + "xaarch64" ]; then
+	if [ "x$_arch" = "xaarch64" ]; then
 		install_gc_lib libSPIRV_viv.so
-		for bg in fb wl x11; do
-			install_gc_lib libvulkan-$bg.so $bg/libvulkan.so.1
+		for bg in fb wayland x11; do
+			install_gc_lib $bg/libvulkan.so.1.1.6 $bg/libvulkan.so.1
 			link_gc_lib libvulkan.so.1 $bg/libvulkan.so
 		done
+		link_gc_lib libvulkan.so.1 libvulkan.so
+		install_headers vulkan
 	fi
 
 	# VDK
-	for bg in fb wl x11; do
-		install_gc_lib libVDK-$bg.so $bg/libVDK.so
+	for bg in fb wayland x11; do
+		install_gc_lib $bg/libVDK.so.1.2.0 $bg/libVDK.so.1
+		link_gc_lib libVDK.so.1 $bg/libVDK.so
 	done
-	# alternatives: libVDK.so -> $bg/libVDK.so
+	# alternatives: libVDK.so.1 -> $bg/libVDK.so.1
+	link_gc_lib libVDK.so.1 libVDK.so
 	install_header gc_vdk.h
 	install_header gc_vdk_types.h
 	install_header vdk.h
@@ -166,7 +176,7 @@ install_core_wl() {
 install_core_alternatives() {
 	update-alternatives --remove-all vivante-gal
 	prio=0
-	for bg in fb wl x11; do
+	for bg in fb wayland x11; do
 		((prio=prio+10))
 		update-alternatives \
 			--install /usr/lib/galcore/libGAL.so vivante-gal /usr/lib/galcore/$bg/libGAL.so $prio \
@@ -303,12 +313,12 @@ fi
 
 case $_arch in
 	arm)
-		fslpkgname=imx-gpu-viv-6.4.0.p2.0-aarch32.bin
-		fslpkgchksum=4544b0c874914dfbc47ec93855bd04a7
+		fslpkgname=imx-gpu-viv-6.4.3.p0.0-aarch32.bin
+		fslpkgchksum=163167d49e1667bab3a8a37ea33b7624
 		;;
 	aarch64)
-		fslpkgname=imx-gpu-viv-6.4.0.p2.0-aarch64.bin
-		fslpkgchksum=f4005a4a2dba6a79d8f25547612aa3b9
+		fslpkgname=imx-gpu-viv-6.4.3.p0.0-aarch64.bin
+		fslpkgchksum=db4c88a19d0c1f7ec2788531822f9144
 		;;
 	*)
 		echo "invalid value \"${_arch}\"for option --arch"
@@ -318,7 +328,7 @@ esac
 
 #################################################################
 
-echo "Going to install Freescale Vivante userspace 6.4.0.p2.0"
+echo "Going to install Freescale Vivante userspace 6.4.3.p0.0"
 
 # download the vivante binary package
 pushd $MESON_SOURCE_ROOT

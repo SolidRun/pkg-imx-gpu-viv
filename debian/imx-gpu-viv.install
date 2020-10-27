@@ -2,19 +2,21 @@
 /etc/ld.so.conf.d/0vivante.conf
 /etc/OpenCL/vendors/Vivante.icd
 
-/usr/lib/galcore/libEGL.so*
-/usr/lib/galcore/libGLES_CL.so*
-/usr/lib/galcore/libGLES_CM.so*
-/usr/lib/galcore/libGLESv1_CL.so*
-/usr/lib/galcore/libGLESv1_CM.so*
-/usr/lib/galcore/libGLESv2.so*
+/usr/lib/galcore/libEGL.so.*
+/usr/lib/galcore/libGLES_CL.so.*
+/usr/lib/galcore/libGLES_CM.so.*
+/usr/lib/galcore/libGLESv1_CL.so.*
+/usr/lib/galcore/libGLESv1_CM.so.*
+/usr/lib/galcore/libGLESv2.so.*
 /usr/lib/galcore/libGLSLC.so
-/usr/lib/galcore/libOpenVG*.so
+/usr/lib/galcore/libOpenVG.so.*
+
+/usr/lib/galcore/libSPIRV_viv.so
 
 /usr/lib/galcore/libVSC.so
 
 /usr/lib/galcore/libCLC.so
-/usr/lib/galcore/libOpenCL.so
+/usr/lib/galcore/libOpenCL.so.*
 /usr/lib/galcore/libVivanteOpenCL.so
 
 /usr/bin/gmem_info
