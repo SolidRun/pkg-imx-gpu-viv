@@ -353,6 +353,9 @@ install_libgbm
 
 # patch headers
 find ${_destdir}/${_includedir} -type f -exec sed -i "s;defined(LINUX);defined(__linux__);g" {} \;
+sed -i ${_destdir}/${_includedir}/EGL/eglplatform.h \
+	-e "s;#include <X11/Xlib\.h>;struct _XDisplay\;;g" \
+	-e "s;#include <X11/Xutil\.h>;typedef struct _XDisplay Display\;;g"
 
 if [ "$skip_alternatives" = "no" ]; then
 	install_core_alternatives
