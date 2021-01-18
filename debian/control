@@ -195,7 +195,7 @@ Depends:
  ${misc:Depends},
  imx-gpu-viv-fb (= ${binary:Version}) | imx-gpu-viv-wl (= ${binary:Version}) | imx-gpu-viv-x11 (= ${binary:Version}),
 Provides:
- libgbm1 (= 20.2.3-1),
+ libgbm1 (= 20.3.2-1),
 Description: Vivante Graphics Buffer Management
  Graphics Buffer Management library implementation for Vivante GPUs.
 
@@ -206,6 +206,6 @@ Depends:
  libgbm1 (= ${binary:Version}),
  ${misc:Depends}
 Provides:
- libgbm-dev (= 20.2.3-1),
+ libgbm-dev (= 20.3.2-1),
 Description: Development files for Vivante libgbm
  Provides libraries and headers to create programs using Vivante libgbm.
