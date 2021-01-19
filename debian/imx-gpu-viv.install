@@ -20,3 +20,10 @@
 /usr/lib/galcore/libVivanteOpenCL.so
 
 /usr/bin/gmem_info
+
+# libraries dlopened by libGAL without soname :(
+/usr/lib/galcore/libEGL.so
+/usr/lib/galcore/libGLESv1_CM.so
+/usr/lib/galcore/libGLESv2.so
+/usr/lib/galcore/libGL.so
+/usr/lib/galcore/libOpenVG.so
